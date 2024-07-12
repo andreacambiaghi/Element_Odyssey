@@ -70,3 +70,14 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Ignora i file generati dalla build di Unity
+"Element Odyssey/Library/Bee/artifacts/Android/d8kzr/libil2cpp.so"
+"Element Odyssey/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/local_aar_for_lint/release/out.aar"
+"Element Odyssey/Library/Bee/artifacts/Android/il2cppOutput/build/armeabi-v7a/libil2cpp.dbg.so"
+
+# Ignora i file generati dalla build di Unity
+Element Odyssey/Library/Bee/artifacts/Android/d8kzr/libil2cpp.so
+Element Odyssey/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/local_aar_for_lint/release/out.aar
+Element Odyssey/Library/Bee/artifacts/Android/il2cppOutput/build/armeabi-v7a/libil2cpp.dbg.so
+
