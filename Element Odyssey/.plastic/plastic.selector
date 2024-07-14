@@ -1,4 +1,0 @@
-repository "Element Odyssey@Lordrea@cloud"
-  path "/"
-    br "/main"
-    co "/main"
