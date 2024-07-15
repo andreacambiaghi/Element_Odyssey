@@ -1,5 +1,8 @@
 ScriptsOnlyBuild:
   usedScripts:
+    Assembly-CSharp.dll:
+    - Elements
+    - MultipleImagesTrackingManager
     Unity.InputSystem.dll:
     - UnityEngine.InputSystem.InputSettings
     - UnityEngine.InputSystem.InputSystemObject
@@ -25,14 +28,12 @@ ScriptsOnlyBuild:
     - Unity.XR.CoreUtils.XROrigin
     Unity.XR.Management.Editor.dll:
     - UnityEditor.XR.Management.XRGeneralSettingsPerBuildTarget
-    - UnityEditor.XR.Management.XRManagerSettingsEditor
     Unity.XR.Management.dll:
     - UnityEngine.XR.Management.XRGeneralSettings
     - UnityEngine.XR.Management.XRManagerSettings
     Unity.XR.Simulation.Editor.dll:
     - UnityEditor.XR.Simulation.SimulationEnvironmentAssetsManager
     - UnityEditor.XR.Simulation.XREnvironmentViewManager
-    - UnityEditor.XR.Simulation.XRSimulationRuntimeSettingsEditor
     - UnityEditor.XR.Simulation.XRSimulationSettings
     Unity.XR.Simulation.dll:
     - UnityEngine.XR.Simulation.SimulatedBoundedPlane
@@ -77,6 +78,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 89
@@ -86,22 +89,28 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16802}
+      Script: {instanceID: 16816}
     - Class: 114
-      Script: {instanceID: 18910}
+      Script: {instanceID: 18954}
     - Class: 114
-      Script: {instanceID: 19508}
+      Script: {instanceID: 19558}
     - Class: 114
-      Script: {instanceID: 19616}
+      Script: {instanceID: 19668}
     - Class: 114
-      Script: {instanceID: 20260}
+      Script: {instanceID: 20318}
     - Class: 114
-      Script: {instanceID: 20670}
+      Script: {instanceID: 20738}
     - Class: 114
-      Script: {instanceID: 22134}
+      Script: {instanceID: 22222}
     - Class: 114
-      Script: {instanceID: 24524}
+      Script: {instanceID: 24650}
+    - Class: 114
+      Script: {instanceID: 25888}
+    - Class: 114
+      Script: {instanceID: 26798}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -612,6 +621,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline
     namespaceName: UnityEngine.Timeline
     className: ActivationTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 3e4d800cee21c1250c5253c6acfbe524
+    assemblyName: Unity.XR.ARCore
+    namespaceName: UnityEngine.XR.ARCore
+    className: ARCoreLoaderSettings
   - hash:
       serializedVersion: 2
       Hash: 552dca338f20933ce362ebbe559a6aa6
@@ -1304,6 +1319,12 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: cac40d2f764f526c6d35c42606cd2f9f
+    assemblyName: Unity.XR.ARCore
+    namespaceName: UnityEngine.XR.ARCore
+    className: ARCoreLoader
+  - hash:
+      serializedVersion: 2
       Hash: 67272c9c30c50b68ef1ce72ac0191c57
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -1484,17 +1505,17 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 3e4d800cee21c1250c5253c6acfbe524
-    assemblyName: Unity.XR.ARCore
-    namespaceName: UnityEngine.XR.ARCore
-    className: ARCoreLoaderSettings
+      Hash: 54936578e55e55d5c31c529b9606488d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: MultipleImagesTrackingManager
   - hash:
       serializedVersion: 2
-      Hash: cac40d2f764f526c6d35c42606cd2f9f
-    assemblyName: Unity.XR.ARCore
-    namespaceName: UnityEngine.XR.ARCore
-    className: ARCoreLoader
+      Hash: e2ac02954a92594efec7b3b4c6867e2a
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Elements
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/andre/Desktop/AAAA/apk.apk
+  playerPath: C:/Users/andre/Desktop/AAAA/vivoperlei.apk

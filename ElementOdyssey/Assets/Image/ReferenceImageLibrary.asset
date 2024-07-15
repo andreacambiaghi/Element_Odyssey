@@ -12,18 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
   m_Name: ReferenceImageLibrary
   m_EditorClassIdentifier: 
-  m_GuidLow: 0
-  m_GuidHigh: 0
+  m_GuidLow: 5627344721529213769
+  m_GuidHigh: 10548238973469032628
   m_DataStore:
     m_Storage: []
   m_Images:
   - m_SerializedGuid:
-      m_GuidLow: 4840213381489686679
-      m_GuidHigh: 17059171718989838215
+      m_GuidLow: 4877499818683449157
+      m_GuidHigh: 9213833866924215223
     m_SerializedTextureGuid:
-      m_GuidLow: 14322837250152409245
-      m_GuidHigh: 7475952522642030648
+      m_GuidLow: 6189283647354453030
+      m_GuidHigh: 2684993108255363960
     m_Size: {x: 0, y: 0}
     m_SpecifySize: 0
-    m_Name: water_marker
+    m_Name: water
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5125219948127206673
+      m_GuidHigh: 15389190031603227551
+    m_SerializedTextureGuid:
+      m_GuidLow: 4635457063210763490
+      m_GuidHigh: 4768610424748120104
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: fire
     m_Texture: {fileID: 0}

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\andre\\Desktop\\VirtualRealityProject\\ElementOdyssey\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\launcher\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-pa\\values-pa.xml",
+            "outputFile": "C:\\Users\\andre\\Desktop\\ProgettoAR\\ElementOdyssey\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\launcher\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-pa\\values-pa.xml",
             "map": [
                 {
                     "source": "C:\\Users\\andre\\.gradle\\caches\\transforms-3\\5bb704542cba3570043c1ca9bf4fbace\\transformed\\arcore_client\\res\\values-pa\\values.xml",
