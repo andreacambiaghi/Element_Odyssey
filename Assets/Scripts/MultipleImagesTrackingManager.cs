@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -12,21 +10,30 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     private ARTrackedImageManager _arTrackedImageManager;
     private Dictionary<string, GameObject> _arObjects;
 
-    // Get the reference to the ARTrackedImageManager
+    // UI Elements
+    public GameObject menuPanel; // Reference to the menu panel GameObject
+    public Button waterButton; // Reference to the WaterButton
+    public Button fireButton; // Reference to the FireButton
 
+    private ARTrackedImage currentTrackedImage;
+
+    // Initialize ARTrackedImageManager and AR objects
     private void Awake()
     {
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _arObjects = new Dictionary<string, GameObject>();
-
     }
 
+    // Start is called before the first frame update
     private void Start()
     {
-        // Listen the event when the tracked images are changed
+        // Hide the menu at the start
+        menuPanel.SetActive(false);
+
+        // Subscribe to the trackedImagesChanged event
         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
 
-        // Spawn the game objects for the existing tracked images
+        // Instantiate and set up AR objects
         foreach (GameObject prefab in prefabsToSpawn)
         {
             GameObject newARObject = Instantiate(prefab, Vector3.zero, Quaternion.Euler(-90, 0, 0));
@@ -34,46 +41,68 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             newARObject.gameObject.SetActive(false);
             _arObjects.Add(newARObject.name, newARObject);
         }
+
+        // Add listeners to buttons
+        waterButton.onClick.AddListener(() => OnPrefabSelected("water"));
+        fireButton.onClick.AddListener(() => OnPrefabSelected("fire"));
     }
 
-
+    // Unsubscribe from the trackedImagesChanged event
     private void OnDestroy()
     {
-        // Remove the listener when the script is destroyed
         _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
     }
 
+    // Handle changes in tracked images
     private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
-        // Identify the changes in the tracked images
         foreach (ARTrackedImage trackedImage in eventArgs.added)
         {
-            UpdatedTrackedImage(trackedImage);
+            ShowMenu(trackedImage);
         }
         foreach (ARTrackedImage trackedImage in eventArgs.updated)
         {
-            UpdatedTrackedImage(trackedImage);
+            if (trackedImage.trackingState == TrackingState.Tracking)
+            {
+                ShowMenu(trackedImage);
+            }
+            else
+            {
+                HideMenu();
+            }
         }
-        foreach (ARTrackedImage trackedImage in eventArgs.removed)
+        foreach (ARTrackedImage _ in eventArgs.removed)
         {
-            _arObjects[trackedImage.referenceImage.name].gameObject.SetActive(false);
+            HideMenu();
         }
     }
 
-    private void UpdatedTrackedImage(ARTrackedImage trackedImage)
+    // Show the menu when an image is tracked
+    private void ShowMenu(ARTrackedImage trackedImage)
     {
-        // Check tracking statsu of the tracked image
-        if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
+        currentTrackedImage = trackedImage;
+        menuPanel.SetActive(true);
+    }
+
+    // Hide the menu
+    private void HideMenu()
+    {
+        Debug.Log("Hiding menu");
+        menuPanel.SetActive(false);
+    }
+
+
+    // Handle prefab selection from the menu
+    private void OnPrefabSelected(string prefabName)
+    {
+        if (currentTrackedImage != null && _arObjects.ContainsKey(prefabName))
         {
-            _arObjects[trackedImage.referenceImage.name].gameObject.SetActive(false);
-            return;
+            Debug.Log("Prefab selected: " + prefabName);
+            var selectedPrefab = _arObjects[prefabName];
+            selectedPrefab.transform.position = currentTrackedImage.transform.position;
+            selectedPrefab.gameObject.SetActive(true);
         }
 
-        // Show, hide or position the game object based on the tracking image
-        if (prefabsToSpawn != null)
-        {
-            _arObjects[trackedImage.referenceImage.name].gameObject.SetActive(true);
-            _arObjects[trackedImage.referenceImage.name].transform.position = trackedImage.transform.position;
-        }
+        HideMenu(); // Hide the menu after a prefab is selected
     }
 }
