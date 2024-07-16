@@ -9,6 +9,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
     private Dictionary<string, GameObject> _arObjects;
+    private HashSet<string> _processedMarkers; // HashSet to track processed markers
 
     // UI Elements
     public GameObject menuPanel; // Reference to the menu panel GameObject
@@ -22,6 +23,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     {
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _arObjects = new Dictionary<string, GameObject>();
+        _processedMarkers = new HashSet<string>(); // Initialize the HashSet
     }
 
     // Start is called before the first frame update
@@ -71,15 +73,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 HideMenu();
             }
         }
-        foreach (ARTrackedImage _ in eventArgs.removed)
+        foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
             HideMenu();
         }
     }
 
-    // Show the menu when an image is tracked
+    // Show the menu when an image is tracked, if it hasn't been processed
     private void ShowMenu(ARTrackedImage trackedImage)
     {
+        // Check if this marker has already been processed
+        if (_processedMarkers.Contains(trackedImage.referenceImage.name))
+        {
+            return; // Do not show the menu if the marker has already been processed
+        }
+
         currentTrackedImage = trackedImage;
         menuPanel.SetActive(true);
     }
@@ -91,7 +99,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         menuPanel.SetActive(false);
     }
 
-
     // Handle prefab selection from the menu
     private void OnPrefabSelected(string prefabName)
     {
@@ -101,6 +108,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             var selectedPrefab = _arObjects[prefabName];
             selectedPrefab.transform.position = currentTrackedImage.transform.position;
             selectedPrefab.gameObject.SetActive(true);
+
+            // Mark this marker as processed
+            _processedMarkers.Add(currentTrackedImage.referenceImage.name);
         }
 
         HideMenu(); // Hide the menu after a prefab is selected
