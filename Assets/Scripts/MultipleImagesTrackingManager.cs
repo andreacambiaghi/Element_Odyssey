@@ -9,6 +9,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
     private Dictionary<string, GameObject> _arObjects;
+    private Dictionary<string, GameObject> _activePrefabs;
     private HashSet<string> _processedMarkers; // HashSet to track processed markers
 
     // UI Elements
@@ -24,6 +25,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _arObjects = new Dictionary<string, GameObject>();
         _processedMarkers = new HashSet<string>(); // Initialize the HashSet
+        _activePrefabs = new Dictionary<string, GameObject>(); // Dictionary to keep track of active prefabs
     }
 
     // Start is called before the first frame update
@@ -67,6 +69,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             if (trackedImage.trackingState == TrackingState.Tracking)
             {
                 ShowMenu(trackedImage);
+                UpdatePrefabPosition(trackedImage);
             }
             else
             {
@@ -107,12 +110,25 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             Debug.Log("Prefab selected: " + prefabName);
             var selectedPrefab = _arObjects[prefabName];
             selectedPrefab.transform.position = currentTrackedImage.transform.position;
+            selectedPrefab.transform.rotation = currentTrackedImage.transform.rotation;
             selectedPrefab.gameObject.SetActive(true);
 
             // Mark this marker as processed
             _processedMarkers.Add(currentTrackedImage.referenceImage.name);
+            _activePrefabs[currentTrackedImage.referenceImage.name] = selectedPrefab; // Keep track of the active prefab
         }
 
         HideMenu(); // Hide the menu after a prefab is selected
+    }
+
+    // Update the position of the prefab to follow the tracked image
+    private void UpdatePrefabPosition(ARTrackedImage trackedImage)
+    {
+        if (_activePrefabs.ContainsKey(trackedImage.referenceImage.name))
+        {
+            var prefab = _activePrefabs[trackedImage.referenceImage.name];
+            prefab.transform.position = trackedImage.transform.position;
+            prefab.transform.rotation = trackedImage.transform.rotation;
+        }
     }
 }
