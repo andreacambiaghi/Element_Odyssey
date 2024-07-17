@@ -73,12 +73,12 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             }
             else
             {
-                HideMenu();
+                HidePrefab(trackedImage);
             }
         }
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
-            HideMenu();
+            HidePrefab(trackedImage);
         }
     }
 
@@ -129,6 +129,17 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             var prefab = _activePrefabs[trackedImage.referenceImage.name];
             prefab.transform.position = trackedImage.transform.position;
             prefab.transform.rotation = trackedImage.transform.rotation;
+            prefab.gameObject.SetActive(true);
+        }
+    }
+
+    // Hide the prefab associated with the tracked image
+    private void HidePrefab(ARTrackedImage trackedImage)
+    {
+        if (_activePrefabs.ContainsKey(trackedImage.referenceImage.name))
+        {
+            var prefab = _activePrefabs[trackedImage.referenceImage.name];
+            prefab.gameObject.SetActive(false);
         }
     }
 }
