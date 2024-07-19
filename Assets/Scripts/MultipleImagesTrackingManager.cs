@@ -5,7 +5,8 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 public class MultipleImagesTrackingManager : MonoBehaviour
-{
+{   
+    public static MultipleImagesTrackingManager Istance;
     [SerializeField] private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
     private Dictionary<string, GameObject> _arObjects;
@@ -22,6 +23,17 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     // Initialize ARTrackedImageManager and AR objects
     private void Awake()
     {
+
+        if(Istance != null && Istance != this)
+        {
+           Destroy(this.gameObject);
+           return;
+        }
+        else
+        {
+            Istance = this;
+        }
+
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _arObjects = new Dictionary<string, GameObject>();
         _processedMarkers = new HashSet<string>(); // Initialize the HashSet
@@ -44,11 +56,12 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             newARObject.name = prefab.name;
             newARObject.gameObject.SetActive(false);
             _arObjects.Add(newARObject.name, newARObject);
+            Debug.Log("Added " + newARObject.name + " to the dictionary");
         }
 
         // Add listeners to buttons
-        waterButton.onClick.AddListener(() => OnPrefabSelected("water"));
-        fireButton.onClick.AddListener(() => OnPrefabSelected("fire"));
+        // waterButton.onClick.AddListener(() => OnPrefabSelected("water"));
+        // fireButton.onClick.AddListener(() => OnPrefabSelected("fire"));
     }
 
     // Unsubscribe from the trackedImagesChanged event
@@ -103,8 +116,10 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     }
 
     // Handle prefab selection from the menu
-    private void OnPrefabSelected(string prefabName)
+    public void OnPrefabSelected(string prefabName)
     {
+        Debug.Log("Prefab selected: " + prefabName);
+        Debug.Log(_arObjects);
         if (currentTrackedImage != null && _arObjects.ContainsKey(prefabName))
         {
             Debug.Log("Prefab selected: " + prefabName);
