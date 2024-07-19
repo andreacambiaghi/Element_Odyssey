@@ -87,3 +87,9 @@ crashlytics-build.properties
 
 # Ignore generated files from Unity builds
 /[Bb]uild/**/Generated/
+
+Assets/XR/Temp.meta
+Assets/XR/Temp/XRSimulationPreferences.asset
+Assets/XR/Temp/XRSimulationPreferences.asset.meta
+Assets/XR/Temp/XRSimulationRuntimeSettings.asset
+Assets/XR/Temp/XRSimulationRuntimeSettings.asset.meta
