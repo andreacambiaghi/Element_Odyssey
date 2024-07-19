@@ -66,19 +66,35 @@ public class Elements : MonoBehaviour
 
     // Create Interact action
     private void Interact(Elements element)
-    {
-        
-        Vector3 midpoint = (transform.position + element.transform.position) / 2;
-        Vector3 offset = new Vector3(0, 0.01f, 0); // Adjust the offset as needed
-        Vector3 spawnPosition = midpoint + offset;
+{
+    Vector3 midpoint = (transform.position + element.transform.position) / 2;
+    Vector3 offset = new Vector3(0, 0.01f, 0); // Adjust the offset as needed
+    Vector3 spawnPosition = midpoint + offset;
 
-        if (instantiatedPrefab == null)
+    if (instantiatedPrefab == null)
+    {
+        ElementPair elementPair = new ElementPair(this.name, element.name);
+        Debug.Log("Element pair: " + elementPair.ToString());
+
+        if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
         {
-            GameObject steamPrefab = Resources.Load<GameObject>("Prefab/steam");
-            instantiatedPrefab = Instantiate(steamPrefab, spawnPosition, Quaternion.identity);
-            Debug.Log("Instantiated prefab");
+            GameObject resultPrefab = Resources.Load<GameObject>($"Prefab/{resultPrefabName}");
+            if (resultPrefab != null)
+            {
+                instantiatedPrefab = Instantiate(resultPrefab, spawnPosition, Quaternion.identity);
+                Debug.Log($"Instantiated prefab: {resultPrefabName}");
+            }
+            else
+            {
+                Debug.LogError($"Prefab '{resultPrefabName}' not found in Resources/Prefab.");
+            }
         }
-        
+        else
+        {
+            Debug.Log($"No association found for element pair: {elementPair.ToString()}");
+        }
     }
+}
+
 
 }

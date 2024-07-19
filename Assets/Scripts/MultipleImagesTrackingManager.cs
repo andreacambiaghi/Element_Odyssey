@@ -112,36 +112,40 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     // Handle prefab selection from the menu
     public void OnPrefabSelected(string prefabName)
+{
+    Debug.Log("Prefab selected: " + prefabName);
+    Debug.Log(_arObjects);
+    if (currentTrackedImage != null && _arObjects.ContainsKey(prefabName))
     {
         Debug.Log("Prefab selected: " + prefabName);
-        Debug.Log(_arObjects);
-        if (currentTrackedImage != null && _arObjects.ContainsKey(prefabName))
-        {
-            Debug.Log("Prefab selected: " + prefabName);
-            var selectedPrefab = _arObjects[prefabName];
-            selectedPrefab.transform.position = currentTrackedImage.transform.position;
-            selectedPrefab.transform.rotation = currentTrackedImage.transform.rotation;
-            selectedPrefab.gameObject.SetActive(true);
+        var selectedPrefab = _arObjects[prefabName];
+        selectedPrefab.transform.position = currentTrackedImage.transform.position;
+        selectedPrefab.transform.rotation = currentTrackedImage.transform.rotation;
+        selectedPrefab.gameObject.SetActive(true);
 
-            // Mark this marker as processed
-            _processedMarkers.Add(currentTrackedImage.referenceImage.name);
-            _activePrefabs[currentTrackedImage.referenceImage.name] = selectedPrefab; // Keep track of the active prefab
-        }
+        // Update the prefab position immediately after activation
+        UpdatePrefabPosition(currentTrackedImage);
 
-        HideMenu(); // Hide the menu after a prefab is selected
+        // Mark this marker as processed
+        _processedMarkers.Add(currentTrackedImage.referenceImage.name);
+        _activePrefabs[currentTrackedImage.referenceImage.name] = selectedPrefab; // Keep track of the active prefab
     }
 
-    // Update the position of the prefab to follow the tracked image
-    private void UpdatePrefabPosition(ARTrackedImage trackedImage)
+    HideMenu(); // Hide the menu after a prefab is selected
+}
+
+// Update the position of the prefab to follow the tracked image
+private void UpdatePrefabPosition(ARTrackedImage trackedImage)
+{
+    if (_activePrefabs.ContainsKey(trackedImage.referenceImage.name))
     {
-        if (_activePrefabs.ContainsKey(trackedImage.referenceImage.name))
-        {
-            var prefab = _activePrefabs[trackedImage.referenceImage.name];
-            prefab.transform.position = trackedImage.transform.position;
-            prefab.transform.rotation = trackedImage.transform.rotation;
-            prefab.gameObject.SetActive(true);
-        }
+        var prefab = _activePrefabs[trackedImage.referenceImage.name];
+        prefab.transform.position = trackedImage.transform.position;
+        prefab.transform.rotation = trackedImage.transform.rotation;
+        prefab.gameObject.SetActive(true);
     }
+}
+
 
     // Hide the prefab associated with the tracked image
     private void HidePrefab(ARTrackedImage trackedImage)
