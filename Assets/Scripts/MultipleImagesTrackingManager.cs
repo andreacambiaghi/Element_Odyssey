@@ -7,7 +7,7 @@ using UnityEngine.XR.ARSubsystems;
 public class MultipleImagesTrackingManager : MonoBehaviour
 {   
     public static MultipleImagesTrackingManager Istance;
-    [SerializeField] private GameObject[] prefabsToSpawn;
+    private GameObject[] _prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
     private Dictionary<string, GameObject> _arObjects;
     private Dictionary<string, GameObject> _activePrefabs;
@@ -15,9 +15,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     // UI Elements
     public GameObject menuPanel; // Reference to the menu panel GameObject
-    public Button waterButton; // Reference to the WaterButton
-    public Button fireButton; // Reference to the FireButton
-
+    
     private ARTrackedImage currentTrackedImage;
 
     // Initialize ARTrackedImageManager and AR objects
@@ -38,6 +36,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _arObjects = new Dictionary<string, GameObject>();
         _processedMarkers = new HashSet<string>(); // Initialize the HashSet
         _activePrefabs = new Dictionary<string, GameObject>(); // Dictionary to keep track of active prefabs
+        _prefabsToSpawn = Resources.LoadAll<GameObject>("Prefab");
     }
 
     // Start is called before the first frame update
@@ -50,7 +49,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
 
         // Instantiate and set up AR objects
-        foreach (GameObject prefab in prefabsToSpawn)
+        foreach (GameObject prefab in _prefabsToSpawn)
         {
             GameObject newARObject = Instantiate(prefab, Vector3.zero, Quaternion.Euler(-90, 0, 0));
             newARObject.name = prefab.name;
@@ -58,10 +57,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _arObjects.Add(newARObject.name, newARObject);
             Debug.Log("Added " + newARObject.name + " to the dictionary");
         }
-
-        // Add listeners to buttons
-        // waterButton.onClick.AddListener(() => OnPrefabSelected("water"));
-        // fireButton.onClick.AddListener(() => OnPrefabSelected("fire"));
     }
 
     // Unsubscribe from the trackedImagesChanged event
