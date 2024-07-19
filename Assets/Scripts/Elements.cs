@@ -8,9 +8,6 @@ public class Elements : MonoBehaviour
     // List of elements this one is interacting with
     private List<Elements> _elementsInteractingWith = new List<Elements>();
 
-    // Serialized prefab to instantiate
-    [SerializeField] private GameObject interactionPrefab;
-
     // Instance of the instantiated prefab
     private GameObject instantiatedPrefab;
 
@@ -70,18 +67,18 @@ public class Elements : MonoBehaviour
     // Create Interact action
     private void Interact(Elements element)
     {
-        if (interactionPrefab != null)
-        {
-            Vector3 midpoint = (transform.position + element.transform.position) / 2;
-            Vector3 offset = new Vector3(0, 0.01f, 0); // Adjust the offset as needed
-            Vector3 spawnPosition = midpoint + offset;
+        
+        Vector3 midpoint = (transform.position + element.transform.position) / 2;
+        Vector3 offset = new Vector3(0, 0.01f, 0); // Adjust the offset as needed
+        Vector3 spawnPosition = midpoint + offset;
 
-            if (instantiatedPrefab == null)
-            {
-                instantiatedPrefab = Instantiate(interactionPrefab, spawnPosition, Quaternion.identity);
-                Debug.Log("Instantiated prefab");
-            }
+        if (instantiatedPrefab == null)
+        {
+            GameObject steamPrefab = Resources.Load<GameObject>("Prefab/steam");
+            instantiatedPrefab = Instantiate(steamPrefab, spawnPosition, Quaternion.identity);
+            Debug.Log("Instantiated prefab");
         }
+        
     }
 
 }
