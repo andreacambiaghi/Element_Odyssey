@@ -30,6 +30,8 @@ public class CreateButtons : MonoBehaviour
 
             // Modifica dell'etichetta del bottone
             TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
+            Image buttonImage = GetComponent<Image>();
+
             if (buttonText != null)
             {
                 buttonText.text = buttonLabels[i];
@@ -37,7 +39,7 @@ public class CreateButtons : MonoBehaviour
 
             // Aggiungi il listener al bottone
             string buttonLabelLowercase = buttonLabels[i].ToLower();
-            newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Istance.OnPrefabSelected(buttonLabelLowercase));
+            newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
 
             // Posiziona il bottone
             RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();

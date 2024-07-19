@@ -6,7 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 
 public class MultipleImagesTrackingManager : MonoBehaviour
 {   
-    public static MultipleImagesTrackingManager Istance;
+    public static MultipleImagesTrackingManager Instance;
     private GameObject[] _prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
     private Dictionary<string, GameObject> _arObjects;
@@ -15,21 +15,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     // UI Elements
     public GameObject menuPanel; // Reference to the menu panel GameObject
-    
+
     private ARTrackedImage currentTrackedImage;
 
     // Initialize ARTrackedImageManager and AR objects
     private void Awake()
     {
 
-        if(Istance != null && Istance != this)
+        if(Instance != null && Instance != this)
         {
            Destroy(this.gameObject);
            return;
         }
         else
         {
-            Istance = this;
+            Instance = this;
         }
 
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
