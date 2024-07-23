@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Element_Odyssey.sln"
+    "dotnet.defaultSolution": "ElementOdyssey.sln"
 }
