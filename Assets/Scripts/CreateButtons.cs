@@ -19,9 +19,6 @@ public class CreateButtons : MonoBehaviour
         int buttonCount = buttonLabels.Count;
         RectTransform parentRectTransform = GetComponent<RectTransform>();
 
-        float startY = 0f; // Iniziale posizione Y per il primo bottone
-        float yOffset = -100f; // Offset Y per i successivi bottoni
-
         for (int i = 0; i < buttonLabels.Count; i++)
         {
             // Creazione del bottone
@@ -41,7 +38,6 @@ public class CreateButtons : MonoBehaviour
 
             // Posiziona il bottone
             RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();
-            //buttonRectTransform.anchoredPosition = new Vector2(0, startY + i * yOffset);
 
             newButton.gameObject.SetActive(true);
         }
