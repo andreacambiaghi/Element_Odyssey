@@ -58,7 +58,7 @@ public class Elements : MonoBehaviour
         }
     }
 
-    // Create Spleep action
+    // Create Sleep action
     private void Sleep()
     {
         
