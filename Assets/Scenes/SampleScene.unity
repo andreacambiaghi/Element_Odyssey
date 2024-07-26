@@ -1474,7 +1474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a2a3b88dd01cc4e967f7486e0082fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuPanel: {fileID: 8303878}
+  prefabsToSpawn:
+  - {fileID: 3701164556499110233, guid: d3796b9f5333faf4184991a4b86881f8, type: 3}
+  - {fileID: 3452790797114543995, guid: 2595fdf30f2bfe442a77bb1258315220, type: 3}
 --- !u!1 &1600812346
 GameObject:
   m_ObjectHideFlags: 0
