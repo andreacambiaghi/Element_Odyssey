@@ -5,41 +5,36 @@ using TMPro;
 
 public class CreateButtons : MonoBehaviour
 {
-    public Button buttonPrefab; // Prefab del bottone da clonare
-    public List<string> buttonLabels; // Lista di etichette per i bottoni
-    public float spacing = 10f; // Spazio tra i bottoni
+    [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
+    [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
 
     public void Start()
     {
-        CreateButtonsDynamic();
+        foreach (string label in buttonLabels)
+        {
+            CreateButton(label);
+        }
     }
 
-    public void CreateButtonsDynamic()
+    public void CreateButton(string label)
     {
-        int buttonCount = buttonLabels.Count;
-        RectTransform parentRectTransform = GetComponent<RectTransform>();
+        // Creazione del bottone
+        Button newButton = Instantiate(buttonPrefab, transform);
 
-        for (int i = 0; i < buttonLabels.Count; i++)
+        // Modifica dell'etichetta del bottone
+        TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (buttonText != null)
         {
-            // Creazione del bottone
-            Button newButton = Instantiate(buttonPrefab, transform);
-
-            // Modifica dell'etichetta del bottone
-            TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
-
-            if (buttonText != null)
-            {
-                buttonText.text = buttonLabels[i];
-            }
-
-            // Aggiungi il listener al bottone
-            string buttonLabelLowercase = buttonLabels[i].ToLower();
-            newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
-
-            // Posiziona il bottone
-            RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();
-
-            newButton.gameObject.SetActive(true);
+            buttonText.text = label;
         }
+
+        // Aggiungi il listener al bottone
+        string buttonLabelLowercase = label.ToLower();
+        newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+
+        // Posiziona il bottone
+        RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();
+
+        newButton.gameObject.SetActive(true);
     }
 }
