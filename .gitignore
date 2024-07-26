@@ -93,3 +93,7 @@ Assets/XR/Temp/XRSimulationPreferences.asset
 Assets/XR/Temp/XRSimulationPreferences.asset.meta
 Assets/XR/Temp/XRSimulationRuntimeSettings.asset
 Assets/XR/Temp/XRSimulationRuntimeSettings.asset.meta
+
+# Ignore Visual Studio Code folder
+.vscode/
+
