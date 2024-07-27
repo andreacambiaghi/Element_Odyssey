@@ -505,18 +505,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 6055347402741821853, guid: 67555ea0500e67941a2ff45604f164a8, type: 3}
-  buttonImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   panel: {fileID: 1758269977}
+  numberOfButtons: 10
 --- !u!114 &755656900
 MonoBehaviour:
   m_ObjectHideFlags: 0

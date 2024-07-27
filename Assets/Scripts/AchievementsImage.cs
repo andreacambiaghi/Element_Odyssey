@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class AchievementsImage : MonoBehaviour
 {
     [SerializeField] private GameObject buttonPrefab;
-    public Sprite[] buttonImages;
-    public GameObject panel;
-    private string baseTag = "Achievement_";
+    [SerializeField] private GameObject panel;
+    [SerializeField] private int numberOfButtons;
+    private string baseID = "Achievement_";
 
     void Start()
     {
@@ -15,7 +15,7 @@ public class AchievementsImage : MonoBehaviour
 
     void CreateButtonGrid()
     {
-        int totalButtons = buttonImages.Length;
+        int totalButtons = numberOfButtons;
 
         for (int i = 0; i < totalButtons; i++)
         {
@@ -24,10 +24,9 @@ public class AchievementsImage : MonoBehaviour
 
             newButton.SetActive(true);
 
-            Image buttonImage = newButton.GetComponent<Image>();
-            buttonImage.sprite = buttonImages[i];
-
-            newButton.tag = baseTag + i.ToString();
+            // Add and set unique identifier
+            AchievementsIdentifier achievementsIdentifier = newButton.AddComponent<AchievementsIdentifier>();
+            achievementsIdentifier.uniqueID = baseID + i.ToString();
         }
     }
 }
