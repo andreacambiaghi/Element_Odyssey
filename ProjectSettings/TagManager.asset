@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Element
+  - Achievement
   layers:
   - Default
   - TransparentFX

@@ -123,7 +123,6 @@ GameObject:
   - component: {fileID: 7102629245134493684}
   - component: {fileID: 1411124372641761445}
   - component: {fileID: 1952259182504935555}
-  - component: {fileID: 1677484418572063465}
   m_Layer: 5
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -189,21 +188,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1677484418572063465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3962137364699487802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 377e7a363457e134dbeb49679566d959, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxProgress: 100
-  currentProgress: 0
-  mask: {fileID: 8708952067596578720}
 --- !u!1 &6055347402741821853
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,9 +199,10 @@ GameObject:
   - component: {fileID: 4820802280430078038}
   - component: {fileID: 8225030840655733880}
   - component: {fileID: 5082457052143066237}
+  - component: {fileID: 2019143739905433293}
   m_Layer: 5
   m_Name: AchievementSprite
-  m_TagString: Untagged
+  m_TagString: Achievement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -280,6 +265,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2019143739905433293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055347402741821853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377e7a363457e134dbeb49679566d959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxProgress: 100
+  currentProgress: 0
+  mask: {fileID: 8708952067596578720}
 --- !u!1 &8306276407843104511
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.4
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
