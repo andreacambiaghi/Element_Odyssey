@@ -6,6 +6,7 @@ public class AchievementsImage : MonoBehaviour
     [SerializeField] private GameObject buttonPrefab;
     public Sprite[] buttonImages;
     public GameObject panel;
+    private string baseTag = "Achievement_";
 
     void Start()
     {
@@ -25,6 +26,8 @@ public class AchievementsImage : MonoBehaviour
 
             Image buttonImage = newButton.GetComponent<Image>();
             buttonImage.sprite = buttonImages[i];
+
+            newButton.tag = baseTag + i.ToString();
         }
     }
 }
