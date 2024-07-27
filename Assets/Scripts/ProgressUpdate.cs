@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class ProgressUpdate : MonoBehaviour
 {
     public void Testare()
     {
@@ -12,7 +12,7 @@ public class Test : MonoBehaviour
 
             if (progressBar != null)
             {
-                progressBar.SetProgress(50);
+                progressBar.SetProgress(600);
             }
             else
             {

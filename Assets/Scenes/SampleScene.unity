@@ -2388,9 +2388,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2139607548}
-        m_TargetAssemblyTypeName: Test, Assembly-CSharp
-        m_MethodName: Testare
+      - m_Target: {fileID: 2139607547}
+        m_TargetAssemblyTypeName: Achievements, Assembly-CSharp
+        m_MethodName: OpenPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2400,9 +2400,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2139607547}
-        m_TargetAssemblyTypeName: Achievements, Assembly-CSharp
-        m_MethodName: OpenPanel
+      - m_Target: {fileID: 2139607548}
+        m_TargetAssemblyTypeName: Test, Assembly-CSharp
+        m_MethodName: Testare
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
