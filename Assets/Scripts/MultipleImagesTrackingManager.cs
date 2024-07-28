@@ -13,7 +13,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     private ARTrackedImageManager _arTrackedImageManager;
 
     private Dictionary<ARTrackedImage, GameObject> _imageObjectMap; // Marker name -> GameObject
-    private Dictionary<string, GameObject> _arObjects;
+    //private Dictionary<string, GameObject> _arObjects;
 
     public GameObject defaultObject;
 
@@ -33,7 +33,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
-        _arObjects = new Dictionary<string, GameObject>();
+        //_arObjects = new Dictionary<string, GameObject>();
 
     }
 
