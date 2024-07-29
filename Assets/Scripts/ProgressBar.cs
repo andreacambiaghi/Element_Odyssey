@@ -9,7 +9,13 @@ public class ProgressBar : MonoBehaviour
     public int maxProgress = 100;
     public int currentProgress = 0;
     [SerializeField] private Image mask;
-    [SerializeField] private Sprite completedBar;
+    private Sprite[] pathSprite;
+
+    void Start()
+    {
+        pathSprite = Resources.LoadAll<Sprite>("AchievementsImage/Sprites");
+        Debug.Log("pathSprite.Length: " + pathSprite.Length);
+    }
 
     void Update()
     {
@@ -65,6 +71,7 @@ public class ProgressBar : MonoBehaviour
                 {
                     if (child.CompareTag("Logo"))
                     {
+                        Sprite completedBar = pathSprite[thisIdentifier.uniqueID];
                         child.GetComponent<Image>().sprite = completedBar;
                     }
                 }
