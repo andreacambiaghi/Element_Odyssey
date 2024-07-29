@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ProgressUpdate : MonoBehaviour
 {
-    public void Testare()
+    public void Update()
     {
         GameObject achievementObject = FindGameObjectWithUniqueID(5);
 

@@ -1405,6 +1405,7 @@ GameObject:
   - component: {fileID: 1452209674}
   - component: {fileID: 1452209673}
   - component: {fileID: 1452209672}
+  - component: {fileID: 1452209676}
   m_Layer: 5
   m_Name: AchievementUI
   m_TagString: Untagged
@@ -1496,6 +1497,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1452209676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452209671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae621eb8e8c25741aaf322f73715f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1506747369
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2407,6 @@ GameObject:
   - component: {fileID: 2139607545}
   - component: {fileID: 2139607544}
   - component: {fileID: 2139607547}
-  - component: {fileID: 2139607548}
   m_Layer: 5
   m_Name: Open
   m_TagString: Untagged
@@ -2478,18 +2490,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2139607548}
-        m_TargetAssemblyTypeName: Test, Assembly-CSharp
-        m_MethodName: Testare
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2139607545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2543,18 +2543,6 @@ MonoBehaviour:
   panel: {fileID: 1797613204}
   openButton: {fileID: 2139607542}
   slider: {fileID: 782628375}
---- !u!114 &2139607548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2139607542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae621eb8e8c25741aaf322f73715f1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
