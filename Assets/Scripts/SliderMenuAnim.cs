@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SliderMenuAnim : MonoBehaviour
 {
     public GameObject PanelMenu;
+    private bool isMenuOpen = false;
 
     public void ShowHideMenu()
     {
+        isMenuOpen = !isMenuOpen;
         Debug.Log("Sono denro ShowHideMenu");
         if(PanelMenu != null)
         {
@@ -20,5 +23,9 @@ public class SliderMenuAnim : MonoBehaviour
                 animator.SetBool("show", !isOpen);
             }
         }
+    }
+
+    public bool GetState() {
+        return isMenuOpen;
     }
 }

@@ -317,6 +317,7 @@ MonoBehaviour:
   panel: {fileID: 1797613204}
   openButton: {fileID: 2139607542}
   slider: {fileID: 782628375}
+  menu: {fileID: 0}
 --- !u!1 &443000658
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,6 +2557,7 @@ MonoBehaviour:
   panel: {fileID: 1797613204}
   openButton: {fileID: 2139607542}
   slider: {fileID: 782628375}
+  menu: {fileID: 1577749885}
 --- !u!114 &2139607548
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Achievements : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject openButton;
     [SerializeField] private GameObject slider;
+    [SerializeField] private SliderMenuAnim menu;
 
     public void OpenPanel()
     {
@@ -22,6 +24,11 @@ public class Achievements : MonoBehaviour
 
         if (slider != null)
         {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
             slider.SetActive(false);
         }
 
