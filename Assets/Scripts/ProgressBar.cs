@@ -53,38 +53,23 @@ public class ProgressBar : MonoBehaviour
 
     public void SetImageCompletedBar()
     {
-        Transform achievementSprite = transform.Find("AchievementSprite");
-        if (achievementSprite != null)
+        GameObject[] achievementGOs = GameObject.FindGameObjectsWithTag("Achievement");
+        Debug.Log("achievementGOs.Length: " + achievementGOs.Length);
+        AchievementIdentifier thisIdentifier = gameObject.GetComponent<AchievementIdentifier>();
+        foreach (GameObject go in achievementGOs)
         {
-            Transform achievement = achievementSprite.Find("Achievement");
-            if (achievement != null)
+            AchievementIdentifier identifier = go.GetComponent<AchievementIdentifier>();
+            if (identifier != null && identifier.uniqueID == thisIdentifier.uniqueID)
             {
-                Transform logo = achievement.Find("Logo");
-                if (logo != null)
+                Transform[] children = go.GetComponentsInChildren<Transform>();
+                foreach (Transform child in children)
                 {
-                    Image logoImage = logo.GetComponent<Image>();
-                    if (logoImage != null)
+                    if (child.CompareTag("Logo"))
                     {
-                        logoImage.sprite = completedBar;
-                    }
-                    else
-                    {
-                        Debug.Log("Logo does not have an Image component.");
+                        child.GetComponent<Image>().sprite = completedBar;
                     }
                 }
-                else
-                {
-                    Debug.Log("Logo child not found.");
-                }
             }
-            else
-            {
-                Debug.Log("Achievement child not found.");
-            }
-        }
-        else
-        {
-            Debug.Log("AchievementSprite child not found.");
         }
     }
 
