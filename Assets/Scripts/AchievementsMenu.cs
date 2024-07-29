@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Achievements : MonoBehaviour
 {
-    public GameObject panel;
-    public GameObject openButton;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject openButton;
+    [SerializeField] private GameObject slider;
+
+    void Start()
+    {
+        slider = GameObject.Find("Slider");
+    }
     public void OpenPanel()
     {
         if (panel != null)
@@ -18,6 +24,11 @@ public class Achievements : MonoBehaviour
             openButton.SetActive(false);
         }
 
+        if (slider != null)
+        {
+            slider.SetActive(false);
+        }
+
     }
     public void ClosePanel()
     {
@@ -25,9 +36,15 @@ public class Achievements : MonoBehaviour
         {
             panel.SetActive(false);
         }
+        
         if (openButton != null)
         {
             openButton.SetActive(true);
+        }
+
+        if (slider != null)
+        {
+            slider.SetActive(true);
         }
     }
 }

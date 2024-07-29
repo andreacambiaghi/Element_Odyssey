@@ -54,7 +54,6 @@ public class ProgressBar : MonoBehaviour
     public void SetImageCompletedBar()
     {
         GameObject[] achievementGOs = GameObject.FindGameObjectsWithTag("Achievement");
-        Debug.Log("achievementGOs.Length: " + achievementGOs.Length);
         AchievementIdentifier thisIdentifier = gameObject.GetComponent<AchievementIdentifier>();
         foreach (GameObject go in achievementGOs)
         {
