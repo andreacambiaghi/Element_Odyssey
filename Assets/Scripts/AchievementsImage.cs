@@ -7,6 +7,7 @@ public class AchievementsImage : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private int numberOfButtons;
     public AchievementIdentifier identifier;
+    private AchievementsInfo _info = new();
 
     void Awake()
     {
@@ -26,9 +27,9 @@ public class AchievementsImage : MonoBehaviour
             identifier.uniqueID = i;
 
             ProgressBar progressBar = newButton.GetComponent<ProgressBar>();
-            if (progressBar != null && i < AchievementsInfo.Instance.GetMaxProgressLength())
+            if (progressBar != null && i < _info.GetMaxProgressLength())
             {
-                progressBar.maxProgress = AchievementsInfo.Instance.GetMaxProgress(i);
+                progressBar.maxProgress = _info.GetMaxProgress(i);
             }
         }
     }
