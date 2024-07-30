@@ -8,9 +8,19 @@ public class AchievementManager : MonoBehaviour
     private TextAsset jsonFile;
 
     private string filePath;
+    public static AchievementManager Instance;
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
 
         if (!File.Exists(filePath))
