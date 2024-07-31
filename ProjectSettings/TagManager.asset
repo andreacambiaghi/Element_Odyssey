@@ -8,6 +8,7 @@ TagManager:
   - Achievement
   - Logo
   - Slider
+  - Info
   layers:
   - Default
   - TransparentFX
