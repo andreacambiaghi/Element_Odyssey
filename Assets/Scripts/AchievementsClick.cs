@@ -77,7 +77,7 @@ public class AchievementsClick : MonoBehaviour
         foreach (GameObject obj in achievements)
         {
             AchievementsClick script = obj.GetComponent<AchievementsClick>();
-            if (script != null && script != this && script.isColorChanged)
+            if (script != null && script != this)
             {
                 script.imageComponent.color = script.originalColor;
                 script.isColorChanged = false;
@@ -92,6 +92,9 @@ public class AchievementsClick : MonoBehaviour
         if (imageComponent != null)
         {
             imageComponent.color = originalColor;
+            rectTransform.sizeDelta = new Vector2(0, rectTransform.rect.height);
+            textComponent.text = "";
+            isColorChanged = false;
         }
     }
 }
