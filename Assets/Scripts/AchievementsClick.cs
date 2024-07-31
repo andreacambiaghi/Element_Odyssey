@@ -8,9 +8,15 @@ public class AchievementsClick : MonoBehaviour
     private Image imageComponent;
     private bool isColorChanged = false;
     private static readonly string achievementTag = "Achievement";
+    private AchievementsInfo achievementsInfo = new();
+    private AchievementIdentifier achievementsIdentifier;
+    private int id;
+
 
     private void Start()
     {
+        achievementsIdentifier = GetComponent<AchievementIdentifier>();
+        id = achievementsIdentifier.uniqueID;
         imageComponent = GetComponent<Image>();
         if (imageComponent != null)
         {
@@ -23,6 +29,7 @@ public class AchievementsClick : MonoBehaviour
 
     private void OnClick()
     {
+        Debug.LogError("Achievement with ID: " + id + " was clicked");
         RestoreOriginalColors();
 
         if (imageComponent != null)
