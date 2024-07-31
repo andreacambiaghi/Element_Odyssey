@@ -33,7 +33,7 @@ public class AchievementsClick : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Il prefab non ha un componente Image!");
+            Debug.Log("Il prefab non ha un componente Image");
         }
 
         Button button = GetComponent<Button>();
@@ -43,7 +43,7 @@ public class AchievementsClick : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Il prefab non ha un componente Button!");
+            Debug.Log("Il prefab non ha un componente Button");
         }
     }
 
@@ -89,7 +89,6 @@ public class AchievementsClick : MonoBehaviour
 
     private void OnDisable()
     {
-        // Assicura che il colore sia ripristinato quando disabilitato
         if (imageComponent != null)
         {
             imageComponent.color = originalColor;
