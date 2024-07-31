@@ -41,13 +41,20 @@
 
 using UnityEngine;
 
-public class ChangeColorOnTouch : MonoBehaviour
+public class ArTouchManager : MonoBehaviour
 {
+    private Color defaultColor;
+    public Color selectedColor;
+
+    private MultipleImagesTrackingManager mitm;
+
     private Renderer objectRenderer;
 
     void Start()
     {
         objectRenderer = GetComponent<Renderer>();
+        mitm = MultipleImagesTrackingManager.Instance;
+        defaultColor = objectRenderer.material.color;
     }
 
     void Update()
@@ -65,15 +72,21 @@ public class ChangeColorOnTouch : MonoBehaviour
                 {
                     if (hit.transform == transform)
                     {
-                        ChangeColor();
+                        Select();
                     }
                 }
             }
         }
     }
 
-    void ChangeColor()
+    void Select()
     {
-        objectRenderer.material.color = new Color(Random.value, Random.value, Random.value);
+        //objectRenderer.material.color = new Color(Random.value, Random.value, Random.value);
+        mitm.SelectGameObject(gameObject);
+    }
+
+    public void Deselect()
+    {
+        objectRenderer.material.color = defaultColor;
     }
 }
