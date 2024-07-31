@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AchievementsClick : MonoBehaviour
 {
@@ -8,42 +9,66 @@ public class AchievementsClick : MonoBehaviour
     private Image imageComponent;
     private bool isColorChanged = false;
     private static readonly string achievementTag = "Achievement";
+    private GameObject panelInfo;
     private AchievementsInfo achievementsInfo = new();
-    private AchievementIdentifier achievementsIdentifier;
+    private AchievementIdentifier achievementIdentifier;
+    private RectTransform rectTransform;
     private int id;
-
+    private TextMeshProUGUI textComponent;
 
     private void Start()
     {
-        achievementsIdentifier = GetComponent<AchievementIdentifier>();
-        id = achievementsIdentifier.uniqueID;
+        achievementIdentifier = GetComponent<AchievementIdentifier>();
+        id = achievementIdentifier.uniqueID;
+
+        panelInfo = GameObject.FindWithTag("Info");
+        rectTransform = panelInfo.GetComponent<RectTransform>();
+        textComponent = panelInfo.GetComponentInChildren<TextMeshProUGUI>();
+        Debug.Log(rectTransform.rect.width);
+
         imageComponent = GetComponent<Image>();
         if (imageComponent != null)
         {
             originalColor = imageComponent.color;
         }
+        else
+        {
+            Debug.LogError("Il prefab non ha un componente Image!");
+        }
 
         Button button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
+        if (button != null)
+        {
+            button.onClick.AddListener(OnClick);
+        }
+        else
+        {
+            Debug.LogError("Il prefab non ha un componente Button!");
+        }
     }
 
     private void OnClick()
     {
-        Debug.LogError("Achievement with ID: " + id + " was clicked");
+        Debug.Log("Achievement " + id + " clicked");
         RestoreOriginalColors();
-
         if (imageComponent != null)
         {
             if (isColorChanged)
             {
                 imageComponent.color = originalColor;
+                rectTransform.sizeDelta = new Vector2(0, rectTransform.rect.height);
+                textComponent.text = "";
             }
             else
             {
                 imageComponent.color = newColor;
+                rectTransform.sizeDelta = new Vector2(550, rectTransform.rect.height);
+                textComponent.text = achievementsInfo.GetAchievementInfo(id);
+
             }
             isColorChanged = !isColorChanged;
         }
+        
     }
 
     private void RestoreOriginalColors()
@@ -52,16 +77,19 @@ public class AchievementsClick : MonoBehaviour
         foreach (GameObject obj in achievements)
         {
             AchievementsClick script = obj.GetComponent<AchievementsClick>();
-            if (script != null)
+            if (script != null && script != this && script.isColorChanged)
             {
                 script.imageComponent.color = script.originalColor;
                 script.isColorChanged = false;
+                rectTransform.sizeDelta = new Vector2(0, rectTransform.rect.height);
+                textComponent.text = "";
             }
         }
     }
 
     private void OnDisable()
     {
+        // Assicura che il colore sia ripristinato quando disabilitato
         if (imageComponent != null)
         {
             imageComponent.color = originalColor;
