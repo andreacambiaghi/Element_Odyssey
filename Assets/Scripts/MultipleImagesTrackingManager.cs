@@ -138,6 +138,16 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     }
 
 
+    public void SetPrefabOnSelected(string prefabName)
+    {
+        if (SelectedImageObject == null) return;
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefabs/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        newARObject.name = prefabName;
+        newARObject.gameObject.SetActive(false);
+        _imageObjectMap[SelectedImageObject] = newARObject;
+        UpdatedTrackedImage(SelectedImageObject);
+    }
+
     public void OnPrefabSelected(string prefabName){
         //TODO: remove
     }

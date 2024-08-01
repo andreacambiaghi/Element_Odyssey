@@ -44,7 +44,7 @@ using UnityEngine;
 public class ArTouchManager : MonoBehaviour
 {
     private Color defaultColor;
-    public Color selectedColor;
+    private Color selectedColor;
 
     private MultipleImagesTrackingManager mitm;
 
