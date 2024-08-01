@@ -9,13 +9,19 @@ using UnityEngine.XR.ARSubsystems;
 public class MultipleImagesTrackingManager : MonoBehaviour
 {
     public static MultipleImagesTrackingManager Instance;
-    private GameObject[] prefabsToSpawn;
+    
+    //private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
 
     private Dictionary<ARTrackedImage, GameObject> _imageObjectMap; // Marker name -> GameObject
-    private Dictionary<string, GameObject> _arObjects;
+    //private Dictionary<string, GameObject> _arObjects;
 
     public GameObject defaultObject;
+
+    private ARTrackedImage SelectedImageObject;
+
+//hello
+
 
     // Get the reference to the ARTrackedImageManager
 
@@ -31,9 +37,10 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             Instance = this;
         }
 
+        
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
-        _arObjects = new Dictionary<string, GameObject>();
+        //_arObjects = new Dictionary<string, GameObject>();
 
     }
 
@@ -90,17 +97,55 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         // Check tracking status of the tracked image
         if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
         {
-            //_arObjects[trackedImage.referenceImage.name].gameObject.SetActive(false);
             _imageObjectMap[trackedImage].SetActive(false);
             return;
         }
 
         // Show, hide or position the game object based on the tracking image
     
-        // _arObjects[trackedImage.referenceImage.name].gameObject.SetActive(true);
-        // _arObjects[trackedImage.referenceImage.name].transform.position = trackedImage.transform.position;
         _imageObjectMap[trackedImage].gameObject.SetActive(true);
         _imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
+    }
+
+
+    public void SelectGameObject(GameObject selectedObject)
+    {
+        //get the ar tracked image associated to this object
+        foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+        {
+            if(entry.Value == null || entry.Key == null)
+            {
+                continue;
+            }
+            Debug.Log("Entry: " + entry.Key.referenceImage.name + " -> " + entry.Value.name);
+            if (entry.Value == selectedObject)
+            {
+                if(SelectedImageObject != null && SelectedImageObject != entry.Key) deselectSelectedGameObject();
+
+                SelectedImageObject = entry.Key;
+                Debug.Log("Selected: " + SelectedImageObject.referenceImage.name);
+                selectedObject.GetComponent<Renderer>().material.color = Color.red;
+                break;
+            }
+        }
+        //Debug.Log("Selected image object: " + SelectedImageObject);
+    }
+
+    public void deselectSelectedGameObject()
+    {
+        _imageObjectMap[SelectedImageObject].GetComponent<ArTouchManager>().Deselect();
+        SelectedImageObject = null;
+    }
+
+
+    public void SetPrefabOnSelected(string prefabName)
+    {
+        if (SelectedImageObject == null) return;
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefabs/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        newARObject.name = prefabName;
+        newARObject.gameObject.SetActive(false);
+        _imageObjectMap[SelectedImageObject] = newARObject;
+        UpdatedTrackedImage(SelectedImageObject);
     }
 
     public void OnPrefabSelected(string prefabName){
