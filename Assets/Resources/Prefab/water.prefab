@@ -190,6 +190,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 087fc762c0013c44da000bcfcc9c7977, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7994326633732367587}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 087fc762c0013c44da000bcfcc9c7977, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -61345407961265153}
   m_SourcePrefab: {fileID: 100100000, guid: 087fc762c0013c44da000bcfcc9c7977, type: 3}
 --- !u!4 &2639415334363223489 stripped
 Transform:
@@ -261,4 +264,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b7ea4c64399484abc9db4659a695ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementName: water
+--- !u!114 &-61345407961265153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452790797114543995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
