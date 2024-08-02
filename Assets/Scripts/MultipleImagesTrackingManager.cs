@@ -138,17 +138,29 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     }
 
 
-    public void SetPrefabOnSelected(string prefabName)
+    public bool SetPrefabOnSelected(string prefabName)
     {
-        if (SelectedImageObject == null) return;
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefabs/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        Debug.Log("Loading -> " + prefabName);  
+        if (SelectedImageObject == null) return false; 
+        GameObject oldGO = _imageObjectMap[SelectedImageObject];
+        ARTrackedImage aRTrackedImage = SelectedImageObject;
+
+        if (_imageObjectMap[aRTrackedImage] != null ) {
+            deselectSelectedGameObject();
+            _imageObjectMap[aRTrackedImage].gameObject.SetActive(false);
+        }
+
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.name = prefabName;
         newARObject.gameObject.SetActive(false);
-        _imageObjectMap[SelectedImageObject] = newARObject;
-        UpdatedTrackedImage(SelectedImageObject);
+        _imageObjectMap[aRTrackedImage] = newARObject;
+        UpdatedTrackedImage(aRTrackedImage);
+
+        return true;
     }
 
-    public void OnPrefabSelected(string prefabName){
-        //TODO: remove
+    public bool OnPrefabSelected(string prefabName){
+        if(SelectedImageObject == null) return false; //aggiungere errore nella gui che indica che è necessario fare una selezione
+        return SetPrefabOnSelected(prefabName);
     }
 }
