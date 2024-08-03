@@ -72,7 +72,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, 0, 0));
             newARObject.name = defaultObject.name;
             newARObject.gameObject.SetActive(false);
-            //_arObjects.Add(newARObject.name, newARObject);
 
             _imageObjectMap.Add(trackedImage, newARObject);
             Debug.Log("Added: " + trackedImage.referenceImage.name + " -> " + newARObject.name);
@@ -90,6 +89,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             //_arObjects[trackedImage.referenceImage.name].gameObject.SetActive(false);
             _imageObjectMap[trackedImage].SetActive(false);
         }
+    }
+
+    private void AssociateGameObjectToMarker(ARTrackedImage trackedImage, string prefabName)   
+    {
+        if (_imageObjectMap.ContainsKey(trackedImage) && _imageObjectMap[trackedImage] != null)
+        {
+            _imageObjectMap[trackedImage].gameObject.SetActive(false);
+            DeselectSelectedGameObject();
+        }
+
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        newARObject.name = prefabName;
+        newARObject.gameObject.SetActive(false);
+        _imageObjectMap[trackedImage] = newARObject;
+        UpdatedTrackedImage(trackedImage);
     }
 
     private void UpdatedTrackedImage(ARTrackedImage trackedImage)
@@ -120,7 +134,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             Debug.Log("Entry: " + entry.Key.referenceImage.name + " -> " + entry.Value.name);
             if (entry.Value == selectedObject)
             {
-                if(SelectedImageObject != null && SelectedImageObject != entry.Key) deselectSelectedGameObject();
+                if(SelectedImageObject != null && SelectedImageObject != entry.Key) DeselectSelectedGameObject();
 
                 SelectedImageObject = entry.Key;
                 Debug.Log("Selected: " + SelectedImageObject.referenceImage.name);
@@ -131,13 +145,12 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         //Debug.Log("Selected image object: " + SelectedImageObject);
     }
 
-    public void deselectSelectedGameObject()
+    public void DeselectSelectedGameObject()
     {
         if (SelectedImageObject == null || !_imageObjectMap.ContainsKey(SelectedImageObject)) return;
         _imageObjectMap[SelectedImageObject].GetComponent<ArTouchManager>().Deselect();
         SelectedImageObject = null;
     }
-
 
     public bool SetPrefabOnSelected(string prefabName)
     {
@@ -147,7 +160,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         ARTrackedImage aRTrackedImage = SelectedImageObject;
 
         if (_imageObjectMap[aRTrackedImage] != null ) {
-            deselectSelectedGameObject();
+            DeselectSelectedGameObject();
             _imageObjectMap[aRTrackedImage].gameObject.SetActive(false);
         }
 
@@ -166,7 +179,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     }
 
     public void clearAndAddElement(string prefabName){
-        deselectSelectedGameObject();
+        DeselectSelectedGameObject();
         ARTrackedImage targetImage = null;
         bool first = true;
         List<ARTrackedImage> imagesToReset = new List<ARTrackedImage>();
@@ -191,17 +204,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
 
         foreach(ARTrackedImage image in imagesToReset){
-            _imageObjectMap[image].gameObject.SetActive(false);
-            //_imageObjectMap.Remove(image);
+            AssociateGameObjectToMarker(image, defaultObject.name);
         }
+
+        // foreach(ARTrackedImage image in imagesToReset){
+        //     _imageObjectMap[image].gameObject.SetActive(false);
+        //      GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        //     newARObject.name = prefabName;
+        //     newARObject.gameObject.SetActive(false);
+        //     _imageObjectMap[targetImage] = newARObject;
+        //     UpdatedTrackedImage(targetImage);
+        // }
         Debug.Log("---3");
 
         if(targetImage != null){
-            GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-            newARObject.name = prefabName;
-            newARObject.gameObject.SetActive(false);
-            _imageObjectMap[targetImage] = newARObject;
-            UpdatedTrackedImage(targetImage);
+            AssociateGameObjectToMarker(targetImage, prefabName);
         }
         Debug.Log("---4");
 
