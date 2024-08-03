@@ -133,6 +133,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     public void deselectSelectedGameObject()
     {
+        if (SelectedImageObject == null || !_imageObjectMap.ContainsKey(SelectedImageObject)) return;
         _imageObjectMap[SelectedImageObject].GetComponent<ArTouchManager>().Deselect();
         SelectedImageObject = null;
     }
@@ -162,5 +163,47 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     public bool OnPrefabSelected(string prefabName){
         if(SelectedImageObject == null) return false; //aggiungere errore nella gui che indica che è necessario fare una selezione
         return SetPrefabOnSelected(prefabName);
+    }
+
+    public void clearAndAddElement(string prefabName){
+        deselectSelectedGameObject();
+        ARTrackedImage targetImage = null;
+        bool first = true;
+        List<ARTrackedImage> imagesToReset = new List<ARTrackedImage>();
+
+        Debug.Log("---1");
+        foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+        {
+            Debug.Log("---2");
+            if(entry.Value == null || entry.Key == null)
+            {
+                Debug.Log("---21");
+                continue;
+            }
+            if(first) {
+                Debug.Log("---22");
+                targetImage = entry.Key;
+                first = false;
+            }
+            Debug.Log("---23");
+            imagesToReset.Add(entry.Key);
+            
+        }
+
+        foreach(ARTrackedImage image in imagesToReset){
+            _imageObjectMap[image].gameObject.SetActive(false);
+            //_imageObjectMap.Remove(image);
+        }
+        Debug.Log("---3");
+
+        if(targetImage != null){
+            GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+            newARObject.name = prefabName;
+            newARObject.gameObject.SetActive(false);
+            _imageObjectMap[targetImage] = newARObject;
+            UpdatedTrackedImage(targetImage);
+        }
+        Debug.Log("---4");
+
     }
 }

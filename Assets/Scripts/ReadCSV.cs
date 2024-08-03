@@ -27,6 +27,10 @@ public class ReadCSV : MonoBehaviour
     void Start()
     {
         LoadElementAssociations();
+        foreach(KeyValuePair<ElementPair, string> entry in elementAssociations)
+        {
+            Debug.Log("PairFound: " + entry.Key.ToString() + " -> " + entry.Value);
+        }
     }
 
     private void LoadElementAssociations()
