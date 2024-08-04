@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Initialize : MonoBehaviour
 {
@@ -35,5 +36,22 @@ public class Initialize : MonoBehaviour
             Debug.LogError("Il GameObject target non ha il componente 'CreateButtons'");
         }
     }
+
+
+    // static void EnableReadWrite()
+    // {
+    //     string[] guids = AssetDatabase.FindAssets("t:Mesh", new[] { "Assets/YourMeshFolder" });
+    //     foreach (string guid in guids)
+    //     {
+    //         string path = AssetDatabase.GUIDToAssetPath(guid);
+    //         ModelImporter importer = AssetImporter.GetAtPath(path) as ModelImporter;
+    //         if (importer != null)
+    //         {
+    //             importer.isReadable = true;
+    //             AssetDatabase.ImportAsset(path);
+    //         }
+    //     }
+    //     Debug.Log("Read/Write Enabled on all meshes in the specified folder.");
+    // }
 
 }

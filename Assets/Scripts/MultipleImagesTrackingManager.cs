@@ -121,6 +121,29 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
     }
 
+    private Color GetInvertedColor(GameObject gameObject){
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Texture2D texture = renderer.material.mainTexture as Texture2D;
+        Color averageColor = Color.black;
+
+        if (texture != null)
+        {
+            Color[] pixels = texture.GetPixels();
+            foreach (Color pixel in pixels)
+            {
+                averageColor += pixel;
+            }
+            averageColor /= pixels.Length;
+        }
+        else
+        {
+            averageColor = renderer.material.color;
+        }
+
+        Color invertedColor = new Color(1 - averageColor.r, 1 - averageColor.g, 1 - averageColor.b);
+
+        return invertedColor;
+    }
 
     public void SelectGameObject(GameObject selectedObject)
     {
@@ -138,17 +161,32 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
                 SelectedImageObject = entry.Key;
                 Debug.Log("Selected: " + SelectedImageObject.referenceImage.name);
-                selectedObject.GetComponent<Renderer>().material.color = Color.red;
+
+                var outline = selectedObject.AddComponent<Outline>();
+                outline.OutlineMode = Outline.Mode.OutlineAll;
+                Color originalColor = selectedObject.GetComponent<Renderer>().material.color;
+                outline.OutlineColor = GetInvertedColor(selectedObject);
+                outline.OutlineWidth = 10f;
+
                 break;
             }
         }
-        //Debug.Log("Selected image object: " + SelectedImageObject);
     }
+
 
     public void DeselectSelectedGameObject()
     {
         if (SelectedImageObject == null || !_imageObjectMap.ContainsKey(SelectedImageObject)) return;
-        _imageObjectMap[SelectedImageObject].GetComponent<ArTouchManager>().Deselect();
+
+        Outline outline = _imageObjectMap[SelectedImageObject].GetComponent<Outline>();
+
+        if (outline != null)
+        {
+            Destroy(outline);
+        }
+
+        Color color = _imageObjectMap[SelectedImageObject].GetComponent<Renderer>().material.color;
+   
         SelectedImageObject = null;
     }
 
@@ -184,21 +222,16 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         bool first = true;
         List<ARTrackedImage> imagesToReset = new List<ARTrackedImage>();
 
-        Debug.Log("---1");
         foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
         {
-            Debug.Log("---2");
             if(entry.Value == null || entry.Key == null)
             {
-                Debug.Log("---21");
                 continue;
             }
             if(first) {
-                Debug.Log("---22");
                 targetImage = entry.Key;
                 first = false;
             }
-            Debug.Log("---23");
             imagesToReset.Add(entry.Key);
             
         }
@@ -207,14 +240,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             AssociateGameObjectToMarker(image, defaultObject.name);
         }
 
-        // foreach(ARTrackedImage image in imagesToReset){
-        //     _imageObjectMap[image].gameObject.SetActive(false);
-        //      GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-        //     newARObject.name = prefabName;
-        //     newARObject.gameObject.SetActive(false);
-        //     _imageObjectMap[targetImage] = newARObject;
-        //     UpdatedTrackedImage(targetImage);
-        // }
         Debug.Log("---3");
 
         if(targetImage != null){
