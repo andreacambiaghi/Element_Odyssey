@@ -75,7 +75,6 @@ public class AchievementManager : MonoBehaviour
     
     public void UpdateAchievements()
     {
-        SetAchievementValue("Achievement 0", 100);
         for (int i = 0; i < 10; i++)
         {
             GameObject achievementObject = FindGameObjectWithUniqueID(i);

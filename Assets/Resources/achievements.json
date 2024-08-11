@@ -2,7 +2,7 @@
     "Achievements": [
         {
             "Key": "Achievement 0",
-            "Value": 100
+            "Value": 0
         },
         {
             "Key": "Achievement 1",
@@ -22,7 +22,7 @@
         },
         {
             "Key": "Achievement 5",
-            "Value": 600
+            "Value": 0
         },
         {
             "Key": "Achievement 6",
