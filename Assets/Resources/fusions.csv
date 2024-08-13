@@ -1,4 +1,10 @@
 water;fire;steam
-fire;earth;volcano
+water;wind;wave
+water;earth;plant
 water;water;lake
-mountain;fire;volcano
+fire;wind;smoke
+fire;earth;lava
+fire;fire;volcano
+wind;earth;dust
+wind;wind;tornado
+earth;earth;mountain
