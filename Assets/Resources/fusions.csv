@@ -8,3 +8,16 @@ fire;fire;volcano
 wind;earth;dust
 wind;wind;tornado
 earth;earth;mountain
+steam;water;cloud
+steam;fire;engine
+steam;wind;cloud
+steam;earth;mud
+steam;steam;cloud
+steam;plant;tea
+steam;lake;cloud
+steam;smoke;cloud
+steam;lava;volcano
+steam;volcano;lava
+steam;dust;cloud
+steam;tornado;tornado
+steam;mountain;volcano
