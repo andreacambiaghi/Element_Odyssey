@@ -18,6 +18,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private ARTrackedImage SelectedImageObject;
 
+    private CreateButtons _createButtonsComponent;
+
     [SerializeField] private GameObject slider;
     [SerializeField] private SliderMenuAnim menu;
 
@@ -41,6 +43,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
+        _createButtonsComponent = createButton.GetComponent<CreateButtons>();
         //_arObjects = new Dictionary<string, GameObject>();
 
     }
@@ -114,11 +117,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 button.onClick.Invoke();
             }
         }
-
-        AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
-        AudioSource audioSource = newARObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.Play();
 
     }
 
@@ -274,18 +272,25 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
         Debug.Log("---4");
 
-        CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
-        if (createButtonsComponent != null)
-        {
-            if(createButtonsComponent.buttonLabels.Contains(char.ToUpper(prefabName[0]) + prefabName.Substring(1))) return;
-            
-            createButtonsComponent.CreateButton(char.ToUpper(prefabName[0]) + prefabName.Substring(1));
-            createButtonsComponent.buttonLabels.Add(char.ToUpper(prefabName[0]) + prefabName.Substring(1));
+        AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+
+        string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
+        
+        if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
+            clip = Resources.Load<AudioClip>("Sounds/wrong");
+        }
+
+        else {   
+            _createButtonsComponent.CreateButton(buttonLabel);
+            _createButtonsComponent.buttonLabels.Add(buttonLabel);
             Debug.Log("ButtonLabels aggiornato con successo");
         }
-        else
-        {
-            Debug.LogError("Il GameObject target non ha il componente 'CreateButtons'");
-        }
+
+        GameObject tempAudioObject = new GameObject("TempAudioObject");
+        AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.Play();
+        Destroy(tempAudioObject, clip.length);
+    
     }
 }
