@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -117,6 +114,11 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 button.onClick.Invoke();
             }
         }
+
+        AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+        AudioSource audioSource = newARObject.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.Play();
 
     }
 
