@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class Initialize : MonoBehaviour
 {
-    public GameObject createButton;
+    [SerializeField] private GameObject createButton;
     private List<string> labelsToAdd = new List<string>();
 
 

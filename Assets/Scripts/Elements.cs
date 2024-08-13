@@ -78,7 +78,7 @@ public class Elements : MonoBehaviour
 
             if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
             {
-                MultipleImagesTrackingManager.Instance.clearAndAddElement(resultPrefabName);
+                MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName);
                 // GameObject resultPrefab = Resources.Load<GameObject>($"Prefab/{resultPrefabName}");
                 // if (resultPrefab != null)
                 // {

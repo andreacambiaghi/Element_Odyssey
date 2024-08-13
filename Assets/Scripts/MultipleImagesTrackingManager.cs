@@ -24,7 +24,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject slider;
     [SerializeField] private SliderMenuAnim menu;
 
-//hello
+    [SerializeField] private GameObject createButton;
 
 
     // Get the reference to the ARTrackedImageManager
@@ -240,7 +240,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         return SetPrefabOnSelected(prefabName);
     }
 
-    public void clearAndAddElement(string prefabName){
+    public void ClearAndAddElement(string prefabName){
+
         DeselectSelectedGameObject();
         ARTrackedImage targetImage = null;
         bool first = true;
@@ -271,5 +272,18 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
         Debug.Log("---4");
 
+        CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
+        if (createButtonsComponent != null)
+        {
+            if(createButtonsComponent.buttonLabels.Contains(char.ToUpper(prefabName[0]) + prefabName.Substring(1))) return;
+            
+            createButtonsComponent.CreateButton(char.ToUpper(prefabName[0]) + prefabName.Substring(1));
+            createButtonsComponent.buttonLabels.Add(char.ToUpper(prefabName[0]) + prefabName.Substring(1));
+            Debug.Log("ButtonLabels aggiornato con successo");
+        }
+        else
+        {
+            Debug.LogError("Il GameObject target non ha il componente 'CreateButtons'");
+        }
     }
 }
