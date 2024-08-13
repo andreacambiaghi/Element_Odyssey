@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -19,6 +20,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     public GameObject defaultObject;
 
     private ARTrackedImage SelectedImageObject;
+
+    [SerializeField] private GameObject slider;
+    [SerializeField] private SliderMenuAnim menu;
 
 //hello
 
@@ -104,6 +108,16 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         newARObject.gameObject.SetActive(false);
         _imageObjectMap[trackedImage] = newARObject;
         UpdatedTrackedImage(trackedImage);
+
+        if (slider != null)
+        {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+        }
+
     }
 
     private void UpdatedTrackedImage(ARTrackedImage trackedImage)
@@ -202,11 +216,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _imageObjectMap[aRTrackedImage].gameObject.SetActive(false);
         }
 
+        
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.name = prefabName;
         newARObject.gameObject.SetActive(false);
         _imageObjectMap[aRTrackedImage] = newARObject;
         UpdatedTrackedImage(aRTrackedImage);
+
+        if (slider != null)
+        {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+        }
 
         return true;
     }
