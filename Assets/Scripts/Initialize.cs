@@ -13,17 +13,8 @@ public class Initialize : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        TextAsset textAsset = Resources.Load<TextAsset>("InitialElements");
-        if (textAsset != null)
-        {
-            // Dividi il contenuto del file in righe
-            string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-            labelsToAdd.AddRange(lines);
-        }
-        else
-        {
-            Debug.LogError("File non trovato");
-        }
+        LoadLabelsFromFile("InitialElements");
+        LoadLabelsFromFile("Founds");
 
         CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
         if (createButtonsComponent != null)
@@ -36,6 +27,21 @@ public class Initialize : MonoBehaviour
             Debug.LogError("Il GameObject target non ha il componente 'CreateButtons'");
         }
     }
+
+    private void LoadLabelsFromFile(string fileName)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(fileName);
+        if (textAsset != null)
+        {
+            string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            labelsToAdd.AddRange(lines);
+        }
+        else
+        {
+            Debug.LogError($"File '{fileName}' non trovato");
+        }
+    }
+
 
 
     // static void EnableReadWrite()

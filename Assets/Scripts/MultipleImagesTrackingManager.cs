@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using System.IO;
+using System;
 
 public class MultipleImagesTrackingManager : MonoBehaviour
 {
@@ -24,7 +26,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private SliderMenuAnim menu;
 
     [SerializeField] private GameObject createButton;
-
 
     // Get the reference to the ARTrackedImageManager
 
@@ -284,6 +285,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _createButtonsComponent.CreateButton(buttonLabel);
             _createButtonsComponent.buttonLabels.Add(buttonLabel);
             Debug.Log("ButtonLabels aggiornato con successo");
+
+            //File.AppendAllText(Path.Combine(Application.dataPath, "Resources", "Founds.txt"), buttonLabel + Environment.NewLine);
         }
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");
