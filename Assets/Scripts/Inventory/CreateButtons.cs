@@ -32,6 +32,36 @@ public class CreateButtons : MonoBehaviour
         string buttonLabelLowercase = label.ToLower();
         newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
 
+        // Carica lo sprite corrispondente dal percorso Resources/Icon
+        Sprite sprite = Resources.Load<Sprite>($"Icon/{buttonLabelLowercase}");
+
+        if (sprite != null)
+        {
+            // Trova l'oggetto figlio 'IconElement' nel bottone appena creato
+            Transform iconElementTransform = newButton.transform.Find("IconElement");
+            if (iconElementTransform != null)
+            {
+                // Ottieni il componente Image del figlio 'IconElement'
+                Image iconImage = iconElementTransform.GetComponent<Image>();
+                if (iconImage != null)
+                {
+                    iconImage.sprite = sprite; // Assegna lo sprite al componente Image
+                }
+                else
+                {
+                    Debug.LogError("Il GameObject 'IconElement' non ha un componente Image");
+                }
+            }
+            else
+            {
+                Debug.LogError("Il GameObject 'IconElement' non è stato trovato come figlio del bottone");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Sprite '{buttonLabelLowercase}' non trovato nella cartella Resources/Icon");
+        }
+
         // Posiziona il bottone
         RectTransform buttonRectTransform = newButton.GetComponent<RectTransform>();
 
