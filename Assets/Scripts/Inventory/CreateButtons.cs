@@ -38,7 +38,7 @@ public class CreateButtons : MonoBehaviour
         if (sprite != null)
         {
             // Trova l'oggetto figlio 'IconElement' nel bottone appena creato
-            Transform iconElementTransform = newButton.transform.Find("IconElement");
+            Transform iconElementTransform = newButton.transform.Find("Image/IconElement");
             if (iconElementTransform != null)
             {
                 // Ottieni il componente Image del figlio 'IconElement'
