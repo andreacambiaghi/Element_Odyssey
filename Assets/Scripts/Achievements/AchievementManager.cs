@@ -9,25 +9,31 @@ public class AchievementManager : MonoBehaviour
 
     private string filePath;
     
+    ElementFilesManager elementFilesManager;
+
+
     void Awake()
     {
-        filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
+        // filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
 
-        if (!File.Exists(filePath))
-        {
-            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
-        }
-        else
-        {
-            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
-        }
+        // if (!File.Exists(filePath))
+        // {
+        //     Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
+        // }
+        // else
+        // {
+        //     Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        // }
+        elementFilesManager = ElementFilesManager.Instance;
+
         UpdateAchievements();
     }
 
     public int GetAchievementValue(string achievementKey)
     {
-        string json = File.ReadAllText(filePath);
-        Debug.Log(json);
+        //string json = File.ReadAllText(filePath);
+        string json = elementFilesManager.getAchievementsJson();
+        // Debug.Log(json);
 
         AchievementWrapper achievementWrapper = JsonUtility.FromJson<AchievementWrapper>(json);
 
@@ -46,7 +52,9 @@ public class AchievementManager : MonoBehaviour
 
     public void SetAchievementValue(string achievementKey, int value)
     {
-        string json = File.ReadAllText(filePath);
+        // string json = File.ReadAllText(filePath);
+        string json = elementFilesManager.getAchievementsJson();
+
         AchievementWrapper achievementWrapper = JsonUtility.FromJson<AchievementWrapper>(json);
 
         if (achievementWrapper == null)
@@ -65,13 +73,13 @@ public class AchievementManager : MonoBehaviour
         {
             achievementsList.Add(new Achievement { Key = achievementKey, Value = value });
         }
+
         achievementWrapper.Achievements = achievementsList.ToArray();
         string updatedJson = JsonUtility.ToJson(achievementWrapper, true);
-        File.WriteAllText(filePath, updatedJson);
+        
+        elementFilesManager.UpdateAchievementsJson(updatedJson);
+        //File.WriteAllText(filePath, updatedJson);
     }
-
-
-    
     
     public void UpdateAchievements()
     {
@@ -85,7 +93,7 @@ public class AchievementManager : MonoBehaviour
                 {
                     int progress = GetAchievementValue("Achievement " + i);
                     progressBar.SetProgress(progress);
-                    Debug.Log("progress: " + progress);
+                    // Debug.Log("progress: " + progress);
                 }
             }
         }
@@ -94,7 +102,7 @@ public class AchievementManager : MonoBehaviour
     GameObject FindGameObjectWithUniqueID(int uniqueID)
     {
         GameObject[] achievementObjects = GameObject.FindGameObjectsWithTag("Achievement");
-        Debug.Log("achievementObjects.Length: " + achievementObjects.Length);
+        // Debug.Log("achievementObjects.Length: " + achievementObjects.Length);
         foreach (GameObject obj in achievementObjects)
         {
             AchievementIdentifier identifier = obj.GetComponent<AchievementIdentifier>();

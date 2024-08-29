@@ -5,13 +5,29 @@ public class Initialize : MonoBehaviour
 {
     [SerializeField] private GameObject createButton;
     private List<string> labelsToAdd = new List<string>();
+    ElementFilesManager elementFilesManager;
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        LoadLabelsFromFile("InitialElements");
-        LoadLabelsFromFile("Founds");
+        //elementFilesManager = ElementFilesManager.GetInstance();
+        elementFilesManager = ElementFilesManager.Instance;
+
+        if(elementFilesManager == null)
+        {
+            Debug.LogError("ElementFilesManager non trovato ->>>>>>>");
+            return;
+        }   
+
+        InitializeButtons();
+    }
+ 
+    private void InitializeButtons(){
+        labelsToAdd.AddRange(elementFilesManager.GetInitialElements());
+        labelsToAdd.AddRange(elementFilesManager.GetFoundElements());
+        // LoadLabelsFromFile("InitialElements");
+        // LoadLabelsFromFile("Founds");
 
         CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
         if (createButtonsComponent != null)
@@ -25,19 +41,20 @@ public class Initialize : MonoBehaviour
         }
     }
 
-    private void LoadLabelsFromFile(string fileName)
-    {
-        TextAsset textAsset = Resources.Load<TextAsset>(fileName);
-        if (textAsset != null)
-        {
-            string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-            labelsToAdd.AddRange(lines);
-        }
-        else
-        {
-            Debug.LogError($"File '{fileName}' non trovato");
-        }
-    }
+
+    // private void LoadLabelsFromFile(string fileName)
+    // {
+    //     TextAsset textAsset = Resources.Load<TextAsset>(fileName);
+    //     if (textAsset != null)
+    //     {
+    //         string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+    //         labelsToAdd.AddRange(lines);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError($"File '{fileName}' non trovato");
+    //     }
+    // }
 
 
 

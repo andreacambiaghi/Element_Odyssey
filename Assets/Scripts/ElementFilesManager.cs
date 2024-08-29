@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class ElementsFilesManager : MonoBehaviour
+public class ElementFilesManager : MonoBehaviour
 {
-    public static ElementsFilesManager Instance;
+    public static ElementFilesManager Instance;
 
-    public List<string> initialElements = null;
+    private List<string> initialElements = null;
 
-    public List<string> foundElements = null;
+    private List<string> foundElements = null;
 
-    public Dictionary<ElementPair, string> elementAssociations = null;
+    private Dictionary<ElementPair, string> elementAssociations = null;
 
     private void Awake()
     {
+        Debug.Log("ElementFilesManager init");
         if(Instance != null && Instance != this)
         {
            Destroy(this.gameObject);
@@ -21,22 +22,39 @@ public class ElementsFilesManager : MonoBehaviour
         }
         else
         {
-            //Initialize();
             Instance = this;
+            Initialize();
         }
     }
 
+    private static ElementFilesManager GetInstance(){
+        if(Instance == null){
+            Instance = new ElementFilesManager();
+        }
+
+        return Instance;
+    }
+
+
     private void Initialize()
     {
-        initialElements = GetInitialElements();
-        foundElements = GetFoundElements();
-        elementAssociations = GetElementAssociations();
+
+        UpdateAll();
+        // initialElements = GetInitialElements();
+        // foundElements = GetFoundElements();
+        // elementAssociations = GetElementAssociations();
+
+        Debug.Log("-----------------");
+        Debug.Log("ElementFilesManager initialized");
+        Debug.Log("InitialElements: " + initialElements.Count);
+        Debug.Log("FoundElements: " + foundElements.Count);
+        Debug.Log("ElementAssociations: " + elementAssociations.Count);
+        Debug.Log("-----------------");
+        
     }
 
     public List<string> GetInitialElements()
     {
-        Debug.Log("1...");
-
         if (initialElements != null)
         {
             return initialElements;
@@ -76,7 +94,6 @@ public class ElementsFilesManager : MonoBehaviour
         }
         return foundItems;
     }
-
 
     public Dictionary<ElementPair, string> GetElementAssociations()
     {
@@ -126,6 +143,37 @@ public class ElementsFilesManager : MonoBehaviour
         initialElements = GetInitialElements();
         foundElements = GetFoundElements();
         elementAssociations = GetElementAssociations();
+    }
+
+    public string getAchievementsJson(){
+        string filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
+            return null;
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        }
+        return File.ReadAllText(filePath);
+    }
+
+
+    public void UpdateAchievementsJson(string json){
+        string filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
+            return;
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        }
+        File.WriteAllText(filePath, json);
     }
 
 }
