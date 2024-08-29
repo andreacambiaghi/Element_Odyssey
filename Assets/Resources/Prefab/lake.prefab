@@ -78,40 +78,19 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e7418596533c1064c95ee1d45a9ec1f9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4574653309078735788}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e7418596533c1064c95ee1d45a9ec1f9, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3561164577362212610}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e7418596533c1064c95ee1d45a9ec1f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7545522252382214995}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e7418596533c1064c95ee1d45a9ec1f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7810488055922374958}
   m_SourcePrefab: {fileID: 100100000, guid: e7418596533c1064c95ee1d45a9ec1f9, type: 3}
 --- !u!1 &2645007185554956313 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e7418596533c1064c95ee1d45a9ec1f9, type: 3}
   m_PrefabInstance: {fileID: 2915409870324161864}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &4574653309078735788
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2645007185554956313}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.0059152073
-  m_Center: {x: 0.000012720004, y: -0.00001735939, z: -0.000028439921}
 --- !u!114 &3561164577362212610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,3 +115,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &7810488055922374958
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645007185554956313}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.008872811
+  m_Center: {x: 0.000012720004, y: -0.00001735939, z: -0.000028439921}

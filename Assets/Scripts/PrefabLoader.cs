@@ -18,9 +18,11 @@ public class PrefabModifier : MonoBehaviour
                 if (sphereCollider == null)
                 {
                     sphereCollider = prefabInstance.AddComponent<SphereCollider>();
+                    sphereCollider.radius *= 1.5f;
                 }
 
                 sphereCollider.isTrigger = true;
+
                 if (prefabInstance.GetComponent<Elements>() == null)
                 {
                     prefabInstance.AddComponent<Elements>();
