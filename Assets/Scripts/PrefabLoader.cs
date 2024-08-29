@@ -14,11 +14,13 @@ public class PrefabModifier : MonoBehaviour
 
             if (prefabInstance != null)
             {
-                if (prefabInstance.GetComponent<SphereCollider>() == null)
+                SphereCollider sphereCollider = prefabInstance.GetComponent<SphereCollider>();
+                if (sphereCollider == null)
                 {
-                    prefabInstance.AddComponent<SphereCollider>();
+                    sphereCollider = prefabInstance.AddComponent<SphereCollider>();
                 }
 
+                sphereCollider.isTrigger = true;
                 if (prefabInstance.GetComponent<Elements>() == null)
                 {
                     prefabInstance.AddComponent<Elements>();
