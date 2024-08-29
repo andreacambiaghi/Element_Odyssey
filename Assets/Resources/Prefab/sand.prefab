@@ -75,5 +75,64 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bb6af490e779d404aa848066ece6d1c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2404261855095357855}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bb6af490e779d404aa848066ece6d1c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7372396667666986411}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bb6af490e779d404aa848066ece6d1c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3115049264564075468}
   m_SourcePrefab: {fileID: 100100000, guid: bb6af490e779d404aa848066ece6d1c9, type: 3}
+--- !u!1 &1657744140464686046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bb6af490e779d404aa848066ece6d1c9, type: 3}
+  m_PrefabInstance: {fileID: 1999620580611931791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2404261855095357855
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657744140464686046}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0059425444
+  m_Center: {x: -0.000016188715, y: 0.000007943951, z: 0.000070811904}
+--- !u!114 &7372396667666986411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657744140464686046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b7ea4c64399484abc9db4659a695ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3115049264564075468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657744140464686046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
