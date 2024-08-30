@@ -19,9 +19,8 @@ public class PrefabModifier : MonoBehaviour
                 {
                     sphereCollider = prefabInstance.AddComponent<SphereCollider>();
                     sphereCollider.radius *= 1.5f;
+                    sphereCollider.isTrigger = true;
                 }
-
-                sphereCollider.isTrigger = true;
 
                 if (prefabInstance.GetComponent<Elements>() == null)
                 {
@@ -31,6 +30,13 @@ public class PrefabModifier : MonoBehaviour
                 if (prefabInstance.GetComponent<ArTouchManager>() == null)
                 {
                     prefabInstance.AddComponent<ArTouchManager>();
+                }
+
+                Rigidbody rigidbody = prefabInstance.GetComponent<Rigidbody>();
+                if (prefabInstance.GetComponent<Rigidbody>() == null)
+                {
+                    rigidbody = prefabInstance.AddComponent<Rigidbody>();
+                    rigidbody.useGravity = false;
                 }
 
                 PrefabUtility.SaveAsPrefabAsset(prefabInstance, AssetDatabase.GetAssetPath(prefab));
