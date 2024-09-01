@@ -77,3 +77,11 @@ lava;volcano;eruption
 lava;dust;volcano
 lava;tornado;volcano
 lava;mountain;volcano
+volcano;water;lava
+volcano;fire;lava
+volcano;wind;eruption
+volcano;earth;lava
+volcano;volcano;mountain
+volcano;dust;ash
+volcano;tornado;eruption
+volcano;mountain;lava
