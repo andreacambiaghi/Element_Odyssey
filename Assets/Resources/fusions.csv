@@ -68,4 +68,12 @@ smoke;volcano;eruption
 smoke;dust;dust
 smoke;tornado;volcano
 smoke;mountain;volcano
-
+lava;water;stone
+lava;fire;volcano
+lava;wind;volcano
+lava;earth;stone
+lava;lava;volcano
+lava;volcano;eruption
+lava;dust;volcano
+lava;tornado;volcano
+lava;mountain;volcano
