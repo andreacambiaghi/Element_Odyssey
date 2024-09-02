@@ -176,4 +176,11 @@ public class ElementFilesManager : MonoBehaviour
         File.WriteAllText(filePath, json);
     }
 
+    public Sprite[] GetPathSprite()
+    {
+        Sprite[] pathSprite = Resources.LoadAll<Sprite>("AchievementsImage/Sprites");
+        Debug.Log("pathSprite.Length: " + pathSprite.Length);
+        return pathSprite;
+    }
+
 }
