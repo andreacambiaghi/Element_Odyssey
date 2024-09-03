@@ -12,7 +12,7 @@ public class PrefabModifier : MonoBehaviour
         {
             GameObject prefabInstance = PrefabUtility.LoadPrefabContents(AssetDatabase.GetAssetPath(prefab));
 
-            if (prefabInstance != null)
+            if (prefabInstance != null && prefabInstance.name != "sphere")
             {
                 SphereCollider sphereCollider = prefabInstance.GetComponent<SphereCollider>();
                 if (sphereCollider == null)
