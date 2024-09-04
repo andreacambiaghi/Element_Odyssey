@@ -125,7 +125,7 @@ public class ElementFilesManager : MonoBehaviour
         // return foundItems;
     }
 
-    public void UpdateFoundElements(List<string> foundElements)
+    private void UpdateFoundElementsFile(List<string> foundElements)
     {
         //TODO: mettere anche funzione con append per singolo foundelement
         string filePath = foundElementsFilePath;
@@ -133,6 +133,19 @@ public class ElementFilesManager : MonoBehaviour
         Debug.LogWarning("UPDATED FOUND ELEMENTS: " + File.ReadAllText(filePath));
     }
 
+    public void AddFoundElement(string foundElement)
+    {
+        //valutare se non aggiornare ogni volta
+        List<string> foundElements = GetFoundElements();
+
+        if (foundElements.Contains(foundElement))
+        {
+            return;
+        }
+
+        foundElements.Add(foundElement);
+        UpdateFoundElementsFile(foundElements);
+    }
 
     public Dictionary<ElementPair, string> GetElementAssociations()
     {
