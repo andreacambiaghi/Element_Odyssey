@@ -5,6 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.IO;
 using System;
+using TMPro;
 
 public class MultipleImagesTrackingManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private SliderMenuAnim menu;
 
     [SerializeField] private GameObject createButton;
+
+    [SerializeField] private GameObject popUpElementCreated;
 
     // Get the reference to the ARTrackedImageManager
 
@@ -286,6 +289,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _createButtonsComponent.buttonLabels.Add(buttonLabel);
             Debug.Log("ButtonLabels aggiornato con successo");
 
+            SpawnPopUp(prefabName);
+
             //File.AppendAllText(Path.Combine(Application.dataPath, "Resources", "Founds.txt"), buttonLabel + Environment.NewLine);
         }
 
@@ -296,4 +301,62 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         Destroy(tempAudioObject, clip.length);
     
     }
+
+    void SpawnPopUp(string prefabName = "default")
+    {
+        GameObject spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        
+        Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
+        if (backgroundTransform != null)
+        {
+            Image backgroundImage = backgroundTransform.GetComponent<Image>();
+            if (backgroundImage != null)
+            {
+                Sprite loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                if (loadedSprite != null)
+                {
+                    backgroundImage.sprite = loadedSprite;
+                    Debug.Log("Loaded sprite: " + loadedSprite.name);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Background not found");
+        }
+
+        Transform nameElementTransform = FindInChildren(spawnedObject.transform, "NameElement");
+        if (nameElementTransform != null)
+        {
+            TextMeshProUGUI nameText = nameElementTransform.GetComponent<TextMeshProUGUI>();
+            if (nameText != null)
+            {
+                nameText.text = char.ToUpper(prefabName[0]) + prefabName[1..];
+                Debug.Log("Loaded name: " + nameText.text);
+            }
+        }
+        else
+        {
+            Debug.Log("NameElement not found");
+        }
+
+        Destroy(spawnedObject, 3f);
+    }
+
+    Transform FindInChildren(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            Transform result = FindInChildren(child, name);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+
+
 }
