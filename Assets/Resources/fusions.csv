@@ -90,7 +90,7 @@ dust;fire;ash
 dust;wind;sandstorm
 dust;earth;planet
 dust;dust;sand
-dust;tornado;dust_storm
+dust;tornado;dustStorm
 dust;mountain;volcano
 tornado;water;tsunami
 tornado;fire;volcano
@@ -102,4 +102,4 @@ mountain;water;lake
 mountain;fire;volcano
 mountain;wind;avalanche
 mountain;earth;volcano
-mountain;mountain;mountain_range
+mountain;mountain;mountainRange

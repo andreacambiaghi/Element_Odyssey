@@ -11,10 +11,10 @@ public class SliderMenuAnim : MonoBehaviour
     public void ShowHideMenu()
     {
         isMenuOpen = !isMenuOpen;
-        Debug.Log("Sono denro ShowHideMenu");
+        // Debug.Log("Sono denro ShowHideMenu");
         if(PanelMenu != null)
         {
-            Debug.Log("PanelMenu non è null");
+            // Debug.Log("PanelMenu non è null");
             Animator animator = PanelMenu.GetComponent<Animator>();
             if(animator != null)
             {

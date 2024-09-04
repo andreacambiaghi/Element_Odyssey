@@ -261,8 +261,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         // if(isSameElement) sameElementSoundCount++;
         // else sameElementSoundCount = 0;
 
-
-        _elementFilesManager.AddFoundElement(prefabName);
+        bool elementAlreadyAdded = _elementFilesManager.AddFoundElement(prefabName.ToLower());
 
         DeselectSelectedGameObject();
         
@@ -276,7 +275,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             {
                 continue;
             }
-            if(first) {
+            if (first) {
                 targetImage = entry.Key;
                 first = false;
             }
@@ -299,12 +298,17 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         // if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
         //     clip = Resources.Load<AudioClip>("Sounds/wrong");
         // }
-        if (_elementFilesManager.getFoundElements().Contains(prefabName.ToLower()) && soundOn)
+        // if (_elementFilesManager.GetFoundElements().Contains(prefabName.ToLower()))
+        if (!elementAlreadyAdded)
         {
             clip = Resources.Load<AudioClip>("Sounds/wrong");
+            Debug.Log("Elemento già trovato (MITM): " + prefabName);
         } else {   
-            _createButtonsComponent.CreateButton(buttonLabel);
-            _createButtonsComponent.buttonLabels.Add(buttonLabel);
+            // _createButtonsComponent.CreateButton(buttonLabel);
+            // _createButtonsComponent.buttonLabels.Add(buttonLabel);
+
+            _createButtonsComponent.ResetButtons();
+            //_createButtonsComponent.ClearButtons();
             Debug.Log("ButtonLabels aggiornato con successo");
             SpawnPopUp(prefabName);
         }
@@ -332,7 +336,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 if (loadedSprite != null)
                 {
                     backgroundImage.sprite = loadedSprite;
-                    Debug.Log("Loaded sprite: " + loadedSprite.name);
+                    // Debug.Log("Loaded sprite: " + loadedSprite.name);
                 }
             }
         }
@@ -348,7 +352,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             if (nameText != null)
             {
                 nameText.text = char.ToUpper(prefabName[0]) + prefabName[1..];
-                Debug.Log("Loaded name: " + nameText.text);
+                // Debug.Log("Loaded name: " + nameText.text);
             }
         }
         else

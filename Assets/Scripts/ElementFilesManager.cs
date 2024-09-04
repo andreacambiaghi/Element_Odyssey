@@ -45,9 +45,9 @@ public class ElementFilesManager : MonoBehaviour
         return Instance;
     }   
 
-    public List<string> getFoundElements(){
-        return foundElements;
-    }
+    // public List<string> getFoundElements(){
+    //     return foundElements;
+    // }
 
     private void Initialize()
     {
@@ -86,6 +86,9 @@ public class ElementFilesManager : MonoBehaviour
         {
             Debug.LogError("File non trovato");
         }
+
+        Debug.Log("INITIAL ELEMENTS: " + string.Join(", ", initialItems));
+
         return initialItems;
     }
 
@@ -137,19 +140,20 @@ public class ElementFilesManager : MonoBehaviour
         Debug.LogWarning("UPDATED FOUND ELEMENTS: " + File.ReadAllText(filePath));
     }
 
-    public void AddFoundElement(string foundElement)
+    public bool AddFoundElement(string foundElement)
     {
         //valutare se non aggiornare ogni volta
         List<string> foundElements = GetFoundElements();
 
         if (foundElements.Contains(foundElement.ToLower()))
         {
-            Debug.LogWarning("Elemento già trovato: " + foundElement);
-            return;
+            Debug.LogWarning("Elemento già trovato (EFM): " + foundElement);
+            return false;
         }
 
         foundElements.Add(foundElement.ToLower());
         UpdateFoundElementsFile(foundElements);
+        return true;
     }
 
     public Dictionary<ElementPair, string> GetElementAssociations()

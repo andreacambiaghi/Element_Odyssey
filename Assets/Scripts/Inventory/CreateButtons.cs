@@ -2,18 +2,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class CreateButtons : MonoBehaviour
 {
     [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
     [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
 
+    private ElementFilesManager elementFilesManager;
+
     public void Start()
     {
-        foreach (string label in buttonLabels)
-        {
-            CreateButton(label);
-        }
+        elementFilesManager = ElementFilesManager.Instance;
+
+        ResetButtons();
+
+        // foreach (string label in buttonLabels)
+        // {
+        //     CreateButton(label);
+        // }
     }
 
     public void CreateButton(string label)
@@ -67,4 +74,33 @@ public class CreateButtons : MonoBehaviour
 
         newButton.gameObject.SetActive(true);
     }
+
+    public void ClearButtons()
+    {
+        buttonLabels = new List<string>();
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void ResetButtons()
+    {
+        ClearButtons();
+
+        Debug.LogWarning("Button labels cleared: " + string.Join(", ", buttonLabels));
+        buttonLabels = elementFilesManager.GetInitialElements();
+        buttonLabels.AddRange(elementFilesManager.GetFoundElements());
+
+        // TODO: aggiustare
+        buttonLabels = buttonLabels.Distinct().ToList();
+
+        Debug.LogWarning("Button labels to update: " + string.Join(", ", buttonLabels));
+    
+        foreach (string label in buttonLabels)
+        {
+            CreateButton(label);
+        }
+    }
+
 }
