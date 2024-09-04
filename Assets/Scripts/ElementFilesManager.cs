@@ -42,9 +42,7 @@ public class ElementFilesManager : MonoBehaviour
         }
 
         return Instance;
-    }
-
-
+    }   
     private void Initialize()
     {
         foundElementsFilePath = Path.Combine(Application.persistentDataPath, "FoundElements.txt");
