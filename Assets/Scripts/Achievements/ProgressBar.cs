@@ -11,10 +11,15 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private Image mask;
     private Sprite[] pathSprite;
 
+    private ElementFilesManager elementFilesManager;
+
     void Start()
-    {
-        pathSprite = Resources.LoadAll<Sprite>("AchievementsImage/Sprites");
-        Debug.Log("pathSprite.Length: " + pathSprite.Length);
+    {  
+        elementFilesManager = ElementFilesManager.Instance;
+        pathSprite = elementFilesManager.GetPathSprite();
+
+        // pathSprite = Resources.LoadAll<Sprite>("AchievementsImage/Sprites");
+        // Debug.Log("pathSprite.Length: " + pathSprite.Length);
     }
 
     void Update()

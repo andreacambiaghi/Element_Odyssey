@@ -10,6 +10,8 @@ using TMPro;
 public class MultipleImagesTrackingManager : MonoBehaviour
 {
     public static MultipleImagesTrackingManager Instance;
+
+    private ElementFilesManager _elementFilesManager;
     
     //private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
@@ -48,6 +50,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
         _createButtonsComponent = createButton.GetComponent<CreateButtons>();
+        _elementFilesManager = ElementFilesManager.Instance;
         //_arObjects = new Dictionary<string, GameObject>();
 
     }
@@ -191,7 +194,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
     }
 
-
     public void DeselectSelectedGameObject()
     {
         if (SelectedImageObject == null || !_imageObjectMap.ContainsKey(SelectedImageObject)) return;
@@ -245,8 +247,10 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     }
 
     public void ClearAndAddElement(string prefabName){
+        _elementFilesManager.AddFoundElement(prefabName);
 
         DeselectSelectedGameObject();
+        
         ARTrackedImage targetImage = null;
         bool first = true;
         List<ARTrackedImage> imagesToReset = new List<ARTrackedImage>();
@@ -269,12 +273,12 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             AssociateGameObjectToMarker(image, defaultObject.name);
         }
 
-        Debug.Log("---3");
+        //Debug.Log("---3");
 
         if(targetImage != null){
             AssociateGameObjectToMarker(targetImage, prefabName);
         }
-        Debug.Log("---4");
+        //Debug.Log("---4");
 
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
