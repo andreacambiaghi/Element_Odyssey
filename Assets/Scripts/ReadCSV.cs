@@ -76,4 +76,14 @@ public class ReadCSV : MonoBehaviour
         }
         return null;
     }
+
+    public string GetResultForElements(ElementPair pair)
+    {
+        if (elementAssociations.TryGetValue(pair, out string result))
+        {
+            return result;
+        }
+        return null;
+    }
+
 }

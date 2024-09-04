@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -43,6 +44,11 @@ public class ElementFilesManager : MonoBehaviour
 
         return Instance;
     }   
+
+    public List<string> getFoundElements(){
+        return foundElements;
+    }
+
     private void Initialize()
     {
         foundElementsFilePath = Path.Combine(Application.persistentDataPath, "FoundElements.txt");
@@ -136,12 +142,13 @@ public class ElementFilesManager : MonoBehaviour
         //valutare se non aggiornare ogni volta
         List<string> foundElements = GetFoundElements();
 
-        if (foundElements.Contains(foundElement))
+        if (foundElements.Contains(foundElement.ToLower()))
         {
+            Debug.LogWarning("Elemento già trovato: " + foundElement);
             return;
         }
 
-        foundElements.Add(foundElement);
+        foundElements.Add(foundElement.ToLower());
         UpdateFoundElementsFile(foundElements);
     }
 

@@ -246,7 +246,22 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         return SetPrefabOnSelected(prefabName);
     }
 
-    public void ClearAndAddElement(string prefabName){
+
+    bool soundOn = true;
+
+    bool sameElementSoundCount = false;
+
+    public void ClearAndAddElement(string prefabName, bool isSameElement = false){    
+
+
+        soundOn = (!sameElementSoundCount && isSameElement) || !isSameElement;
+
+        sameElementSoundCount = !sameElementSoundCount && isSameElement;
+
+        // if(isSameElement) sameElementSoundCount++;
+        // else sameElementSoundCount = 0;
+
+
         _elementFilesManager.AddFoundElement(prefabName);
 
         DeselectSelectedGameObject();
@@ -273,37 +288,34 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             AssociateGameObjectToMarker(image, defaultObject.name);
         }
 
-        //Debug.Log("---3");
-
         if(targetImage != null){
             AssociateGameObjectToMarker(targetImage, prefabName);
         }
-        //Debug.Log("---4");
 
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
-        string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
-        
-        if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
+        //string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
+        string buttonLabel = prefabName;
+        // if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
+        //     clip = Resources.Load<AudioClip>("Sounds/wrong");
+        // }
+        if (_elementFilesManager.getFoundElements().Contains(prefabName.ToLower()) && soundOn)
+        {
             clip = Resources.Load<AudioClip>("Sounds/wrong");
-        }
-
-        else {   
+        } else {   
             _createButtonsComponent.CreateButton(buttonLabel);
             _createButtonsComponent.buttonLabels.Add(buttonLabel);
             Debug.Log("ButtonLabels aggiornato con successo");
-
             SpawnPopUp(prefabName);
-
-            //File.AppendAllText(Path.Combine(Application.dataPath, "Resources", "Founds.txt"), buttonLabel + Environment.NewLine);
         }
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
-        audioSource.Play();
+
+        if(soundOn) audioSource.Play();
+
         Destroy(tempAudioObject, clip.length);
-    
     }
 
     void SpawnPopUp(string prefabName = "default")
