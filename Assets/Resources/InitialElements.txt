@@ -1,4 +1,4 @@
-Water
-Fire
-Wind
-Earth
+water
+fire
+wind
+earth
