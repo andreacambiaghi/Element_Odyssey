@@ -197,6 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0020ea896607e67468cdc5dca0acf815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultAchievementsJsonFile: {fileID: 4900000, guid: 5b0d55b919b273c469cf32f0662e86c5, type: 3}
 --- !u!4 &91428876
 Transform:
   m_ObjectHideFlags: 0

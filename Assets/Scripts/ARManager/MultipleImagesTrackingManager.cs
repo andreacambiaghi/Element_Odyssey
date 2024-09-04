@@ -266,12 +266,12 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             AssociateGameObjectToMarker(image, defaultObject.name);
         }
 
-        Debug.Log("---3");
+        //Debug.Log("---3");
 
         if(targetImage != null){
             AssociateGameObjectToMarker(targetImage, prefabName);
         }
-        Debug.Log("---4");
+        //Debug.Log("---4");
 
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 

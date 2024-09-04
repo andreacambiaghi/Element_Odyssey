@@ -33,9 +33,14 @@ public class AchievementManager : MonoBehaviour
     {
         //string json = File.ReadAllText(filePath);
         string json = elementFilesManager.getAchievementsJson();
-        // Debug.Log(json);
+        Debug.LogWarning(json);
 
         AchievementWrapper achievementWrapper = JsonUtility.FromJson<AchievementWrapper>(json);
+
+        if (achievementWrapper == null)
+        {
+            Debug.LogError("AchievementWrapper is null");
+        }
 
         foreach (var achievement in achievementWrapper.Achievements)
         {

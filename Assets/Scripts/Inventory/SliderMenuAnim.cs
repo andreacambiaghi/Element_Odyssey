@@ -18,7 +18,7 @@ public class SliderMenuAnim : MonoBehaviour
             Animator animator = PanelMenu.GetComponent<Animator>();
             if(animator != null)
             {
-                Debug.Log("animator non è null");
+                //Debug.Log("animator non è null");
                 bool isOpen = animator.GetBool("show");
                 animator.SetBool("show", !isOpen);
             }

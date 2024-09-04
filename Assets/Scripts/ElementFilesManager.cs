@@ -1,9 +1,18 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ElementFilesManager : MonoBehaviour
 {
+
+    [SerializeField]
+    public TextAsset defaultAchievementsJsonFile;
+
+    private string foundElementsFilePath;
+
+    private string achievementsFilePath;
+
     public static ElementFilesManager Instance;
 
     private List<string> initialElements = null;
@@ -38,6 +47,8 @@ public class ElementFilesManager : MonoBehaviour
 
     private void Initialize()
     {
+        foundElementsFilePath = Path.Combine(Application.persistentDataPath, "FoundElements.txt");
+        achievementsFilePath = Path.Combine(Application.persistentDataPath, "achievements.json");
 
         UpdateAll();
         // initialElements = GetInitialElements();
@@ -76,24 +87,52 @@ public class ElementFilesManager : MonoBehaviour
 
     public List<string> GetFoundElements()
     {
-        if (foundElements != null)
-        {
-            return foundElements;
-        }
+        // if (foundElements != null)
+        // {
+        //     return foundElements;
+        // }
 
+        string filePath = foundElementsFilePath;
         List<string> foundItems = new List<string>();
-        TextAsset textAsset = Resources.Load<TextAsset>("FoundElements");
-        if (textAsset != null)
+        if (!File.Exists(filePath))
         {
-            string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-            foundItems.AddRange(lines);
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, "");
+            Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
         }
         else
         {
-            Debug.LogError("File non trovato");
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+            string[] lines = File.ReadAllText(filePath).Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            foundItems.AddRange(lines);
         }
+
+        // Debug.Log("Reading JSON file achiements.json");
+        Debug.LogWarning("FOUND ELEMENTS: " + File.ReadAllText(filePath));
         return foundItems;
+
+        // List<string> foundItems = new List<string>();
+        // TextAsset textAsset = Resources.Load<TextAsset>("FoundElements");
+        // if (textAsset != null)
+        // {
+        //     string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        //     foundItems.AddRange(lines);
+        // }
+        // else
+        // {
+        //     Debug.LogError("File non trovato");
+        // }
+        // return foundItems;
     }
+
+    public void UpdateFoundElements(List<string> foundElements)
+    {
+        //TODO: mettere anche funzione con append per singolo foundelement
+        string filePath = foundElementsFilePath;
+        File.WriteAllLines(filePath, foundElements);
+        Debug.LogWarning("UPDATED FOUND ELEMENTS: " + File.ReadAllText(filePath));
+    }
+
 
     public Dictionary<ElementPair, string> GetElementAssociations()
     {
@@ -145,29 +184,74 @@ public class ElementFilesManager : MonoBehaviour
         elementAssociations = GetElementAssociations();
     }
 
-    public string getAchievementsJson(){
-        string filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
 
-        if (!File.Exists(filePath))
+    private void ListDirectoriesInPersistentDataPath()
+    {
+        string persistentDataPath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources");
+
+        if (Directory.Exists(persistentDataPath))
         {
-            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
-            return null;
+            string[] directories = Directory.GetDirectories(persistentDataPath);
+
+            if (directories.Length == 0)
+            {
+                Debug.Log("No directories found in the persistentDataPath.");
+            }
+            else
+            {
+                Debug.Log("Directories in persistentDataPath:");
+                foreach (string directory in directories)
+                {
+                    Debug.Log(directory);
+                }
+            }
         }
         else
         {
-            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+            Debug.LogError("The persistentDataPath does not exist.");
         }
+    }
+
+
+    public string getAchievementsJson(){
+        //Debug.LogWarning("DEFAULT FILE -> " + defaultAchievementsJsonFile.text);
+        //ListDirectoriesInPersistentDataPath();
+        //string filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
+        // string filePath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources", "achievements.json");
+        //string filePath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources", "achievements.json");
+        string filePath = achievementsFilePath;
+
+        //TextAsset textAsset = Resources.Load<TextAsset>("achievements");
+
+        // Debug.Log("Reading JSON file achiements");
+        // Debug.LogWarning(textAsset.text);
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, defaultAchievementsJsonFile.text);
+            //Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
+        }
+        else
+        {
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        // Debug.Log("Reading JSON file achiements.json");
+        Debug.LogWarning("SAVED ACHIEVEMENTS: " + File.ReadAllText(filePath));
         return File.ReadAllText(filePath);
+
+        //return textAsset.text;
+        //return achievementsJsonFile.text;
     }
 
 
     public void UpdateAchievementsJson(string json){
-        string filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
+        string filePath = Path.Combine(Application.persistentDataPath, "Resources", "achievements.json");
 
         if (!File.Exists(filePath))
         {
-            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
-            return;
+            Debug.Log("Il file JSON non esiste nel percorso, an empty one will be created: " + filePath);
         }
         else
         {
