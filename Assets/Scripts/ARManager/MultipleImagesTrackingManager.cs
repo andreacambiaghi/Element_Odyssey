@@ -80,7 +80,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         foreach (ARTrackedImage trackedImage in eventArgs.added)
         {
             // Spawn the prefab when the tracked image is found
-            GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(0, 0, 0));
+            GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, -90, 0));
             newARObject.name = defaultObject.name;
             newARObject.gameObject.SetActive(false);
 
