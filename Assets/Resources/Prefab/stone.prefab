@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7664275333444116800
+--- !u!1001 &2010696150732207162
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -60,14 +60,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a11655b26e13a4d4b82308b9dfb6c9f3, type: 2}
     - target: {fileID: 919132149155446097, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
       propertyPath: m_Name
       value: stone
@@ -78,29 +70,29 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1300110364529696881}
+      addedObject: {fileID: 4858560406374887201}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 153029536628879667}
+      addedObject: {fileID: 6553994611501269722}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1168240706000342729}
+      addedObject: {fileID: 5587531593831145814}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7101624897308689472}
+      addedObject: {fileID: 1487363479086247976}
   m_SourcePrefab: {fileID: 100100000, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
---- !u!1 &7394224625539128337 stripped
+--- !u!1 &1668025861983324523 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4472fd0934d802e4cb27f6171d42eb89, type: 3}
-  m_PrefabInstance: {fileID: 7664275333444116800}
+  m_PrefabInstance: {fileID: 2010696150732207162}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &1300110364529696881
+--- !u!135 &4858560406374887201
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7394224625539128337}
+  m_GameObject: {fileID: 1668025861983324523}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -115,37 +107,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.008883176
   m_Center: {x: -0.0000027616043, y: 0.000018035764, z: -0.00000034982813}
---- !u!114 &153029536628879667
+--- !u!114 &6553994611501269722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7394224625539128337}
+  m_GameObject: {fileID: 1668025861983324523}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65b7ea4c64399484abc9db4659a695ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1168240706000342729
+--- !u!114 &5587531593831145814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7394224625539128337}
+  m_GameObject: {fileID: 1668025861983324523}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &7101624897308689472
+--- !u!54 &1487363479086247976
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7394224625539128337}
+  m_GameObject: {fileID: 1668025861983324523}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0

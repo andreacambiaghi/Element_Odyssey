@@ -14,6 +14,8 @@ public class PrefabModifier : MonoBehaviour
 
             if (prefabInstance != null && prefabInstance.name != "sphere")
             {
+                prefabInstance.transform.localScale = new Vector3(5f, 5f, 5f);
+
                 SphereCollider sphereCollider = prefabInstance.GetComponent<SphereCollider>();
                 if (sphereCollider == null)
                 {
