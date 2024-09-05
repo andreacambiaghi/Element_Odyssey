@@ -12,4 +12,9 @@ public class ChangeScenes : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+
+    public void PlaneScene()
+    {
+        SceneManager.LoadScene("PlaneMode");
+    }
 }
