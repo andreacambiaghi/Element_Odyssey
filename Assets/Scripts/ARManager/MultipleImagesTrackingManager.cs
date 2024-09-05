@@ -34,6 +34,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     // Get the reference to the ARTrackedImageManager
 
+    private bool _isSelecting = false;
+    private GameObject _selectedGO;
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -61,7 +64,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
 
         // Spawn the default game object
-        // GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(0, 0, 0));
+        // GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, 0, 0));
         // newARObject.name = prefab.name;
         // newARObject.gameObject.SetActive(false);
         // _arObjects.Add(newARObject.name, newARObject);
@@ -80,7 +83,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         foreach (ARTrackedImage trackedImage in eventArgs.added)
         {
             // Spawn the prefab when the tracked image is found
-            GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, -90, 0));
+            GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, 0, 0));
             newARObject.name = defaultObject.name;
             newARObject.gameObject.SetActive(false);
 
@@ -108,9 +111,10 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         {
             _imageObjectMap[trackedImage].gameObject.SetActive(false);
             DeselectSelectedGameObject();
+            _isSelecting = false;
         }
 
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.name = prefabName;
         newARObject.gameObject.SetActive(false);
         _imageObjectMap[trackedImage] = newARObject;
@@ -168,6 +172,15 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     public void SelectGameObject(GameObject selectedObject)
     {
+
+        // Se l'oggetto è già selezionato, deselezionalo e rimuovi il bordo
+        if (_isSelecting && _imageObjectMap.ContainsValue(selectedObject) && SelectedImageObject != null && _imageObjectMap[SelectedImageObject] == selectedObject)
+        {
+            DeselectSelectedGameObject();
+            _isSelecting = false;
+            return;
+        }
+        
         //get the ar tracked image associated to this object
         foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
         {
@@ -188,6 +201,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 Color originalColor = selectedObject.GetComponent<Renderer>().material.color;
                 outline.OutlineColor = GetInvertedColor(selectedObject);
                 outline.OutlineWidth = 10f;
+
+                _isSelecting = true;
 
                 break;
             }
@@ -220,10 +235,11 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         if (_imageObjectMap[aRTrackedImage] != null ) {
             DeselectSelectedGameObject();
             _imageObjectMap[aRTrackedImage].gameObject.SetActive(false);
+            _isSelecting = false;
         }
 
         
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.name = prefabName;
         newARObject.gameObject.SetActive(false);
         _imageObjectMap[aRTrackedImage] = newARObject;
