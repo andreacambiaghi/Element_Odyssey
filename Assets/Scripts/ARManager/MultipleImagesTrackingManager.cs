@@ -35,7 +35,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     // Get the reference to the ARTrackedImageManager
 
     private bool _isSelecting = false;
-    
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -332,7 +332,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
 
-        if(soundOn) audioSource.Play();
+        if(soundOn && SoundManager.Instance.IsSoundOn()) audioSource.Play();
 
         Destroy(tempAudioObject, clip.length);
     }

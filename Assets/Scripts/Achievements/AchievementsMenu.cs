@@ -9,7 +9,8 @@ public class AchievementsMenu : MonoBehaviour
     [SerializeField] private GameObject openButton;
     [SerializeField] private GameObject slider;
     [SerializeField] private SliderMenuAnim menu;
-    [SerializeField] private GameObject homeButton; 
+    [SerializeField] private GameObject homeButton;
+    [SerializeField] private GameObject soundButton;
 
     public void OpenPanel()
     {
@@ -26,6 +27,11 @@ public class AchievementsMenu : MonoBehaviour
         if (homeButton != null)
         {
             homeButton.SetActive(false);
+        }
+
+        if (soundButton != null)
+        {
+            soundButton.SetActive(false);
         }
 
         if (slider != null)
@@ -53,7 +59,12 @@ public class AchievementsMenu : MonoBehaviour
 
         if (homeButton != null)
         {
-            homeButton.SetActive(!homeButton.activeSelf);
+            homeButton.SetActive(true);
+        }
+
+        if (soundButton != null)
+        {
+            soundButton.SetActive(true);
         }
 
         if (slider != null)
