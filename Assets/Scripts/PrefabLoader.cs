@@ -12,7 +12,7 @@ public class PrefabModifier : MonoBehaviour
         {
             GameObject prefabInstance = PrefabUtility.LoadPrefabContents(AssetDatabase.GetAssetPath(prefab));
 
-            if (prefabInstance != null && prefabInstance.name != "sphere")
+            if (prefabInstance != null && prefabInstance.name != "default")
             {
                 prefabInstance.transform.localScale = new Vector3(5f, 5f, 5f);
 
