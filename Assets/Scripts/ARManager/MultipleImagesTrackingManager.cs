@@ -35,8 +35,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     // Get the reference to the ARTrackedImageManager
 
     private bool _isSelecting = false;
-    private GameObject _selectedGO;
-
+    
     private void Awake()
     {
         if(Instance != null && Instance != this)

@@ -7,4 +7,9 @@ public class ChangeScenes : MonoBehaviour
     {
         SceneManager.LoadScene("CreateMarkerMode");
     }
+
+    public void MenuScene()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
