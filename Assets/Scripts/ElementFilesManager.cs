@@ -156,6 +156,13 @@ public class ElementFilesManager : MonoBehaviour
         return true;
     }
 
+    public void ResetFoundElements()
+    {
+        List<string> foundElements = GetFoundElements();
+        foundElements.Clear();
+        UpdateFoundElementsFile(foundElements);
+    }
+
     public Dictionary<ElementPair, string> GetElementAssociations()
     {
         if (elementAssociations != null)
