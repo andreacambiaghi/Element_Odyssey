@@ -7,8 +7,7 @@ public class AchievementManager : MonoBehaviour
 {
     private TextAsset jsonFile;
 
-    private string filePath;
-    
+    private string filePath;    
     ElementFilesManager elementFilesManager;
 
 
@@ -24,6 +23,7 @@ public class AchievementManager : MonoBehaviour
         // {
         //     Debug.Log("Il file JSON esiste nel percorso: " + filePath);
         // }
+
         elementFilesManager = ElementFilesManager.Instance;
 
         UpdateAchievements();
@@ -57,6 +57,7 @@ public class AchievementManager : MonoBehaviour
 
     public void SetAchievementValue(string achievementKey, int value)
     {
+        Debug.Log("SetAchievementValue: " + achievementKey + " - " + value);
         // string json = File.ReadAllText(filePath);
         string json = elementFilesManager.getAchievementsJson();
 

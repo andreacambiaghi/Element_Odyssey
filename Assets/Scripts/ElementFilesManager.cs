@@ -22,6 +22,8 @@ public class ElementFilesManager : MonoBehaviour
 
     private Dictionary<ElementPair, string> elementAssociations = null;
 
+    private AchievementManager achievementManager = new();
+
     private void Awake()
     {
         Debug.Log("ElementFilesManager init");
@@ -203,6 +205,20 @@ public class ElementFilesManager : MonoBehaviour
         return elementItems;
     }
 
+    public void ResetAchievements()
+    {
+        Debug.Log("Resetting achievements");
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.Log("Resetting achievement " + i);
+            string achievementKey = "Achievement" + i;
+            achievementManager.SetAchievementValue(achievementKey, 0);
+            Debug.LogWarning("Achievement " + i + " resetted");
+            Debug.LogWarning("Achievement " + i + " value: " + achievementManager.GetAchievementValue(achievementKey));
+        }
+        
+    }
+
     public void UpdateAll(){
         initialElements = null;
         foundElements = null;
@@ -276,7 +292,7 @@ public class ElementFilesManager : MonoBehaviour
 
 
     public void UpdateAchievementsJson(string json){
-        string filePath = Path.Combine(Application.persistentDataPath, "Resources", "achievements.json");
+        string filePath = achievementsFilePath;
 
         if (!File.Exists(filePath))
         {

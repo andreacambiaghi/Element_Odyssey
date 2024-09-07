@@ -2147,6 +2147,7 @@ GameObject:
   - component: {fileID: 1452209674}
   - component: {fileID: 1452209673}
   - component: {fileID: 1452209672}
+  - component: {fileID: 1452209677}
   - component: {fileID: 1452209676}
   m_Layer: 5
   m_Name: AchievementUI
@@ -2240,6 +2241,18 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1452209676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452209671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed41f3e52f13a2f4394a46a15fb492b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1452209677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

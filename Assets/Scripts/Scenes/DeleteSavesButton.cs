@@ -30,9 +30,8 @@ public class DeleteSavesButton : MonoBehaviour
         textMesh.text = originalText;
     }
 
-    //  TODO: Implement this method
-    // public void DeleteAchievements()
-    // {
-    //     ElementFilesManager.Instance.ResetAchievements();
-    // }
+    public void DeleteAchievements()
+    {
+        ElementFilesManager.Instance.ResetAchievements();
+    }
 }
