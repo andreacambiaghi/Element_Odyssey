@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/CreateMarkerMode.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/PlaneMode.unity
-    guid: db6891c1e3d6747439fc6723c7c500c9
+    path: Assets/_ARPortal/Scenes/VirtualPlaneMode.unity
+    guid: 04d5d609f64c2fc41955f48b527fcbb1
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: ac8a4c1ba77e03745b09117a2548cd22, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c33d94a42cd812f479bb16f9f1adafe7, type: 2}
