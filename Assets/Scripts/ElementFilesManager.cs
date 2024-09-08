@@ -209,6 +209,7 @@ public class ElementFilesManager : MonoBehaviour
     {
         string filePath = achievementsFilePath;
         File.WriteAllText(filePath, defaultAchievementsJsonFile.text);
+        AchievementsCheck.Instance.ResetAchievements();
     }
 
     public void UpdateAll(){
