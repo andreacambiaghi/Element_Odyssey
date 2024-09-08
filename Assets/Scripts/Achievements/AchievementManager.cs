@@ -70,40 +70,29 @@ public class AchievementManager : MonoBehaviour
     {
         Debug.Log("SetAchievementValue: " + achievementKey + " - " + value);
         // string json = File.ReadAllText(filePath);
-        Debug.Log("ZERO");
         string json = elementFilesManager.getAchievementsJson();
-        Debug.Log("UNO");
         AchievementWrapper achievementWrapper = JsonUtility.FromJson<AchievementWrapper>(json);
-        Debug.Log("DUE");
         if (achievementWrapper == null)
         {
             achievementWrapper = new AchievementWrapper { Achievements = new Achievement[0] };
         }
-        Debug.Log("TRE");
 
         var achievementsList = new List<Achievement>(achievementWrapper.Achievements);
-        Debug.Log("QUATTRO");
         var existingAchievement = achievementsList.Find(a => a.Key == achievementKey);
-        Debug.Log("CINQUE");
         if (existingAchievement != null)
         {
             existingAchievement.Value = value;
-            Debug.Log("SEI");
         }
 
         else
         {
             achievementsList.Add(new Achievement { Key = achievementKey, Value = value });
-            Debug.Log("SETTE");
         }
 
         achievementWrapper.Achievements = achievementsList.ToArray();
-        Debug.Log("OTTO");
         string updatedJson = JsonUtility.ToJson(achievementWrapper, true);
-        Debug.Log("NOVE");
         
         elementFilesManager.UpdateAchievementsJson(updatedJson);
-        Debug.Log("DIECI");
         //File.WriteAllText(filePath, updatedJson);
     }
     
