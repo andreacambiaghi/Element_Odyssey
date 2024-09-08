@@ -72,4 +72,9 @@ public class AchievementsMenu : MonoBehaviour
             slider.SetActive(true);
         }
     }
+
+    public void UpdateAchievements()
+    {
+        AchievementManager.Instance.UpdateAchievements();
+    }
 }
