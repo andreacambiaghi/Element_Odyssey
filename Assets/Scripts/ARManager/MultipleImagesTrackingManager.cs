@@ -327,7 +327,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _createButtonsComponent.ResetButtons();
             //_createButtonsComponent.ClearButtons();
             Debug.Log("ButtonLabels aggiornato con successo");
-            SpawnPopUp(prefabName);
+            SpawnPopUp(prefabName, false);
             AchievementsCheck.Instance.FoundedElement(prefabName);
             Debug.Log("SONO QUIII :)" + prefabName);
         }
@@ -343,8 +343,14 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     {
-        GameObject spawnedObject = Instantiate(alreadyFound ? popUpElementAlreadyFound : popUpElementCreated, transform.position, Quaternion.identity);
-        
+        GameObject spawnedObject = null;
+        if (alreadyFound) {
+            spawnedObject = Instantiate(popUpElementAlreadyFound, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        }
         Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
         if (backgroundTransform != null)
         {
