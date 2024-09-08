@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class AchievementsCheck : MonoBehaviour
 {
-    private List<string> waterElements = new List<string> 
+    private readonly List<string> waterElements = new()
     { 
         "fjord", "lake", "ocean", "seaweed", "steam", "surf" , "swamp", "tea", "tsunami", "wave"
     };
 
-    private List<string> fireElements = new List<string> 
+    private readonly List<string> fireElements = new()
     { 
         "ash", "eruption", "lava", "volcano"
     };
 
-    private List<string> earthElements = new List<string> 
+    private readonly List<string> earthElements = new()
     { 
       "dandelion", "dust", "island", "lily", "mountain", "mountainRange", "mud", "plant", "sand", "stone", "tree"
     };
 
-    private List<string> airElements = new List<string> 
+    private readonly List<string> airElements = new()
     { 
         "cloud", "dustStorm", "fog", "hurricane", "pollen", "sandStorm", "smoke", "storm", "tornado"
     };
 
-    private List<string> otherElements = new List<string> 
+    private readonly List<string> otherElements = new()
     { 
         "avalnche", "engine", "incense", "planet",
     };
@@ -44,7 +44,7 @@ public class AchievementsCheck : MonoBehaviour
 
     public static AchievementsCheck Instance;
 
-    private AchievementManager achievementManager = AchievementManager.Instance;
+    private readonly AchievementManager achievementManager = AchievementManager.Instance;
 
     public void Awake()
     {
