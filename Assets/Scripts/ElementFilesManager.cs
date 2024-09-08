@@ -207,17 +207,8 @@ public class ElementFilesManager : MonoBehaviour
 
     public void ResetAchievements()
     {
-        Debug.Log("Mariooo --2");
-        Debug.Log("Resetting achievements");
-        for (int i = 0; i < 10; i++)
-        {
-            Debug.Log("Resetting achievement " + i);
-            string achievementKey = "Achievement" + i;
-            achievementManager.SetAchievementValue(achievementKey, 0);
-            Debug.LogWarning("Achievement " + i + " resetted");
-            Debug.LogWarning("Achievement " + i + " value: " + achievementManager.GetAchievementValue(achievementKey));
-        }
-        
+        string filePath = achievementsFilePath;
+        File.WriteAllText(filePath, defaultAchievementsJsonFile.text);
     }
 
     public void UpdateAll(){
