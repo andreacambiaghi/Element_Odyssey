@@ -2506,6 +2506,7 @@ MonoBehaviour:
   menu: {fileID: 1577749885}
   createButton: {fileID: 1328013456}
   popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
+  popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
 --- !u!1 &1600812346
 GameObject:
   m_ObjectHideFlags: 0

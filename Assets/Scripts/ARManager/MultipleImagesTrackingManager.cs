@@ -31,6 +31,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject createButton;
 
     [SerializeField] private GameObject popUpElementCreated;
+    [SerializeField] private GameObject popUpElementAlreadyFound;
 
     // Get the reference to the ARTrackedImageManager
 
@@ -317,6 +318,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         if (!elementAlreadyAdded)
         {
             clip = Resources.Load<AudioClip>("Sounds/wrong");
+            SpawnPopUp(prefabName, true);
             Debug.Log("Elemento già trovato (MITM): " + prefabName);
         } else {   
             // _createButtonsComponent.CreateButton(buttonLabel);
@@ -339,9 +341,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         Destroy(tempAudioObject, clip.length);
     }
 
-    void SpawnPopUp(string prefabName = "default")
+    void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     {
-        GameObject spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        GameObject spawnedObject = Instantiate(alreadyFound ? popUpElementAlreadyFound : popUpElementCreated, transform.position, Quaternion.identity);
         
         Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
         if (backgroundTransform != null)

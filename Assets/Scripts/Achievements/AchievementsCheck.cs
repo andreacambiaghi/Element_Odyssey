@@ -29,11 +29,12 @@ public class AchievementsCheck : MonoBehaviour
         "avalnche", "engine", "incense", "planet",
     };
 
-    private int countWaterElements = 0;
-    private int countFireElements = 0;
-    private int countEarthElements = 0;
-    private int countAirElements = 0;
-    private int countOtherElements = 0;
+    private int countWaterElements;
+    private int countFireElements;
+    private int countEarthElements;
+    private int countAirElements;
+    private int countOtherElements;
+    private int countAllElements;
 
     private int minutesPlayed = 0;
     private float time = 0.0f;
@@ -59,7 +60,14 @@ public class AchievementsCheck : MonoBehaviour
         }
         time = Time.time;
         time5Minutes = Time.time;
-        foundedIn5Minutes = 0;
+
+        countWaterElements = AchievementManager.Instance.GetAchievementValue("Achievement 4");
+        countFireElements = AchievementManager.Instance.GetAchievementValue("Achievement 5");
+        countEarthElements = AchievementManager.Instance.GetAchievementValue("Achievement 6");
+        countAirElements = AchievementManager.Instance.GetAchievementValue("Achievement 7");
+        countAllElements = AchievementManager.Instance.GetAchievementValue("Achievement 9");
+        countOtherElements = countAllElements - countWaterElements - countFireElements - countEarthElements - countAirElements;
+
     }
 
     public void Update()
@@ -73,9 +81,10 @@ public class AchievementsCheck : MonoBehaviour
             foundedIn5Minutes = 0;
         }
 
+        achievementManager.SetAchievementValue("Achievement 8", foundedIn5Minutes);
+
         if (foundedIn5Minutes == 5)
         {
-            achievementManager.SetAchievementValue("Achievement 8", 1);
             is5Minutes = true;
         }
         
@@ -103,6 +112,9 @@ public class AchievementsCheck : MonoBehaviour
         {
             countOtherElements++;
         }
+
+        foundedIn5Minutes++;
+        countAllElements++;
 
         UpdateAchievementsJson();
     }
