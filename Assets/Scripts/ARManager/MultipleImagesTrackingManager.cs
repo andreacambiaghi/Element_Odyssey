@@ -327,6 +327,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             Debug.Log("ButtonLabels aggiornato con successo");
             SpawnPopUp(prefabName);
             AchievementsCheck.Instance.FoundedElement(prefabName);
+            Debug.Log("SONO QUIII :)" + prefabName);
         }
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");

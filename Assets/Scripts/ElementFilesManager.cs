@@ -22,7 +22,7 @@ public class ElementFilesManager : MonoBehaviour
 
     private Dictionary<ElementPair, string> elementAssociations = null;
 
-    private AchievementManager achievementManager = new();
+    private AchievementManager achievementManager = AchievementManager.Instance;
 
     private void Awake()
     {

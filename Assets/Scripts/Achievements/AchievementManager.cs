@@ -9,6 +9,7 @@ public class AchievementManager : MonoBehaviour
 
     private string filePath;    
     ElementFilesManager elementFilesManager;
+    public static AchievementManager Instance;
 
 
     void Awake()
@@ -23,6 +24,16 @@ public class AchievementManager : MonoBehaviour
         // {
         //     Debug.Log("Il file JSON esiste nel percorso: " + filePath);
         // }
+
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
 
         elementFilesManager = ElementFilesManager.Instance;
 

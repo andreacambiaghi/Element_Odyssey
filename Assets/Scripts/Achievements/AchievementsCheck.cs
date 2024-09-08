@@ -37,7 +37,7 @@ public class AchievementsCheck : MonoBehaviour
 
     public static AchievementsCheck Instance;
 
-    private AchievementManager achievementManager = new();
+    private AchievementManager achievementManager = AchievementManager.Instance;
 
     public void Awake()
     {
