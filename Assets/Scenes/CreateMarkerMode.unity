@@ -2252,6 +2252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed41f3e52f13a2f4394a46a15fb492b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  achievementPanel: {fileID: 1325042873786835982, guid: 922ba590595dd684b8a75ea2aa92b6c6, type: 3}
 --- !u!114 &1452209677
 MonoBehaviour:
   m_ObjectHideFlags: 0

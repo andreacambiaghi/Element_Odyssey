@@ -95,6 +95,12 @@ public class AchievementManager : MonoBehaviour
         elementFilesManager.UpdateAchievementsJson(updatedJson);
         //File.WriteAllText(filePath, updatedJson);
     }
+
+    public int GetMaxProgress(int index)
+    {
+        AchievementsInfo achievementsInfo = new();
+        return achievementsInfo.GetMaxProgress(index);
+    }
     
     public void UpdateAchievements()
     {

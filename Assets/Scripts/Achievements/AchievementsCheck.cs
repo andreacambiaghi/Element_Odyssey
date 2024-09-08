@@ -47,6 +47,8 @@ public class AchievementsCheck : MonoBehaviour
 
     private readonly AchievementManager achievementManager = AchievementManager.Instance;
 
+    [SerializeField] private GameObject achievementPanel;
+
     public void Awake()
     {
         if(Instance != null && Instance != this)
@@ -168,6 +170,15 @@ public class AchievementsCheck : MonoBehaviour
         achievementManager.SetAchievementValue("Achievement 6", countEarthElements);
         achievementManager.SetAchievementValue("Achievement 7", countAirElements);
         achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i))
+            {
+                GameObject achievement = Instantiate(achievementPanel, achievementPanel.transform.parent);
+                Destroy(achievement, 3f);
+            }
+        }
 
         
     }
