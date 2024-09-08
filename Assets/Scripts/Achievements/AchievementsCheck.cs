@@ -118,10 +118,14 @@ public class AchievementsCheck : MonoBehaviour
     }
 
     private void UpdateAchievementsJson() {
-        if (GetCountAllElements() >= 1)
-        {
-            Debug.LogWarning("Achievement 0 unlocked");
-            achievementManager.SetAchievementValue("Achievement 0", 1);
-        }
+
+        achievementManager.SetAchievementValue("Achievement 0", GetCountAllElements());
+        achievementManager.SetAchievementValue("Achievement 1", GetCountAllElements());
+        achievementManager.SetAchievementValue("Achievement 2", GetCountAllElements());
+        achievementManager.SetAchievementValue("Achievement 4", countWaterElements);
+        achievementManager.SetAchievementValue("Achievement 5", countFireElements);
+        achievementManager.SetAchievementValue("Achievement 6", countEarthElements);
+        achievementManager.SetAchievementValue("Achievement 7", countAirElements);
+        achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
     }
 }
