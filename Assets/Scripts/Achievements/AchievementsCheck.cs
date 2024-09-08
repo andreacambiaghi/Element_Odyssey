@@ -127,6 +127,7 @@ public class AchievementsCheck : MonoBehaviour
         countFireElements = 0;
         countEarthElements = 0;
         countAirElements = 0;
+        countAllElements = 0;
         countOtherElements = 0;
     }
 
