@@ -21,7 +21,7 @@ public class DeleteSavesButton : MonoBehaviour
         }
 
         childText.text = "Deleted!";
-        StartCoroutine(RestoreTextAfterDelay(childText, 3f));
+        StartCoroutine(RestoreTextAfterDelay(childText, 1f));
     }
 
     private IEnumerator RestoreTextAfterDelay(TextMeshProUGUI textMesh, float delay)
@@ -32,6 +32,7 @@ public class DeleteSavesButton : MonoBehaviour
 
     public void DeleteAchievements()
     {
+        Debug.Log("Mariooo --1");
         ElementFilesManager.Instance.ResetAchievements();
     }
 }

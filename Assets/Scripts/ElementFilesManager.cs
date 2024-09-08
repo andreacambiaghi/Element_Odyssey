@@ -207,6 +207,7 @@ public class ElementFilesManager : MonoBehaviour
 
     public void ResetAchievements()
     {
+        Debug.Log("Mariooo --2");
         Debug.Log("Resetting achievements");
         for (int i = 0; i < 10; i++)
         {
