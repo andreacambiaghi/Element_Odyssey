@@ -177,6 +177,13 @@ public class AchievementsCheck : MonoBehaviour
             if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i))
             {
                 GameObject achievement = Instantiate(achievementPanel, achievementPanel.transform.parent);
+
+                AudioClip clip = Resources.Load<AudioClip>("Sounds/achievement");
+                GameObject tempAudioObject = new GameObject("TempAudioObject");
+                AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+                audioSource.clip = clip;
+                audioSource.Play();
+
                 Destroy(achievement, 3f);
             }
         }
