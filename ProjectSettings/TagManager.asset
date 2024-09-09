@@ -9,6 +9,7 @@ TagManager:
   - Logo
   - Slider
   - Info
+  - Special
   layers:
   - Default
   - TransparentFX

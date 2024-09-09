@@ -6,7 +6,7 @@ public class AchievementsCheck : MonoBehaviour
 {
     private readonly List<string> waterElements = new()
     { 
-        "fjord", "lake", "ocean", "seaweed", "steam", "surf" , "swamp", "tea", "tsunami", "wave"
+        "fjord", "lake", "ocean", "seaweed", "steam", "surf" , "swamp", "tea", "tsunami", "wave", "rain", "snow", "surfing"
     };
 
     private readonly List<string> fireElements = new()
@@ -21,12 +21,12 @@ public class AchievementsCheck : MonoBehaviour
 
     private readonly List<string> airElements = new()
     { 
-        "cloud", "dustStorm", "fog", "hurricane", "pollen", "sandStorm", "smoke", "storm", "tornado"
+        "cloud", "dustStorm", "fog", "hurricane", "pollen", "sandStorm", "smoke", "storm", "tornado", "jet"
     };
 
     private readonly List<string> otherElements = new()
     { 
-        "avalnche", "engine", "incense", "planet",
+        "avalnche", "engine", "incense", "planet", "lightning", "rainbow", "sushi", "angel", "sky"
     };
 
     private int countWaterElements;
