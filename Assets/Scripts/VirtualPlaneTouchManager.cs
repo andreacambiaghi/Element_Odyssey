@@ -6,29 +6,43 @@ using System.Collections.Generic;
 public class VirtualPlaneManager : MonoBehaviour 
 { 
 
-    private static VirtualPlaneManager instance;
+    public static VirtualPlaneManager Instance;
 
-    public static VirtualPlaneManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new VirtualPlaneManager();
-            }
-            return instance;
-        }
-    }
+    // public static VirtualPlaneManager Instance
+    // {
+    //     get
+    //     {
+    //         if (instance == null)
+    //         {
+    //             instance = new VirtualPlaneManager();
+    //         }
+    //         return instance;
+    //     }
+    // }
     private VirtualPlaneManager() { }
 
     [SerializeField] private GameObject XROrigin; 
 
     private ARPlaneManager planeManager; 
 
-    private string selectedPrefab;
+    private string selectedPrefab = "water";
  
+
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+           Destroy(this.gameObject);
+           return;
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     private void Start() 
     { 
+
         if (XROrigin == null) 
         { 
             Debug.LogError("XR Origin is not assigned"); 
@@ -53,10 +67,12 @@ public class VirtualPlaneManager : MonoBehaviour
             Debug.Log("Plane Touched at " + planeTouchCoords);
             // Debug.Log("Plane Touched at " + planeTouchCoords.plane.transform.position);
             // Debug.Log("Plane Touched at " + planeTouchCoords.coords);
-            if (selectedPrefab != null)
-                SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
-            else
-                SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, "fire");
+            // if (selectedPrefab != null){}
+            //     SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+            // else
+            //     SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, "fire");
+
+            SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
         }
 
     } 
@@ -176,7 +192,9 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {
+        Debug.Log("Spawning a " + prefabName);
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        newARObject.name = prefabName;
         newARObject.transform.position = position;
 
         //move the object higher the height of itself so that it is not inside the plane
@@ -194,7 +212,7 @@ public class VirtualPlaneManager : MonoBehaviour
     }
 
     public bool OnPrefabSelected(string prefabName){
-        SetSelectedPrefab(prefabName);
+        SetSelectedPrefab(prefabName.ToLower());
 
         return false;
     }
