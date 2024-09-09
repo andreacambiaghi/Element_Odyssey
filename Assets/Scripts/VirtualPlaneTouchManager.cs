@@ -5,8 +5,27 @@ using System.Collections.Generic;
  
 public class VirtualPlaneManager : MonoBehaviour 
 { 
+
+    private static VirtualPlaneManager instance;
+
+    public static VirtualPlaneManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new VirtualPlaneManager();
+            }
+            return instance;
+        }
+    }
+    private VirtualPlaneManager() { }
+
     [SerializeField] private GameObject XROrigin; 
+
     private ARPlaneManager planeManager; 
+
+    private string selectedPrefab;
  
     private void Start() 
     { 
@@ -34,11 +53,16 @@ public class VirtualPlaneManager : MonoBehaviour
             Debug.Log("Plane Touched at " + planeTouchCoords);
             // Debug.Log("Plane Touched at " + planeTouchCoords.plane.transform.position);
             // Debug.Log("Plane Touched at " + planeTouchCoords.coords);
-            SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, "fire");
+            if (selectedPrefab != null)
+                SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+            else
+                SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, "fire");
         }
 
-       
-        
+    } 
+
+
+     /*
         // if (planeManager.enabled == true && Input.touchCount > 0) 
         // if (Input.touchCount > 0) 
         // { 
@@ -68,7 +92,7 @@ public class VirtualPlaneManager : MonoBehaviour
         //         } 
         //     } 
         // } 
-    } 
+        */
  
     private ARPlane DetectPlane(Touch touch) 
     { 
@@ -154,13 +178,33 @@ public class VirtualPlaneManager : MonoBehaviour
     {
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.transform.position = position;
+
         //move the object higher the height of itself so that it is not inside the plane
-        newARObject.transform.position = new Vector3(newARObject.transform.position.x, plane.transform.position.y + newARObject.transform.localScale.y/2, newARObject.transform.position.z); 
+        // newARObject.transform.position = new Vector3(newARObject.transform.position.x, plane.transform.position.y + newARObject.transform.localScale.y/2, newARObject.transform.position.z); 
 
         newARObject.SetActive(true);
         // Instantiate(prefab, position, Quaternion.identity);
     }
 
+    
+    public void SetSelectedPrefab(string prefabName)
+    {
+        Debug.Log("Selected prefab: " + prefabName);
+        selectedPrefab = prefabName;
+    }
+
+    public bool OnPrefabSelected(string prefabName){
+        SetSelectedPrefab(prefabName);
+
+        return false;
+    }
+
+    public void SelectGameObject(GameObject gameObject)
+    {
+        // DeselectAllObjects();
+        // selectedObject = gameObject;
+        // objectRenderer.material.color = selectedColor;
+    }
 
 
     private class PlaneCoords

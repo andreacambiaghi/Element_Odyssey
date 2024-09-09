@@ -26,6 +26,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     private CreateButtons _createButtonsComponent;
 
     [SerializeField] private GameObject slider;
+    
     [SerializeField] private SliderMenuAnim menu;
 
     [SerializeField] private GameObject createButton;

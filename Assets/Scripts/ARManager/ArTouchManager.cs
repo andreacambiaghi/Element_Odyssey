@@ -7,6 +7,10 @@ public class ArTouchManager : MonoBehaviour
 
     private MultipleImagesTrackingManager mitm;
 
+    private VirtualPlaneManager vpm;
+
+    private GameModeManager gameModeManager;
+
     private Renderer objectRenderer;
 
     void Start()
@@ -14,6 +18,9 @@ public class ArTouchManager : MonoBehaviour
         objectRenderer = GetComponent<Renderer>();
         mitm = MultipleImagesTrackingManager.Instance;
         defaultColor = objectRenderer.material.color;
+
+        gameModeManager = GameModeManager.Instance;
+        vpm = VirtualPlaneManager.Instance;
     }
 
     void Update()
@@ -41,7 +48,11 @@ public class ArTouchManager : MonoBehaviour
     void Select()
     {
         //objectRenderer.material.color = new Color(Random.value, Random.value, Random.value);
-        mitm.SelectGameObject(gameObject);
+
+        if(gameModeManager.GameMode == "CreateMarker")
+            mitm.SelectGameObject(gameObject);
+        else if(gameModeManager.GameMode == "VirtualPlane")
+            vpm.SelectGameObject(gameObject);
     }
 
     public void Deselect()
