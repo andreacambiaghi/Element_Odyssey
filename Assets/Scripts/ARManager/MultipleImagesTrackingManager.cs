@@ -307,6 +307,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             AssociateGameObjectToMarker(targetImage, prefabName);
         }
 
+        bool finded = false;
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
         //string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
@@ -318,8 +319,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         if (!elementAlreadyAdded)
         {
             clip = Resources.Load<AudioClip>("Sounds/wrong");
-            SpawnPopUp(prefabName, true);
             Debug.Log("Elemento già trovato (MITM): " + prefabName);
+            finded = true;
         } else {   
             // _createButtonsComponent.CreateButton(buttonLabel);
             // _createButtonsComponent.buttonLabels.Add(buttonLabel);
@@ -327,7 +328,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _createButtonsComponent.ResetButtons();
             //_createButtonsComponent.ClearButtons();
             Debug.Log("ButtonLabels aggiornato con successo");
-            SpawnPopUp(prefabName, false);
+            finded = false;
             AchievementsCheck.Instance.FoundedElement(prefabName);
             Debug.Log("SONO QUIII :)" + prefabName);
         }
@@ -336,7 +337,10 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
 
-        if(soundOn && SoundManager.Instance.IsSoundOn()) audioSource.Play();
+        if (soundOn && SoundManager.Instance.IsSoundOn()) {
+            audioSource.Play();
+            SpawnPopUp(prefabName, finded);
+        }
 
         Destroy(tempAudioObject, clip.length);
     }
