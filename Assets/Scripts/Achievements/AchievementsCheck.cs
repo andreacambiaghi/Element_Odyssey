@@ -6,7 +6,8 @@ public class AchievementsCheck : MonoBehaviour
 {
     private readonly List<string> waterElements = new()
     { 
-        "fjord", "lake", "ocean", "seaweed", "steam", "surf" , "swamp", "tea", "tsunami", "wave", "rain", "snow", "surfing"
+        "fjord", "lake", "ocean", "seaweed", "steam", "surf" , "swamp", "tea", "tsunami",
+        "wave", "rain", "snow", "surfing", "submarine"
     };
 
     private readonly List<string> fireElements = new()
@@ -21,12 +22,15 @@ public class AchievementsCheck : MonoBehaviour
 
     private readonly List<string> airElements = new()
     { 
-        "cloud", "dustStorm", "fog", "hurricane", "pollen", "sandStorm", "smoke", "storm", "tornado", "jet"
+        "cloud", "dustStorm", "fog", "hurricane", "pollen", "sandStorm", "smoke", "storm",
+        "tornado", "jet", "windmill", "helicopter"
     };
 
     private readonly List<string> otherElements = new()
     { 
-        "avalnche", "engine", "incense", "planet", "lightning", "rainbow", "sushi", "angel", "sky"
+        "avalnche", "engine", "incense", "planet", "lightning", "rainbow", "sushi", "angel", "sky",
+        "tractor", "train", "car", "boat", "vacuum", "rocket", "teapot", "sandbox",
+        "steamroller", "wood", "steamboat", "bee", "saturn", "snowmobile"
     };
 
     private int countWaterElements;
@@ -129,31 +133,6 @@ public class AchievementsCheck : MonoBehaviour
         countAirElements = 0;
         countAllElements = 0;
         countOtherElements = 0;
-    }
-
-    public int GetCountWaterElements()
-    {
-        return countWaterElements;
-    }
-
-    public int GetCountFireElements()
-    {
-        return countFireElements;
-    }
-
-    public int GetCountEarthElements()
-    {
-        return countEarthElements;
-    }
-
-    public int GetCountAirElements()
-    {
-        return countAirElements;
-    }
-
-    public int GetCountOtherElements()
-    {
-        return countOtherElements;
     }
 
     public int GetCountAllElements()
