@@ -7,7 +7,7 @@ public class AchievementsCheck : MonoBehaviour
     private readonly List<string> waterElements = new()
     { 
         "fjord", "lake", "ocean", "seaweed", "steam", "surf" , "swamp", "tea", "tsunami",
-        "wave", "rain", "snow", "surfing", "submarine"
+        "wave", "rain", "snow", "surfing", "submarine", "sea"
     };
 
     private readonly List<string> fireElements = new()
@@ -30,7 +30,10 @@ public class AchievementsCheck : MonoBehaviour
     { 
         "avalnche", "engine", "incense", "planet", "lightning", "rainbow", "sushi", "angel", "sky",
         "tractor", "train", "car", "boat", "vacuum", "rocket", "teapot", "sandbox",
-        "steamroller", "wood", "steamboat", "bee", "saturn", "snowmobile"
+        "steamroller", "wood", "steamboat", "bee", "saturn", "snowmobile",
+        "brick", "clay", "beach", "mudslide", "mudweed", "quagmire", "puddle", "lotus", "prefume",
+        "chai", "kite", "teaBag", "mountainDew", "tempest", "sandwich", "rock", "wine", "honey", 
+        "matcha", "plantea", "teaStorm", "teaParty"
     };
 
     private int countWaterElements;
