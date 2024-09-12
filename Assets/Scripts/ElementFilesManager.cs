@@ -305,4 +305,28 @@ public class ElementFilesManager : MonoBehaviour
         return pathSprite;
     }
 
+    public List<string> GetOthersElements(string fileName = "others")
+    {
+        TextAsset file = Resources.Load<TextAsset>(fileName);
+        List<string> elements = new();
+
+        if (file != null)
+        {
+            string[] lines = file.text.Split('\n');
+            foreach (string line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    elements.Add(line.Trim());
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("File not found in Resources folder!");
+        }
+
+        return elements;
+    }
+
 }

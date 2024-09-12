@@ -25,6 +25,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private CreateButtons _createButtonsComponent;
 
+    private List<string> _othersElements;
+
     [SerializeField] private GameObject slider;
     [SerializeField] private SliderMenuAnim menu;
 
@@ -55,6 +57,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _createButtonsComponent = createButton.GetComponent<CreateButtons>();
         _elementFilesManager = ElementFilesManager.Instance;
         //_arObjects = new Dictionary<string, GameObject>();
+
+        _othersElements = ElementFilesManager.Instance.GetOthersElements();
+        Debug.LogWarning("Others elements: " + _othersElements.Count);
 
     }
 
@@ -114,9 +119,19 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             _isSelecting = false;
         }
 
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-        newARObject.name = prefabName;
-        newARObject.gameObject.SetActive(false);
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName)) {
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+            TextMeshProUGUI text = newARObject.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = prefabName;
+        }
+        else
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+            newARObject.name = prefabName;
+        }
+        
+        newARObject.SetActive(false);
         _imageObjectMap[trackedImage] = newARObject;
         UpdatedTrackedImage(trackedImage);
 
@@ -239,8 +254,18 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
 
         
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-        newARObject.name = prefabName;
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName)) {
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+            TextMeshProUGUI text = newARObject.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = prefabName;
+        }
+        else
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+            newARObject.name = prefabName;
+        }
+
         newARObject.gameObject.SetActive(false);
         _imageObjectMap[aRTrackedImage] = newARObject;
         UpdatedTrackedImage(aRTrackedImage);
@@ -361,7 +386,15 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             Image backgroundImage = backgroundTransform.GetComponent<Image>();
             if (backgroundImage != null)
             {
-                Sprite loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                Sprite loadedSprite;
+                if (_othersElements.Contains(prefabName)) {
+                    loadedSprite = Resources.Load<Sprite>("Icon/other");
+                }
+                else
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                }
+
                 if (loadedSprite != null)
                 {
                     backgroundImage.sprite = loadedSprite;
