@@ -33,7 +33,8 @@ public class AchievementsCheck : MonoBehaviour
         "steamroller", "wood", "steamboat", "bee", "saturn", "snowmobile",
         "brick", "clay", "beach", "mudslide", "mudweed", "quagmire", "puddle", "lotus", "prefume",
         "chai", "kite", "teaBag", "mountainDew", "tempest", "sandwich", "rock", "wine", "honey", 
-        "matcha", "plantea", "teaStorm", "teaParty", "surfer", "surfboard", "palm", "allergy"
+        "matcha", "plantea", "teaStorm", "teaParty", "surfer", "surfboard", "palm", "allergy",
+        "titanic", "earthquake", "wish", "forest", "poseidon", "mist", "atlantis", "disaster"
     };
 
     private int countWaterElements;

@@ -26,3 +26,11 @@ surfboard
 lagoon
 palm
 allergy
+titanic
+earthquake
+wish
+forest
+poseidon
+mist
+atlantis
+disaster
