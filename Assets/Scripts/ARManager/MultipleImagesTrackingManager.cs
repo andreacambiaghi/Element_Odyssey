@@ -90,7 +90,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             // Spawn the prefab when the tracked image is found
             GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, 0, 0));
             newARObject.name = defaultObject.name;
-            newARObject.gameObject.SetActive(false);
+            newARObject.SetActive(false);
 
             _imageObjectMap.Add(trackedImage, newARObject);
             Debug.Log("Added: " + trackedImage.referenceImage.name + " -> " + newARObject.name);
@@ -128,9 +128,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         else
         {
             newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-            newARObject.name = prefabName;
         }
         
+        newARObject.name = prefabName;
         newARObject.SetActive(false);
         _imageObjectMap[trackedImage] = newARObject;
         UpdatedTrackedImage(trackedImage);
@@ -263,10 +263,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         else
         {
             newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-            newARObject.name = prefabName;
         }
-
-        newARObject.gameObject.SetActive(false);
+        newARObject.name = prefabName;
+        newARObject.SetActive(false);
         _imageObjectMap[aRTrackedImage] = newARObject;
         UpdatedTrackedImage(aRTrackedImage);
 
@@ -308,7 +307,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         
         ARTrackedImage targetImage = null;
         bool first = true;
-        List<ARTrackedImage> imagesToReset = new List<ARTrackedImage>();
+        List<ARTrackedImage> imagesToReset = new();
 
         foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
         {
