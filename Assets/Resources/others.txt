@@ -21,3 +21,8 @@ matcha
 plantea
 teaStorm
 teaParty
+surfer
+surfboard
+lagoon
+palm
+allergy
