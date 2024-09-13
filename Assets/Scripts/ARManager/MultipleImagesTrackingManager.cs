@@ -125,8 +125,11 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
             // ComponentAdder ca = new();
             // ca.AddComponentsToGameObject(newARObject);
-            TextMeshProUGUI text = newARObject.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = prefabName;
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
         }
         else
         {
@@ -263,8 +266,11 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
             // ComponentAdder ca = new();
             // ca.AddComponentsToGameObject(newARObject);
-            TextMeshProUGUI text = newARObject.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = prefabName;
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
         }
         else
         {
