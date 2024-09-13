@@ -7,13 +7,12 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GameObject go = Instantiate(Create3DText.Instance.GenerateText("Hello World!"), Vector3.zero, Quaternion.identity);
-        Create3DText.Instance.GenerateText("LorenzoPuzzi");
+        GameObject go = Create3DText.Instance.CreateTextObject("HELLO");
+        ComponentAdder ca = new();
+        ca.AddComponentsToGameObject(go);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+
 }

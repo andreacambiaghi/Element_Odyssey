@@ -4,7 +4,7 @@ public class Create3DText : MonoBehaviour
 {
     public static Create3DText Instance { get; private set; }
 
-    [SerializeField] private float spacing = .5f;
+    private float spacing = .5f;
 
     private void Awake()
     {
@@ -19,30 +19,33 @@ public class Create3DText : MonoBehaviour
         }
     }
 
-    public GameObject GenerateText(string text)
+    public GameObject CreateTextObject(string text)
     {
         GameObject textContainer = new GameObject("TextContainer");
-        textContainer.transform.SetParent(transform);
 
         Vector3 startPosition = Vector3.zero;
 
         for (int i = 0; i < text.Length; i++)
         {
             char character = text[i];
-            GameObject letterPrefab = LoadLetterPrefab(character);
+            GameObject letterInstance = CreateLetterInstance(character);
 
-            if (letterPrefab != null)
+            if (letterInstance != null)
             {
-                GameObject letterInstance = Instantiate(letterPrefab, startPosition + new Vector3(i * spacing, 0, 0), Quaternion.Euler(-90, -180, 0), textContainer.transform);
+                letterInstance.transform.position = startPosition + new Vector3(i * spacing, 0, 0);
+                Debug.Log(letterInstance.transform.position);
+                letterInstance.transform.rotation = Quaternion.Euler(-90, 180, 0);
+                letterInstance.transform.SetParent(textContainer.transform);
             }
         }
 
         return textContainer;
     }
 
-    private GameObject LoadLetterPrefab(char character)
+    private GameObject CreateLetterInstance(char character)
     {
         string prefabName = character.ToString().ToUpper();
-        return Resources.Load<GameObject>($"Alphabet/{prefabName}");
+        GameObject prefab = Resources.Load<GameObject>($"Alphabet/{prefabName}");
+        return prefab != null ? Instantiate(prefab) : null;
     }
 }

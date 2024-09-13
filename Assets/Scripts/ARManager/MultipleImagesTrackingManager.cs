@@ -122,7 +122,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         GameObject newARObject;
         if (_othersElements.Contains(prefabName)) {
             newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
-            //newARObject = Create3DText.Instance.GenerateText(prefabName.ToUpper());
+            // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
+            // ComponentAdder ca = new();
+            // ca.AddComponentsToGameObject(newARObject);
             TextMeshProUGUI text = newARObject.GetComponentInChildren<TextMeshProUGUI>();
             text.text = prefabName;
         }
@@ -258,7 +260,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         GameObject newARObject;
         if (_othersElements.Contains(prefabName)) {
             newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
-            //newARObject = Create3DText.Instance.GenerateText(prefabName.ToUpper());
+            // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
+            // ComponentAdder ca = new();
+            // ca.AddComponentsToGameObject(newARObject);
             TextMeshProUGUI text = newARObject.GetComponentInChildren<TextMeshProUGUI>();
             text.text = prefabName;
         }
