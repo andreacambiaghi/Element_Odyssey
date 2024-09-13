@@ -70,7 +70,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         // _arObjects.Add(newARObject.name, newARObject);
     }
 
-
     private void OnDestroy()
     {
         // Remove the listener when the script is destroyed
@@ -269,13 +268,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     public void ClearAndAddElement(string prefabName, bool isSameElement = false){    
 
-
         soundOn = (!sameElementSoundCount && isSameElement) || !isSameElement;
 
         sameElementSoundCount = !sameElementSoundCount && isSameElement;
-
-        // if(isSameElement) sameElementSoundCount++;
-        // else sameElementSoundCount = 0;
 
         bool elementAlreadyAdded = _elementFilesManager.AddFoundElement(prefabName.ToLower());
 
@@ -310,7 +305,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
         //string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
-        string buttonLabel = prefabName;
+        //string buttonLabel = prefabName;
         // if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
         //     clip = Resources.Load<AudioClip>("Sounds/wrong");
         // }

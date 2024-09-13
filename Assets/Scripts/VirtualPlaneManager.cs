@@ -2,11 +2,19 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation; 
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
- 
+using TMPro;
+using UnityEngine.UI;
+
 public class VirtualPlaneManager : MonoBehaviour 
 { 
 
     public static VirtualPlaneManager Instance;
+
+    private ElementFilesManager elementFilesManager;
+    
+    private CreateButtons createButton;
+
+    private GameObject popUpElementCreated;
 
     // public static VirtualPlaneManager Instance
     // {
@@ -40,6 +48,7 @@ public class VirtualPlaneManager : MonoBehaviour
             Instance = this;
         }
     }
+    
     private void Start() 
     { 
 
@@ -50,6 +59,8 @@ public class VirtualPlaneManager : MonoBehaviour
         } 
  
         planeManager = XROrigin.GetComponent<ARPlaneManager>(); 
+        elementFilesManager = ElementFilesManager.Instance;
+        createButton = createButton.GetComponent<CreateButtons>();
     } 
  
     private void Update() 
@@ -204,7 +215,6 @@ public class VirtualPlaneManager : MonoBehaviour
         // Instantiate(prefab, position, Quaternion.identity);
     }
 
-    
     public void SetSelectedPrefab(string prefabName)
     {
         Debug.Log("Selected prefab: " + prefabName);
@@ -222,6 +232,99 @@ public class VirtualPlaneManager : MonoBehaviour
         // DeselectAllObjects();
         // selectedObject = gameObject;
         // objectRenderer.material.color = selectedColor;
+    }
+
+
+    bool alreadyDone = false;
+    public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
+        if(!alreadyDone){
+            bool elementAlreadyAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
+            alreadyDone = true;
+            SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
+            callingGameObject.SetActive(false);
+            
+
+            AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+
+        if (!elementAlreadyAdded)
+        {
+            clip = Resources.Load<AudioClip>("Sounds/wrong");
+            Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
+        } else {   
+
+            createButton.ResetButtons();
+            // Debug.Log("ButtonLabels aggiornato con successo");
+            // SpawnPopUp(prefabName);
+        }
+
+        GameObject tempAudioObject = new GameObject("TempAudioObject");
+        AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+
+        audioSource.Play();
+
+        Destroy(tempAudioObject, clip.length);
+
+        }
+        // callingGameObject.SetActive(false);
+        //Destroy(callingGameObject);
+        
+    }
+
+
+    void SpawnPopUp(string prefabName = "default")
+    {
+        GameObject spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        
+        Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
+        if (backgroundTransform != null)
+        {
+            Image backgroundImage = backgroundTransform.GetComponent<Image>();
+            if (backgroundImage != null)
+            {
+                Sprite loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                if (loadedSprite != null)
+                {
+                    backgroundImage.sprite = loadedSprite;
+                    // Debug.Log("Loaded sprite: " + loadedSprite.name);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Background not found");
+        }
+
+        Transform nameElementTransform = FindInChildren(spawnedObject.transform, "NameElement");
+        if (nameElementTransform != null)
+        {
+            TextMeshProUGUI nameText = nameElementTransform.GetComponent<TextMeshProUGUI>();
+            if (nameText != null)
+            {
+                nameText.text = char.ToUpper(prefabName[0]) + prefabName[1..];
+                // Debug.Log("Loaded name: " + nameText.text);
+            }
+        }
+        else
+        {
+            Debug.Log("NameElement not found");
+        }
+
+        Destroy(spawnedObject, 3f);
+    }
+
+    Transform FindInChildren(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            Transform result = FindInChildren(child, name);
+            if (result != null)
+                return result;
+        }
+        return null;
     }
 
 

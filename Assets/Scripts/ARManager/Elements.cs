@@ -8,8 +8,16 @@ public class Elements : MonoBehaviour
     // List of elements this one is interacting with
     private List<Elements> _elementsInteractingWith = new List<Elements>();
 
+    private GameModeManager gameModeManager;
+
     // Instance of the instantiated prefab
     private GameObject instantiatedPrefab;
+
+    private void Start()
+    {
+        gameModeManager = GameModeManager.Instance;
+    }
+
 
     // Add the element that triggered with this one to the list
     private void OnTriggerEnter(Collider other)
@@ -65,36 +73,56 @@ public class Elements : MonoBehaviour
     }
 
     // Create Interact action
+    // private void Interact(Elements element)
+    // {
+    //     // Vector3 midpoint = (transform.position + element.transform.position) / 2;
+    //     // Vector3 offset = new Vector3(0, 0.01f, 0); // Adjust the offset as needed
+    //     // Vector3 spawnPosition = midpoint + offset;
+
+    //     if (instantiatedPrefab == null)
+    //     {
+    //         ElementPair elementPair = new ElementPair(this.name, element.name);
+    //         Debug.Log("Element pair: " + elementPair.ToString());
+
+    //         if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
+    //         {
+    //             MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, name == element.name);
+    //             // GameObject resultPrefab = Resources.Load<GameObject>($"Prefab/{resultPrefabName}");
+    //             // if (resultPrefab != null)
+    //             // {
+    //             //     instantiatedPrefab = Instantiate(resultPrefab, spawnPosition, Quaternion.identity);
+    //             //     Debug.Log($"Instantiated prefab: {resultPrefabName}");
+    //             // }
+    //             // else
+    //             // {
+    //             //     Debug.LogError($"Prefab '{resultPrefabName}' not found in Resources/Prefab.");
+    //             // }
+    //         }
+    //         else
+    //         {
+    //             Debug.Log($"No association found for element pair: {elementPair.ToString()}");
+    //         }
+    //     }
+    // }
+
     private void Interact(Elements element)
     {
-        Vector3 midpoint = (transform.position + element.transform.position) / 2;
-        Vector3 offset = new Vector3(0, 0.01f, 0); // Adjust the offset as needed
-        Vector3 spawnPosition = midpoint + offset;
-
-        if (instantiatedPrefab == null)
+        ElementPair elementPair = new ElementPair(this.name, element.name);
+        Debug.Log("Element pair: " + elementPair.ToString());
+ 
+        if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
         {
-            ElementPair elementPair = new ElementPair(this.name, element.name);
-            Debug.Log("Element pair: " + elementPair.ToString());
-
-            if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
-            {
+            if(gameModeManager.GameMode == "CreateMarker"){
                 MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, name == element.name);
-                // GameObject resultPrefab = Resources.Load<GameObject>($"Prefab/{resultPrefabName}");
-                // if (resultPrefab != null)
-                // {
-                //     instantiatedPrefab = Instantiate(resultPrefab, spawnPosition, Quaternion.identity);
-                //     Debug.Log($"Instantiated prefab: {resultPrefabName}");
-                // }
-                // else
-                // {
-                //     Debug.LogError($"Prefab '{resultPrefabName}' not found in Resources/Prefab.");
-                // }
-            }
-            else
-            {
-                Debug.Log($"No association found for element pair: {elementPair.ToString()}");
+            }else{
+                VirtualPlaneManager.Instance.ClearAndAddElement(gameObject, resultPrefabName, name == element.name);
             }
         }
+        else
+        {
+            Debug.Log($"No association found for element pair: {elementPair.ToString()}");
+        }
+        
     }
 
 
