@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class VirtualPlaneManager : MonoBehaviour 
 { 
@@ -16,17 +17,8 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private GameObject popUpElementCreated;
 
-    // public static VirtualPlaneManager Instance
-    // {
-    //     get
-    //     {
-    //         if (instance == null)
-    //         {
-    //             instance = new VirtualPlaneManager();
-    //         }
-    //         return instance;
-    //     }
-    // }
+    private List<GameObject> spawnedObjects = new List<GameObject>(); // TODO: gestire questa lista
+
     private VirtualPlaneManager() { }
 
     [SerializeField] private GameObject XROrigin; 
@@ -235,26 +227,73 @@ public class VirtualPlaneManager : MonoBehaviour
     }
 
 
-    bool alreadyDone = false;
+    private static bool alreadyDone = false;
+    private static List<GameObject> interactingElements = new List<GameObject>();
+
+    // public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
+    //     if(!alreadyDone){
+    //         bool elementAlreadyAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
+    //         alreadyDone = true;
+    //         SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
+    //         callingGameObject.SetActive(false);
+            
+
+    //         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+
+    //     if (!elementAlreadyAdded)
+    //     {
+    //         clip = Resources.Load<AudioClip>("Sounds/wrong");
+    //         Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
+    //     } else {   
+
+    //         createButton.ResetButtons();
+    //         // Debug.Log("ButtonLabels aggiornato con successo");
+    //         // SpawnPopUp(prefabName);
+    //     }
+
+    //     GameObject tempAudioObject = new GameObject("TempAudioObject");
+    //     AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+    //     audioSource.clip = clip;
+
+    //     audioSource.Play();
+
+    //     Destroy(tempAudioObject, clip.length);
+
+    //     }
+    //     // callingGameObject.SetActive(false);
+    //     //Destroy(callingGameObject);
+        
+    // }
+
     public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
-        if(!alreadyDone){
-            bool elementAlreadyAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
-            alreadyDone = true;
+        interactingElements.Add(callingGameObject);
+        Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
+
+        if(interactingElements.Count > 1 ){
+            
+            bool newElementAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
+            //alreadyDone = true;
             SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
-            callingGameObject.SetActive(false);
+
+            foreach(GameObject element in interactingElements){
+                element.SetActive(false);
+                Destroy(element);
+            }
+
+            interactingElements.Clear();
+            //callingGameObject.SetActive(false);
             
 
             AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
-        if (!elementAlreadyAdded)
+        if (!newElementAdded)
         {
             clip = Resources.Load<AudioClip>("Sounds/wrong");
             Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
         } else {   
-
             createButton.ResetButtons();
-            // Debug.Log("ButtonLabels aggiornato con successo");
-            // SpawnPopUp(prefabName);
+            Debug.Log("ButtonLabels aggiornato con successo");
+            SpawnPopUp(prefabName);
         }
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");
@@ -265,7 +304,78 @@ public class VirtualPlaneManager : MonoBehaviour
 
         Destroy(tempAudioObject, clip.length);
 
+        }else{
+            //interactingElements.Add(callingGameObject);
         }
+
+
+
+        // callingGameObject.SetActive(false);
+        //Destroy(callingGameObject);
+        
+    }
+
+    public void ClearAndAddElement(ElementPair elementPair, GameObject callingGameObject, GameObject otherObject, bool isSameElement = false){
+        interactingElements.Add(callingGameObject);
+        Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
+
+        if(interactingElements.Count > 1 ){
+
+            // ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out resultPrefabName);
+            // ReadCSV.Instance.elementAssociations.TryGetValue(new ElementPair(elementPair.Element2, elementPair.Element1), out resultPrefabName);
+            string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
+            if(resultPrefabName == null)
+                resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
+
+            if(resultPrefabName == null){
+                Debug.Log("Elemento non trovato...");
+                foreach(GameObject element in interactingElements){
+                    element.SetActive(false);
+                    Destroy(element);
+                }
+
+                interactingElements.Clear();
+                return;
+            }
+
+            
+            bool newElementAdded = elementFilesManager.AddFoundElement(resultPrefabName.ToLower());
+            SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), resultPrefabName);
+
+            foreach(GameObject element in interactingElements){
+                element.SetActive(false);
+                Destroy(element);
+            }
+
+            interactingElements.Clear();
+            
+
+            AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+
+            if (!newElementAdded)
+            {
+                clip = Resources.Load<AudioClip>("Sounds/wrong");
+                Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
+            } else {   
+                createButton.ResetButtons();
+                Debug.Log("ButtonLabels aggiornato con successo");
+                SpawnPopUp(resultPrefabName);
+            }
+
+            GameObject tempAudioObject = new GameObject("TempAudioObject");
+            AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+            audioSource.clip = clip;
+
+            audioSource.Play();
+
+            Destroy(tempAudioObject, clip.length);
+
+        }else{
+            //interactingElements.Add(callingGameObject);
+        }
+
+
+
         // callingGameObject.SetActive(false);
         //Destroy(callingGameObject);
         

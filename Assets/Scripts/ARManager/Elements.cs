@@ -105,24 +105,35 @@ public class Elements : MonoBehaviour
     //     }
     // }
 
+    // private void Interact(Elements element)
+    // {
+    //     ElementPair elementPair = new ElementPair(this.name, element.name);
+    //     Debug.Log("Element pair: " + elementPair.ToString());
+ 
+    //     if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
+    //     {
+    //         if(gameModeManager.GameMode == "CreateMarker"){
+    //             MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, name == element.name);
+    //         }else{
+    //             VirtualPlaneManager.Instance.ClearAndAddElement(gameObject, resultPrefabName, name == element.name);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.Log($"No association found for element pair: {elementPair.ToString()}");
+    //     } 
+    // }
+
     private void Interact(Elements element)
     {
         ElementPair elementPair = new ElementPair(this.name, element.name);
-        Debug.Log("Element pair: " + elementPair.ToString());
- 
-        if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName))
-        {
-            if(gameModeManager.GameMode == "CreateMarker"){
-                MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, name == element.name);
-            }else{
-                VirtualPlaneManager.Instance.ClearAndAddElement(gameObject, resultPrefabName, name == element.name);
+        if(gameModeManager.GameMode == "CreateMarker"){
+            if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName)){
+                MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, element.gameObject);
             }
+        }else{
+            VirtualPlaneManager.Instance.ClearAndAddElement(elementPair, gameObject, element.gameObject);
         }
-        else
-        {
-            Debug.Log($"No association found for element pair: {elementPair.ToString()}");
-        }
-        
     }
 
 
