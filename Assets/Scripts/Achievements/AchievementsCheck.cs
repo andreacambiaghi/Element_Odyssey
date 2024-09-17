@@ -65,10 +65,7 @@ public class AchievementsCheck : MonoBehaviour
             Instance = this;
         }
         startTime = Time.time;
-        timeList = new()
-        {
-            startTime
-        };
+        timeList = new();
 
         countWaterElements = AchievementManager.Instance.GetAchievementValue("Achievement 4");
         countFireElements = AchievementManager.Instance.GetAchievementValue("Achievement 5");
@@ -137,8 +134,8 @@ public class AchievementsCheck : MonoBehaviour
         achievementManager.SetAchievementValue("Achievement 7", countAirElements);
         achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
 
-        achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
         minutesPlayed = (int)(Time.time - startTime) / 60;
+        achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
 
         if (countAllElements >= 5)
         {
