@@ -142,7 +142,7 @@ public class AchievementsCheck : MonoBehaviour
         {
             for (int i = 0; i < countAllElements - 5; i++) 
             {
-                if (timeList[i] - timeList[i + 5] <= 300)
+                if (timeList[i + 5] - timeList[i] <= 300)
                 {
                     achievementManager.SetAchievementValue("Achievement 8", 5);
                 }
