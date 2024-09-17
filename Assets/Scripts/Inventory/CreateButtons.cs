@@ -8,6 +8,7 @@ public class CreateButtons : MonoBehaviour
 {
     [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
     [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
+    [SerializeField] private GameObject elementSelected; // Elemento selezionato 
 
     private GameModeManager gameModeManager;
 
@@ -41,10 +42,14 @@ public class CreateButtons : MonoBehaviour
         // Aggiungi il listener al bottone
         string buttonLabelLowercase = label.ToLower();
 
-        if(gameModeManager.GameMode == "CreateMarker")
+        if (gameModeManager.GameMode == "CreateMarker")
             newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
-        else if(gameModeManager.GameMode == "VirtualPlane")
-            newButton.onClick.AddListener(() => VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+        else if (gameModeManager.GameMode == "VirtualPlane")
+            newButton.onClick.AddListener(() => {
+                VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
+                elementSelected.GetComponentInChildren<TextMeshProUGUI>().text = "You selected: " + buttonLabelLowercase;
+            });
+            
         else
             Debug.LogError("Game mode not recognized");
 
