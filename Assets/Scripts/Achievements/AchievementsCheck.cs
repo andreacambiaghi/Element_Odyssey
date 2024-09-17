@@ -45,12 +45,8 @@ public class AchievementsCheck : MonoBehaviour
     private int countAllElements;
 
     private int minutesPlayed = 0;
-    private float time = 0.0f;
-
-    private int foundedIn5Minutes = 0;
-    private float time5Minutes = 0.0f;
-    private bool is5Minutes = false;
-
+    private float startTime = 0.0f;
+    private List<float> timeList;
     public static AchievementsCheck Instance;
 
     private readonly AchievementManager achievementManager = AchievementManager.Instance;
@@ -68,8 +64,11 @@ public class AchievementsCheck : MonoBehaviour
         {
             Instance = this;
         }
-        time = Time.time;
-        time5Minutes = Time.time;
+        startTime = Time.time;
+        timeList = new()
+        {
+            startTime
+        };
 
         countWaterElements = AchievementManager.Instance.GetAchievementValue("Achievement 4");
         countFireElements = AchievementManager.Instance.GetAchievementValue("Achievement 5");
@@ -78,26 +77,6 @@ public class AchievementsCheck : MonoBehaviour
         countAllElements = AchievementManager.Instance.GetAchievementValue("Achievement 9");
         countOtherElements = countAllElements - countWaterElements - countFireElements - countEarthElements - countAirElements;
 
-    }
-
-    public void Update()
-    {
-        achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
-        minutesPlayed = (int)(Time.time - time) / 60;
-
-        if (Time.time - time5Minutes >= 300 && !is5Minutes)
-        {
-            time5Minutes = Time.time;
-            foundedIn5Minutes = 0;
-        }
-
-        achievementManager.SetAchievementValue("Achievement 8", foundedIn5Minutes);
-
-        if (foundedIn5Minutes == 5)
-        {
-            is5Minutes = true;
-        }
-        
     }
 
     public void FoundedElement(string element)
@@ -123,8 +102,9 @@ public class AchievementsCheck : MonoBehaviour
             countOtherElements++;
         }
 
-        foundedIn5Minutes++;
         countAllElements++;
+
+        timeList.Add(Time.time);
 
         UpdateAchievementsJson();
     }
@@ -154,6 +134,20 @@ public class AchievementsCheck : MonoBehaviour
         achievementManager.SetAchievementValue("Achievement 6", countEarthElements);
         achievementManager.SetAchievementValue("Achievement 7", countAirElements);
         achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
+
+        achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
+        minutesPlayed = (int)(Time.time - startTime) / 60;
+
+        if (countAllElements >= 5)
+        {
+            for (int i = 0; i < countAllElements - 5; i++) 
+            {
+                if (timeList[i] - timeList[i + 5] <= 300)
+                {
+                    achievementManager.SetAchievementValue("Achievement 8", 5);
+                }
+            }
+        }
 
         for (int i = 0; i < 10; i++)
         {
