@@ -127,12 +127,14 @@ public class Elements : MonoBehaviour
     private void Interact(Elements element)
     {
         ElementPair elementPair = new ElementPair(this.name, element.name);
-        if(gameModeManager.GameMode == "CreateMarker"){
+        if (gameModeManager.GameMode == "CreateMarker") {
             if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName)){
                 MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, element.gameObject);
             }
-        }else{
+        } else {
             VirtualPlaneManager.Instance.ClearAndAddElement(elementPair, gameObject, element.gameObject);
+            GameObject popUp = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+            Destroy(popUp, 2f);
         }
     }
 
