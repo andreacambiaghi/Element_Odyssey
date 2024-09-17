@@ -132,7 +132,7 @@ public class Elements : MonoBehaviour
                 MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, element.gameObject);
             } else {
                 ElementPair elementPairBis = new ElementPair(element.name, this.name);
-                if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
+                if (!ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
                     MultipleImagesTrackingManager.Instance.SpawnPopUpNotExits();
             } 
         } else {
