@@ -81,6 +81,8 @@ public class AchievementsCheck : MonoBehaviour
 
     public void FoundedElement(string element)
     {
+        Debug.Log("FoundedElement: " + element);
+
         if (waterElements.Contains(element))
         {
             countWaterElements++;
@@ -142,11 +144,26 @@ public class AchievementsCheck : MonoBehaviour
         {
             for (int i = 0; i < countAllElements - 5; i++) 
             {
-                if (timeList[i + 5] - timeList[i] <= 300)
+                if (timeList[i + 4] - timeList[i] <= 300)
                 {
                     achievementManager.SetAchievementValue("Achievement 8", 5);
                 }
+                else
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (timeList[i + 4] - timeList[i + j] <= 300)
+                        {
+                            achievementManager.SetAchievementValue("Achievement 8", j + 1);
+                            break;
+                        }
+                    }
+                }
             }
+        } 
+        else
+        {
+            achievementManager.SetAchievementValue("Achievement 8", countAllElements);
         }
 
         for (int i = 0; i < 10; i++)

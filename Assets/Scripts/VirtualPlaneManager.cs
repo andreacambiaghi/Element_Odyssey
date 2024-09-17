@@ -322,6 +322,7 @@ public class VirtualPlaneManager : MonoBehaviour
         } else {   
             createButtonsComponent.ResetButtons();
             Debug.Log("ButtonLabels aggiornato con successo");
+            Debug.Log("ECCOMI FRA" + AchievementsCheck.Instance);
             AchievementsCheck.Instance.FoundedElement(prefabName);
             SpawnPopUp(prefabName);
         }
