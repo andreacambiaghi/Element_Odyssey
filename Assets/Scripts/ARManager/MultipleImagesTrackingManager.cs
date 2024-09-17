@@ -13,11 +13,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private ElementFilesManager _elementFilesManager;
     
-    //private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
 
     private Dictionary<ARTrackedImage, GameObject> _imageObjectMap; // Marker name -> GameObject
-    //private Dictionary<string, GameObject> _arObjects;
 
     public GameObject defaultObject;
 
@@ -28,14 +26,13 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     private List<string> _othersElements;
 
     [SerializeField] private GameObject slider;
+    
     [SerializeField] private SliderMenuAnim menu;
 
     [SerializeField] private GameObject createButton;
 
     [SerializeField] private GameObject popUpElementCreated;
     [SerializeField] private GameObject popUpElementAlreadyFound;
-
-    // Get the reference to the ARTrackedImageManager
 
     private bool _isSelecting = false;
 
@@ -67,14 +64,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     {
         // Listen the event when the tracked images are changed
         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
-
-        // Spawn the default game object
-        // GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, 0, 0));
-        // newARObject.name = prefab.name;
-        // newARObject.gameObject.SetActive(false);
-        // _arObjects.Add(newARObject.name, newARObject);
     }
-
 
     private void OnDestroy()
     {
@@ -305,13 +295,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     public void ClearAndAddElement(string prefabName, bool isSameElement = false){    
 
-
         soundOn = (!sameElementSoundCount && isSameElement) || !isSameElement;
 
         sameElementSoundCount = !sameElementSoundCount && isSameElement;
-
-        // if(isSameElement) sameElementSoundCount++;
-        // else sameElementSoundCount = 0;
 
         bool elementAlreadyAdded = _elementFilesManager.AddFoundElement(prefabName.ToLower());
 
@@ -347,7 +333,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
         //string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
-        string buttonLabel = prefabName;
+        //string buttonLabel = prefabName;
         // if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
         //     clip = Resources.Load<AudioClip>("Sounds/wrong");
         // }
