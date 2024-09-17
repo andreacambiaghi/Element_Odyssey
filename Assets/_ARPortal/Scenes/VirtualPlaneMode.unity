@@ -286,6 +286,7 @@ MonoBehaviour:
   menu: {fileID: 1577749885}
   homeButton: {fileID: 219950180}
   soundButton: {fileID: 311711124}
+  elementSelected: {fileID: 1929457939}
 --- !u!114 &179795965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,6 +1053,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   homeButton: {fileID: 219950180}
   soundButton: {fileID: 311711124}
+  elementSelected: {fileID: 1929457939}
 --- !u!114 &727683410
 MonoBehaviour:
   m_ObjectHideFlags: 0

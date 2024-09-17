@@ -11,6 +11,7 @@ public class AchievementsMenu : MonoBehaviour
     [SerializeField] private SliderMenuAnim menu;
     [SerializeField] private GameObject homeButton;
     [SerializeField] private GameObject soundButton;
+    [SerializeField] private GameObject elementSelected;
 
     public void OpenPanel()
     {
@@ -32,6 +33,11 @@ public class AchievementsMenu : MonoBehaviour
         if (soundButton != null)
         {
             soundButton.SetActive(false);
+        }
+
+        if (GameModeManager.Instance.GameMode == "VirtualPlane" && elementSelected != null)
+        {
+            elementSelected.SetActive(false);
         }
 
         if (slider != null)
@@ -70,6 +76,11 @@ public class AchievementsMenu : MonoBehaviour
         if (slider != null)
         {
             slider.SetActive(true);
+        }
+
+        if (GameModeManager.Instance.GameMode == "VirtualPlane" && elementSelected != null)
+        {
+            elementSelected.SetActive(true);
         }
     }
 
