@@ -436,6 +436,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         return null;
     }
 
-
+    public void SpawnPopUpNotExits() {
+        GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+        Destroy(spawnedObject, 3f);
+    }
 
 }

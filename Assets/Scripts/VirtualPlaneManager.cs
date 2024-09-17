@@ -331,10 +331,13 @@ public class VirtualPlaneManager : MonoBehaviour
             // ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out resultPrefabName);
             // ReadCSV.Instance.elementAssociations.TryGetValue(new ElementPair(elementPair.Element2, elementPair.Element1), out resultPrefabName);
             string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
-            if(resultPrefabName == null)
+            if (resultPrefabName == null) {
                 resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
+                GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+                Destroy(spawnedObject, 3f);
+            }
 
-            if(resultPrefabName == null){
+            if (resultPrefabName == null) {
                 Debug.Log("Elemento non trovato...");
                 foreach(GameObject element in interactingElements){
                     element.SetActive(false);
