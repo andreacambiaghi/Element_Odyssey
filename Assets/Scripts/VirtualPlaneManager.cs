@@ -13,11 +13,17 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private ElementFilesManager elementFilesManager;
     
-    private CreateButtons createButton;
-
-    private GameObject popUpElementCreated;
+    private CreateButtons createButtonsComponent;
 
     private List<GameObject> spawnedObjects = new List<GameObject>(); // TODO: gestire questa lista
+
+    [SerializeField] private GameObject slider;
+    
+    [SerializeField] private SliderMenuAnim menu;
+
+    [SerializeField] private GameObject createButton;
+
+    [SerializeField] private GameObject popUpElementCreated;
 
     private VirtualPlaneManager() { }
 
@@ -52,7 +58,7 @@ public class VirtualPlaneManager : MonoBehaviour
  
         planeManager = XROrigin.GetComponent<ARPlaneManager>(); 
         elementFilesManager = ElementFilesManager.Instance;
-        createButton = createButton.GetComponent<CreateButtons>();
+        createButtonsComponent = createButton.GetComponent<CreateButtons>();
     } 
  
     private void Update() 
@@ -221,6 +227,7 @@ public class VirtualPlaneManager : MonoBehaviour
 
     public void SelectGameObject(GameObject gameObject)
     {
+        // TODO: implementare la selezione di un oggetto
         // DeselectAllObjects();
         // selectedObject = gameObject;
         // objectRenderer.material.color = selectedColor;
@@ -291,7 +298,7 @@ public class VirtualPlaneManager : MonoBehaviour
             clip = Resources.Load<AudioClip>("Sounds/wrong");
             Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
         } else {   
-            createButton.ResetButtons();
+            createButtonsComponent.ResetButtons();
             Debug.Log("ButtonLabels aggiornato con successo");
             SpawnPopUp(prefabName);
         }
@@ -357,7 +364,7 @@ public class VirtualPlaneManager : MonoBehaviour
                 clip = Resources.Load<AudioClip>("Sounds/wrong");
                 Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
             } else {   
-                createButton.ResetButtons();
+                createButtonsComponent.ResetButtons();
                 Debug.Log("ButtonLabels aggiornato con successo");
                 SpawnPopUp(resultPrefabName);
             }

@@ -13,11 +13,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private ElementFilesManager _elementFilesManager;
     
-    //private GameObject[] prefabsToSpawn;
     private ARTrackedImageManager _arTrackedImageManager;
 
     private Dictionary<ARTrackedImage, GameObject> _imageObjectMap; // Marker name -> GameObject
-    //private Dictionary<string, GameObject> _arObjects;
 
     public GameObject defaultObject;
 
@@ -32,8 +30,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject createButton;
 
     [SerializeField] private GameObject popUpElementCreated;
-
-    // Get the reference to the ARTrackedImageManager
 
     private bool _isSelecting = false;
 
@@ -54,20 +50,12 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
         _createButtonsComponent = createButton.GetComponent<CreateButtons>();
         _elementFilesManager = ElementFilesManager.Instance;
-        //_arObjects = new Dictionary<string, GameObject>();
-
     }
 
     private void Start()
     {
         // Listen the event when the tracked images are changed
         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
-
-        // Spawn the default game object
-        // GameObject newARObject = Instantiate(defaultObject, Vector3.zero, Quaternion.Euler(-90, 0, 0));
-        // newARObject.name = prefab.name;
-        // newARObject.gameObject.SetActive(false);
-        // _arObjects.Add(newARObject.name, newARObject);
     }
 
     private void OnDestroy()
