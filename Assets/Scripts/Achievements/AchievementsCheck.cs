@@ -135,8 +135,8 @@ public class AchievementsCheck : MonoBehaviour
         achievementManager.SetAchievementValue("Achievement 7", countAirElements);
         achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
 
-        achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
         minutesPlayed = (int)(Time.time - startTime) / 60;
+        achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
 
         if (countAllElements >= 5)
         {
