@@ -438,6 +438,16 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     public void SpawnPopUpNotExits() {
         GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+            
+        AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
+        GameObject audioObject = new GameObject("TempAudioObject");
+        AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.clip = sound;
+
+        audioSourceTemp.Play();
+
+        Destroy(audioObject, sound.length);
+
         Destroy(spawnedObject, 3f);
     }
 

@@ -332,9 +332,11 @@ public class VirtualPlaneManager : MonoBehaviour
             // ReadCSV.Instance.elementAssociations.TryGetValue(new ElementPair(elementPair.Element2, elementPair.Element1), out resultPrefabName);
             string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
             if (resultPrefabName == null) {
+
                 resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
-                GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
-                Destroy(spawnedObject, 3f);
+
+                SpawnPopUpNotExits();
+
             }
 
             if (resultPrefabName == null) {
@@ -371,7 +373,6 @@ public class VirtualPlaneManager : MonoBehaviour
                 Debug.Log("ButtonLabels aggiornato con successo");
                 SpawnPopUp(resultPrefabName);
             }
-
             GameObject tempAudioObject = new GameObject("TempAudioObject");
             AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
             audioSource.clip = clip;
@@ -463,6 +464,21 @@ public class VirtualPlaneManager : MonoBehaviour
         {
             return $"Coords: {coords.ToString()}, Plane: {plane.ToString()}";
         }
+    }
+
+    public void SpawnPopUpNotExits() {
+        GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+            
+        AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
+        GameObject audioObject = new GameObject("TempAudioObject");
+        AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.clip = sound;
+
+        audioSourceTemp.Play();
+
+        Destroy(audioObject, sound.length);
+
+        Destroy(spawnedObject, 3f);
     }
 }
 
