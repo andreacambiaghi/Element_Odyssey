@@ -9,11 +9,14 @@ public class CreateButtons : MonoBehaviour
     [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
     [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
 
+    private GameModeManager gameModeManager;
+
     private ElementFilesManager elementFilesManager;
 
     public void Start()
     {
         elementFilesManager = ElementFilesManager.Instance;
+        gameModeManager = GameModeManager.Instance;
 
         ResetButtons();
 
@@ -37,7 +40,13 @@ public class CreateButtons : MonoBehaviour
 
         // Aggiungi il listener al bottone
         string buttonLabelLowercase = label.ToLower();
-        newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+
+        if(gameModeManager.GameMode == "CreateMarker")
+            newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+        else if(gameModeManager.GameMode == "VirtualPlane")
+            newButton.onClick.AddListener(() => VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+        else
+            Debug.LogError("Game mode not recognized");
 
         // Carica lo sprite corrispondente dal percorso Resources/Icon
         Sprite sprite = Resources.Load<Sprite>($"Icon/{buttonLabelLowercase}");
