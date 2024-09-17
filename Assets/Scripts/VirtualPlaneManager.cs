@@ -16,6 +16,7 @@ public class VirtualPlaneManager : MonoBehaviour
     private CreateButtons createButtonsComponent;
 
     private List<GameObject> spawnedObjects = new List<GameObject>(); // TODO: gestire questa lista
+    private List<string> _othersElements;
 
     [SerializeField] private GameObject slider;
     
@@ -24,6 +25,7 @@ public class VirtualPlaneManager : MonoBehaviour
     [SerializeField] private GameObject createButton;
 
     [SerializeField] private GameObject popUpElementCreated;
+    [SerializeField] private GameObject popUpElementAlreadyFound;
 
     private VirtualPlaneManager() { }
 
@@ -45,6 +47,9 @@ public class VirtualPlaneManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        _othersElements = ElementFilesManager.Instance.GetOthersElements();
+        Debug.LogWarning("Others elements: " + _othersElements.Count);
     }
     
     private void Start() 
@@ -202,7 +207,24 @@ public class VirtualPlaneManager : MonoBehaviour
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {
         Debug.Log("Spawning a " + prefabName);
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName)) {
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+            // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
+            // ComponentAdder ca = new();
+            // ca.AddComponentsToGameObject(newARObject);
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
+        }
+        else
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        }
+        
         newARObject.name = prefabName;
         newARObject.transform.position = position;
 
@@ -336,7 +358,7 @@ public class VirtualPlaneManager : MonoBehaviour
                 resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
 
                 SpawnPopUpNotExits();
-    
+
             }
 
             if (resultPrefabName == null) {
@@ -367,6 +389,7 @@ public class VirtualPlaneManager : MonoBehaviour
             if (!newElementAdded)
             {
                 clip = Resources.Load<AudioClip>("Sounds/wrong");
+                SpawnPopUp(resultPrefabName, true);
                 Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
             } else {   
                 createButtonsComponent.ResetButtons();
@@ -393,17 +416,31 @@ public class VirtualPlaneManager : MonoBehaviour
     }
 
 
-    void SpawnPopUp(string prefabName = "default")
+    void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     {
-        GameObject spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
-        
+        GameObject spawnedObject;
+        if (alreadyFound) {
+            spawnedObject = Instantiate(popUpElementAlreadyFound, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        }
         Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
         if (backgroundTransform != null)
         {
             Image backgroundImage = backgroundTransform.GetComponent<Image>();
             if (backgroundImage != null)
             {
-                Sprite loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                Sprite loadedSprite;
+                if (_othersElements.Contains(prefabName)) {
+                    loadedSprite = Resources.Load<Sprite>("Icon/other");
+                }
+                else
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                }
+
                 if (loadedSprite != null)
                 {
                     backgroundImage.sprite = loadedSprite;
@@ -430,6 +467,21 @@ public class VirtualPlaneManager : MonoBehaviour
         {
             Debug.Log("NameElement not found");
         }
+
+        Destroy(spawnedObject, 3f);
+    }
+
+    public void SpawnPopUpNotExits() {
+        GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+            
+        AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
+        GameObject audioObject = new GameObject("TempAudioObject");
+        AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.clip = sound;
+
+        audioSourceTemp.Play();
+
+        Destroy(audioObject, sound.length);
 
         Destroy(spawnedObject, 3f);
     }
@@ -466,20 +518,6 @@ public class VirtualPlaneManager : MonoBehaviour
         }
     }
 
-    public void SpawnPopUpNotExits() {
-        GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
-            
-        AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
-        GameObject audioObject = new GameObject("TempAudioObject");
-        AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
-        audioSourceTemp.clip = sound;
-
-        audioSourceTemp.Play();
-
-        Destroy(audioObject, sound.length);
-
-        Destroy(spawnedObject, 3f);
-    }
 }
 
 

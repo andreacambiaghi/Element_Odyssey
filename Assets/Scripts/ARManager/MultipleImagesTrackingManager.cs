@@ -369,7 +369,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     {
-        GameObject spawnedObject = null;
+        GameObject spawnedObject;
         if (alreadyFound) {
             spawnedObject = Instantiate(popUpElementAlreadyFound, transform.position, Quaternion.identity);
         }
