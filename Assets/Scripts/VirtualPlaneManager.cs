@@ -336,7 +336,7 @@ public class VirtualPlaneManager : MonoBehaviour
                 resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
 
                 SpawnPopUpNotExits();
-
+    
             }
 
             if (resultPrefabName == null) {
