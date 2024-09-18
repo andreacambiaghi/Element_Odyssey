@@ -614,6 +614,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   homeButton: {fileID: 1668687889}
   soundButton: {fileID: 1218078475}
+  elementSelected: {fileID: 0}
 --- !u!1 &326580907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,6 +2107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
   buttonLabels: []
+  elementSelected: {fileID: 0}
 --- !u!114 &1328013460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2439,7 +2441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -4239,6 +4241,7 @@ MonoBehaviour:
   menu: {fileID: 1577749885}
   homeButton: {fileID: 1668687889}
   soundButton: {fileID: 1218078475}
+  elementSelected: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
