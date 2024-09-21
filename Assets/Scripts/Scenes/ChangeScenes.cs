@@ -28,6 +28,12 @@ public class ChangeScenes : MonoBehaviour
         gameModeManager.GameMode = "VirtualPlane";
         SceneManager.LoadScene("VirtualPlaneMode");
     }
+
+    public void VillageScene()
+    {
+        gameModeManager.GameMode = "Village";
+        SceneManager.LoadScene("Village");
+    }
 }
 
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
-public class CreateButtons : MonoBehaviour
+public class ButtonForVillage : MonoBehaviour
 {
     [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
     [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
@@ -49,12 +49,7 @@ public class CreateButtons : MonoBehaviour
                 VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
                 elementSelected.GetComponentInChildren<TextMeshProUGUI>().text = "You selected: " + buttonLabelLowercase;
             });
-
-        // else if (gameModeManager.GameMode == "Village")
-        //     newButton.onClick.AddListener(() => {
-        //         VillageManager.Instance.OnPrefabSelected(buttonLabelLowercase);
-        //         elementSelected.GetComponentInChildren<TextMeshProUGUI>().text = "You selected: " + buttonLabelLowercase;
-        //     });
+            
         else
             Debug.LogError("Game mode not recognized");
 
