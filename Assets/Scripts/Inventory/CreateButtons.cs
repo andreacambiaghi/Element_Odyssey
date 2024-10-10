@@ -13,11 +13,41 @@ public class CreateButtons : MonoBehaviour
     private GameModeManager gameModeManager;
 
     private ElementFilesManager elementFilesManager;
+    private VirtualPlaneManager virtualPlaneManager;
+    private MultipleImagesTrackingManager multipleImagesTrackingManager;
 
     public void Start()
     {
         elementFilesManager = ElementFilesManager.Instance;
         gameModeManager = GameModeManager.Instance;
+        virtualPlaneManager = VirtualPlaneManager.Instance;
+        multipleImagesTrackingManager = MultipleImagesTrackingManager.Instance;
+
+        if (elementFilesManager == null)
+        {
+            Debug.LogError("ElementFilesManager non trovato");
+            
+        }
+
+        if (gameModeManager == null)
+        {
+            Debug.LogError("GameModeManager non trovato");
+            
+        }
+
+
+        if (multipleImagesTrackingManager == null)
+        {
+            Debug.LogError("MultipleImagesTrackingManager non trovato");
+            
+        }
+
+        if (virtualPlaneManager == null)
+        {
+            Debug.LogError("VirtualPlaneManager non trovato");
+        }
+
+        
 
         ResetButtons();
 
@@ -42,14 +72,12 @@ public class CreateButtons : MonoBehaviour
         // Aggiungi il listener al bottone
         string buttonLabelLowercase = label.ToLower();
 
+        Debug.LogWarning("GameMode is: " + gameModeManager.GameMode);
+
         if (gameModeManager.GameMode == "CreateMarker")
-            newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+            newButton.onClick.AddListener(() => multipleImagesTrackingManager.OnPrefabSelected(buttonLabelLowercase));
         else if (gameModeManager.GameMode == "VirtualPlane")
-            newButton.onClick.AddListener(() => {
-                VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
-                elementSelected.GetComponentInChildren<TextMeshProUGUI>().text = "You selected: " + buttonLabelLowercase;
-            });
-            
+            newButton.onClick.AddListener(() => virtualPlaneManager.OnPrefabSelected(buttonLabelLowercase));     
         else
             Debug.LogError("Game mode not recognized");
 

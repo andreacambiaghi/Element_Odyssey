@@ -53,10 +53,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
         _createButtonsComponent = createButton.GetComponent<CreateButtons>();
         _elementFilesManager = ElementFilesManager.Instance;
-        //_arObjects = new Dictionary<string, GameObject>();
 
         _othersElements = ElementFilesManager.Instance.GetOthersElements();
-        Debug.LogWarning("Others elements: " + _othersElements.Count);
+        Debug.LogWarning("Other elements: " + _othersElements.Count);
 
     }
 
@@ -287,7 +286,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         if(SelectedImageObject == null) return false; //aggiungere errore nella gui che indica che è necessario fare una selezione
         return SetPrefabOnSelected(prefabName);
     }
-
 
     bool soundOn = true;
 

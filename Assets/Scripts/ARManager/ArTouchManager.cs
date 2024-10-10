@@ -20,7 +20,7 @@ public class ArTouchManager : MonoBehaviour
         defaultColor = objectRenderer.material.color;
 
         gameModeManager = GameModeManager.Instance;
-        vpm = VirtualPlaneManager.Instance;
+        vpm = (VirtualPlaneManager) VirtualPlaneManager.Instance;
     }
 
     void Update()
