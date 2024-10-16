@@ -33,8 +33,9 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private ARPlaneManager planeManager; 
 
-    private string selectedPrefab = "water";
- 
+    private GameObject selectedObject;          // the object selected by touch interactions in the arplane
+
+    private string selectedPrefab = "water";    // the prefab selected from the menu
 
     private void Awake()
     {
@@ -68,78 +69,17 @@ public class VirtualPlaneManager : MonoBehaviour
  
     private void Update() 
     { 
-        // Vector3? planeTouchCoords = DetectPlaneTouch();
-        // if (planeTouchCoords != null)
-        // {
-        //     Debug.Log("Plane Touched at " + planeTouchCoords);
-        //     SpawnObject((Vector3)planeTouchCoords, "fire");
-        // }
 
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
         if (planeTouchCoords != null)
         {
             Debug.Log("Plane Touched at " + planeTouchCoords);
-            // Debug.Log("Plane Touched at " + planeTouchCoords.plane.transform.position);
-            // Debug.Log("Plane Touched at " + planeTouchCoords.coords);
-            // if (selectedPrefab != null){}
-            //     SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
-            // else
-            //     SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, "fire");
 
-            SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+            if(selectedObject != null) moveSelectedObject(planeTouchCoords.coords);
+            else  SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+           
         }
 
-    } 
-
-
-     /*
-        // if (planeManager.enabled == true && Input.touchCount > 0) 
-        // if (Input.touchCount > 0) 
-        // { 
-        //     Touch touch = Input.GetTouch(0); 
-        //     if (touch.phase == TouchPhase.Ended) 
-        //     { 
-        //         Vector3 clickedPlane = DetectPlaneTouch(touch); 
-        //         if (clickedPlane != null) 
-        //         { 
-        //             planeManager.enabled = false; // stopping plane search 
- 
-        //             // handling planes 
-        //             foreach (ARPlane plane in planeManager.trackables) 
-        //             { 
-        //                 if (plane == clickedPlane) {
-        //                     //Garden.Instance.SetGardenPlane(clickedPlane);   
-        //                     //Debug.Log("Plane Touched at " + clickedPlane.transform.position); 
-        //                 }
-        //                 else 
-        //                 { 
-        //                     // plane.gameObject.SetActive(false); 
-        //                     // Destroy(plane.gameObject); 
-        //                 } 
-        //             } 
- 
-        //             //this.enabled = false; // stopping the script 
-        //         } 
-        //     } 
-        // } 
-        */
- 
-    private ARPlane DetectPlane(Touch touch) 
-    { 
-        Ray ray = Camera.main.ScreenPointToRay(touch.position); 
-        if (Physics.Raycast(ray, out RaycastHit hit)) 
-        { 
-            ARPlane hitPlane = hit.transform.GetComponent<ARPlane>(); 
-            if (hitPlane != null){
-                // Debug.Log("Plane Touched at " + hitPlane.transform.position);
-                // Debug.Log("Plane Touched at " + hit.transform.position);
-                return hitPlane; 
-            }
- 
-            return null; 
-        } 
- 
-        return null; 
     } 
 
     private PlaneCoords DetectPlaneTouch()
@@ -165,31 +105,6 @@ public class VirtualPlaneManager : MonoBehaviour
         return null;
     }
 
-    // private Vector3? DetectPlaneTouch()
-    // {
-    //     if (Input.touchCount > 0)
-    //     {
-    //         Touch touch = Input.GetTouch(0);
-    //         if (touch.phase == TouchPhase.Ended)
-    //         {
-    //             Ray ray = Camera.main.ScreenPointToRay(touch.position);
-    //             if (Physics.Raycast(ray, out RaycastHit hit))
-    //             {
-    //                 bool uiHit = IsPointerOverUI(touch.position);
-                    
-
-    //                 if (!uiHit)
-    //                     return hit.point;
-    //                 else
-    //                     Debug.Log("UI Hit");
-                    
-    //                 return null;
-    //             }
-    //         }
-    //     }
-    //     return null;
-    // }
-
     private bool IsPointerOverUI(Vector2 pos)
     {
         PointerEventData eventData = new PointerEventData(EventSystem.current)
@@ -202,7 +117,6 @@ public class VirtualPlaneManager : MonoBehaviour
 
         return results.Count > 0;
     }
-
 
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {
@@ -235,6 +149,30 @@ public class VirtualPlaneManager : MonoBehaviour
         // Instantiate(prefab, position, Quaternion.identity);
     }
 
+    private Color GetInvertedColor(GameObject gameObject){
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Texture2D texture = renderer.material.mainTexture as Texture2D;
+        Color averageColor = Color.black;
+
+        if (texture != null)
+        {
+            Color[] pixels = texture.GetPixels();
+            foreach (Color pixel in pixels)
+            {
+                averageColor += pixel;
+            }
+            averageColor /= pixels.Length;
+        }
+        else
+        {
+            averageColor = renderer.material.color;
+        }
+
+        Color invertedColor = new Color(1 - averageColor.r, 1 - averageColor.g, 1 - averageColor.b);
+
+        return invertedColor;
+    }
+
     public void SetSelectedPrefab(string prefabName)
     {
         Debug.Log("Selected prefab: " + prefabName);
@@ -242,57 +180,32 @@ public class VirtualPlaneManager : MonoBehaviour
     }
 
     public bool OnPrefabSelected(string prefabName){
+        DeselectSelectedGameObject();
         SetSelectedPrefab(prefabName.ToLower());
-
         return false;
+    }
+
+    public void DeselectSelectedGameObject(){
+        if(selectedObject != null) {
+            Outline outline = selectedObject.GetComponent<Outline>();
+            if (outline != null) Destroy(outline);
+            selectedObject = null;
+        }
     }
 
     public void SelectGameObject(GameObject gameObject)
     {
-        // TODO: implementare la selezione di un oggetto
-        // DeselectAllObjects();
-        // selectedObject = gameObject;
-        // objectRenderer.material.color = selectedColor;
+        Debug.LogError("SelectGameObject: " + gameObject.name);
+        if(selectedObject != null) DeselectSelectedGameObject();
+
+        selectedObject = gameObject;
+        Outline outline = selectedObject.AddComponent<Outline>();
+        outline.OutlineMode = Outline.Mode.OutlineAll;
+        outline.OutlineColor = GetInvertedColor(selectedObject);
+        outline.OutlineWidth = 10f;
     }
 
-
-    private static bool alreadyDone = false;
     private static List<GameObject> interactingElements = new List<GameObject>();
-
-    // public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
-    //     if(!alreadyDone){
-    //         bool elementAlreadyAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
-    //         alreadyDone = true;
-    //         SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
-    //         callingGameObject.SetActive(false);
-            
-
-    //         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
-
-    //     if (!elementAlreadyAdded)
-    //     {
-    //         clip = Resources.Load<AudioClip>("Sounds/wrong");
-    //         Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
-    //     } else {   
-
-    //         createButton.ResetButtons();
-    //         // Debug.Log("ButtonLabels aggiornato con successo");
-    //         // SpawnPopUp(prefabName);
-    //     }
-
-    //     GameObject tempAudioObject = new GameObject("TempAudioObject");
-    //     AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
-    //     audioSource.clip = clip;
-
-    //     audioSource.Play();
-
-    //     Destroy(tempAudioObject, clip.length);
-
-    //     }
-    //     // callingGameObject.SetActive(false);
-    //     //Destroy(callingGameObject);
-        
-    // }
 
     public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
         interactingElements.Add(callingGameObject);
@@ -301,7 +214,6 @@ public class VirtualPlaneManager : MonoBehaviour
         if(interactingElements.Count > 1 ){
             
             bool newElementAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
-            //alreadyDone = true;
             SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
 
             foreach(GameObject element in interactingElements){
@@ -310,8 +222,6 @@ public class VirtualPlaneManager : MonoBehaviour
             }
 
             interactingElements.Clear();
-            //callingGameObject.SetActive(false);
-            
 
             AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
@@ -419,7 +329,6 @@ public class VirtualPlaneManager : MonoBehaviour
         
     }
 
-
     void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     {
         GameObject spawnedObject;
@@ -502,6 +411,13 @@ public class VirtualPlaneManager : MonoBehaviour
                 return result;
         }
         return null;
+    }
+
+    void moveSelectedObject(Vector3 position){
+        if(selectedObject != null){
+            selectedObject.transform.position = position;
+            DeselectSelectedGameObject();
+        }
     }
 
 
