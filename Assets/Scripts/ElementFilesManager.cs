@@ -14,6 +14,8 @@ public class ElementFilesManager : MonoBehaviour
 
     private string achievementsFilePath;
 
+    private string villageObjectsFilePath;
+
     public static ElementFilesManager Instance;
 
     private List<string> initialElements = null;
@@ -47,14 +49,11 @@ public class ElementFilesManager : MonoBehaviour
         return Instance;
     }   
 
-    // public List<string> getFoundElements(){
-    //     return foundElements;
-    // }
-
     private void Initialize()
     {
         foundElementsFilePath = Path.Combine(Application.persistentDataPath, "FoundElements.txt");
         achievementsFilePath = Path.Combine(Application.persistentDataPath, "achievements.json");
+        villageObjectsFilePath = Path.Combine(Application.persistentDataPath, "villageObjects.json");
 
         UpdateAll();
         // initialElements = GetInitialElements();
@@ -96,11 +95,6 @@ public class ElementFilesManager : MonoBehaviour
 
     public List<string> GetFoundElements()
     {
-        // if (foundElements != null)
-        // {
-        //     return foundElements;
-        // }
-
         string filePath = foundElementsFilePath;
         List<string> foundItems = new List<string>();
         if (!File.Exists(filePath))
@@ -222,7 +216,6 @@ public class ElementFilesManager : MonoBehaviour
         elementAssociations = GetElementAssociations();
     }
 
-
     private void ListDirectoriesInPersistentDataPath()
     {
         string persistentDataPath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources");
@@ -249,7 +242,6 @@ public class ElementFilesManager : MonoBehaviour
             Debug.LogError("The persistentDataPath does not exist.");
         }
     }
-
 
     public string getAchievementsJson(){
         //Debug.LogWarning("DEFAULT FILE -> " + defaultAchievementsJsonFile.text);
@@ -282,7 +274,6 @@ public class ElementFilesManager : MonoBehaviour
         //return textAsset.text;
         //return achievementsJsonFile.text;
     }
-
 
     public void UpdateAchievementsJson(string json){
         string filePath = achievementsFilePath;
@@ -328,5 +319,65 @@ public class ElementFilesManager : MonoBehaviour
 
         return elements;
     }
+
+    public string getDefaultVillageObjects()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("villageObjectsDefaults");
+        return textAsset.text;
+    }
+
+    public VillageData GetVillageData()
+    {
+        string filePath = villageObjectsFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, getDefaultVillageObjects());
+        }
+        else
+        {
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        Debug.LogWarning("saved Village data: " + File.ReadAllText(filePath));
+
+        VillageData villageData = JsonUtility.FromJson<VillageData>(File.ReadAllText(filePath));
+
+
+        Debug.LogError("writing village data");
+        foreach (var villageObject in villageData.villageObjects)
+        {
+            Debug.Log($"Key: {villageObject.Key}, Value: {villageObject.Value}");
+            Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
+        }
+        Debug.LogError("Finshed writing village data");
+        return  villageData;
+    }
+
+
+public class VillageData
+{
+    public List<VillageObject> villageObjects;
+
+    public string toString()
+    {
+        return string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
+    }
+}
+
+public class VillageObject
+{
+
+    public string Key;  // Use fields instead of properties for JsonUtility
+    public int Value;
+    public List<string> Requirements;
+
+    public string toString()
+    {
+        return Key + " " + Value + " " + string.Join(", ", Requirements);
+    }
+}
+
 
 }

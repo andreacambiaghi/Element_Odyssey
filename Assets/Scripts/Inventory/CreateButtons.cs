@@ -47,8 +47,12 @@ public class CreateButtons : MonoBehaviour
         else if (gameModeManager.GameMode == "VirtualPlane")
             newButton.onClick.AddListener(() => {
                 VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
-                elementSelected.GetComponentInChildren<TextMeshProUGUI>().text = "You selected: " + buttonLabelLowercase;
             });
+        else if (gameModeManager.GameMode == "Village") {
+            newButton.onClick.AddListener(() => {
+                VillagePlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
+            });
+        }
 
         // else if (gameModeManager.GameMode == "Village")
         //     newButton.onClick.AddListener(() => {
