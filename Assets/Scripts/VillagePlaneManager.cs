@@ -58,15 +58,23 @@ public class VillagePlaneManager : MonoBehaviour
             Debug.LogError("XR Origin is not assigned"); 
             return; 
         } 
- 
         planeManager = XROrigin.GetComponent<ARPlaneManager>(); 
         elementFilesManager = ElementFilesManager.Instance;
         createButtonsComponent = createButton.GetComponent<CreateButtons>();
 
-        elementFilesManager.GetVillageData().toString();
+        ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
+        if (villageData != null)
+        {
+            Debug.Log("Village data loaded: " + villageData.toString());
+        }
+        else
+        {
+            Debug.LogError("Failed to load village data");
+        }
 
     } 
  
+
     private void Update() 
     { 
 

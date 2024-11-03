@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class ElementFilesManager : MonoBehaviour
 {
@@ -340,10 +341,27 @@ public class ElementFilesManager : MonoBehaviour
             Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
         }
 
-        Debug.LogWarning("saved Village data: " + File.ReadAllText(filePath));
+        string villageDataString = File.ReadAllText(filePath);
+        Debug.LogWarning("saved Village data: " + villageDataString);
 
-        VillageData villageData = JsonUtility.FromJson<VillageData>(File.ReadAllText(filePath));
+        Debug.LogWarning("now creating the village data object");
 
+        VillageData villageData = JsonUtility.FromJson<VillageData>(villageDataString);
+
+        if (villageData == null)
+        {
+            Debug.LogError("Village data is null after deserialization");
+            return null;
+        }
+
+        if (villageData.villageObjects == null)
+        {
+            Debug.LogError("villageObjects is null after deserialization");
+            return null;
+        }
+
+        Debug.Log("This is the village data:");
+        Debug.LogWarning("Village data: " + villageData.toString());
 
         Debug.LogError("writing village data");
         foreach (var villageObject in villageData.villageObjects)
@@ -352,32 +370,34 @@ public class ElementFilesManager : MonoBehaviour
             Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
         }
         Debug.LogError("Finshed writing village data");
-        return  villageData;
+        return villageData;
     }
 
-
-public class VillageData
-{
-    public List<VillageObject> villageObjects;
-
-    public string toString()
+    [Serializable]
+    public class VillageData
     {
-        return string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
+        public List<VillageObject> villageObjects;
+
+        public string toString()
+        {
+            if (villageObjects == null)
+            {
+                return "No village objects available.";
+            }
+            return string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
+        }
     }
-}
 
-public class VillageObject
-{
-
-    public string Key;  // Use fields instead of properties for JsonUtility
-    public int Value;
-    public List<string> Requirements;
-
-    public string toString()
+    [Serializable]
+    public class VillageObject
     {
-        return Key + " " + Value + " " + string.Join(", ", Requirements);
+        public string Key; 
+        public int Value;
+        public List<string> Requirements;
+
+        public string toString()
+        {
+            return $"{Key} {Value} {(Requirements != null ? string.Join(", ", Requirements) : "No requirements")}";
+        }
     }
-}
-
-
 }
