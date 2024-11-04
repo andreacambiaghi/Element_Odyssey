@@ -112,8 +112,19 @@ public class CreateButtons : MonoBehaviour
         ClearButtons();
 
         Debug.LogWarning("Button labels cleared: " + string.Join(", ", buttonLabels));
-        buttonLabels = elementFilesManager.GetInitialElements();
-        buttonLabels.AddRange(elementFilesManager.GetFoundElements());
+
+
+        if(GameModeManager.Instance.GameMode == "createMarker" || GameModeManager.Instance.GameMode == "VirtualPlane"){
+            buttonLabels = elementFilesManager.GetInitialElements();
+            buttonLabels.AddRange(elementFilesManager.GetFoundElements());
+        } else if(GameModeManager.Instance.GameMode == "Village") {
+            ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
+            foreach(ElementFilesManager.VillageObject villageObject in villageData.villageObjects){
+                if(villageObject.Value == 1){
+                    buttonLabels.Add(villageObject.Key);
+                }
+            }
+        }
 
         // TODO: aggiustare
         buttonLabels = buttonLabels.Distinct().ToList();

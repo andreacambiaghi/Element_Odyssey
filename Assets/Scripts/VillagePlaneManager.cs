@@ -62,6 +62,9 @@ public class VillagePlaneManager : MonoBehaviour
         elementFilesManager = ElementFilesManager.Instance;
         createButtonsComponent = createButton.GetComponent<CreateButtons>();
 
+        Debug.Log("Current gamemode: " + GameModeManager.Instance.GameMode);
+
+        //createButtonsComponent.ResetButtons();
         ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
         if (villageData != null)
         {
