@@ -1,17 +1,17 @@
 {
     "villageObjects": [
         {
-            "Key": "fire",
+            "Key": "bee",
             "Value": 0,
             "Requirements": ["fire"]
         },
         {
-            "Key": "water",
+            "Key": "car",
             "Value": 0,
             "Requirements": ["water"]
         },
         {
-            "Key": "volcano",
+            "Key": "tree",
             "Value": 0,
             "Requirements": ["volcano", "steam"]
         }

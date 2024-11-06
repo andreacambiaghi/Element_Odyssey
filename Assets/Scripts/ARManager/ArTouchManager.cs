@@ -9,6 +9,8 @@ public class ArTouchManager : MonoBehaviour
 
     private VirtualPlaneManager vpm;
 
+    private VillagePlaneManager vlpm;
+
     private GameModeManager gameModeManager;
 
     private Renderer objectRenderer;
@@ -21,6 +23,9 @@ public class ArTouchManager : MonoBehaviour
 
         gameModeManager = GameModeManager.Instance;
         vpm = VirtualPlaneManager.Instance;
+
+        vlpm = VillagePlaneManager.Instance;
+        
     }
 
     void Update()
@@ -52,6 +57,10 @@ public class ArTouchManager : MonoBehaviour
             mitm.SelectGameObject(gameObject);
         else if(gameModeManager.GameMode == "VirtualPlane")
             vpm.SelectGameObject(gameObject);
+        else if(gameModeManager.GameMode == "Village")
+            vlpm.SelectGameObject(gameObject);
+        else
+            Debug.LogError("Game mode not recognized");
     }
 
     public void Deselect()

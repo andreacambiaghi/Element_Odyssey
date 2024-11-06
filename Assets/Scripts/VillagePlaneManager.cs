@@ -51,8 +51,7 @@ public class VillagePlaneManager : MonoBehaviour
     }
     
     private void Start() 
-    { 
-
+    {
         if (XROrigin == null) 
         { 
             Debug.LogError("XR Origin is not assigned"); 
@@ -76,14 +75,11 @@ public class VillagePlaneManager : MonoBehaviour
 
         createButtonsComponent = createButton.GetComponent<CreateButtons>();
         createButtonsComponent.ResetButtons();
-        
-
     } 
  
 
     private void Update() 
     { 
-
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
         if (planeTouchCoords != null)
         {
@@ -202,110 +198,110 @@ public class VillagePlaneManager : MonoBehaviour
 
     private static List<GameObject> interactingElements = new List<GameObject>();
 
-    public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
-        // interactingElements.Add(callingGameObject);
-        // Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
+    // public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
+    //     // interactingElements.Add(callingGameObject);
+    //     // Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
 
-        // if(interactingElements.Count > 1 ){
+    //     // if(interactingElements.Count > 1 ){
             
-        //     bool newElementAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
-        //     SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
+    //     //     bool newElementAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
+    //     //     SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
 
-        //     foreach(GameObject element in interactingElements){
-        //         element.SetActive(false);
-        //         Destroy(element);
-        //     }
+    //     //     foreach(GameObject element in interactingElements){
+    //     //         element.SetActive(false);
+    //     //         Destroy(element);
+    //     //     }
 
-        //     interactingElements.Clear();
+    //     //     interactingElements.Clear();
 
-        //     AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+    //     //     AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
-        // if (!newElementAdded)
-        // {
-        //     clip = Resources.Load<AudioClip>("Sounds/wrong");
-        //     Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
-        // } else {   
-        //     createButtonsComponent.ResetButtons();
-        //     Debug.Log("ButtonLabels aggiornato con successo");
-        //     Debug.Log("ECCOMI FRA" + AchievementsCheck.Instance);
-        //     AchievementsCheck.Instance.FoundedElement(prefabName);
-        //     SpawnPopUp(prefabName);
-        // }
+    //     // if (!newElementAdded)
+    //     // {
+    //     //     clip = Resources.Load<AudioClip>("Sounds/wrong");
+    //     //     Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
+    //     // } else {   
+    //     //     createButtonsComponent.ResetButtons();
+    //     //     Debug.Log("ButtonLabels aggiornato con successo");
+    //     //     Debug.Log("ECCOMI FRA" + AchievementsCheck.Instance);
+    //     //     AchievementsCheck.Instance.FoundedElement(prefabName);
+    //     //     SpawnPopUp(prefabName);
+    //     // }
 
-        // GameObject tempAudioObject = new GameObject("TempAudioObject");
-        // AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
-        // audioSource.clip = clip;
+    //     // GameObject tempAudioObject = new GameObject("TempAudioObject");
+    //     // AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+    //     // audioSource.clip = clip;
 
-        // audioSource.Play();
+    //     // audioSource.Play();
 
-        // Destroy(tempAudioObject, clip.length);
+    //     // Destroy(tempAudioObject, clip.length);
 
-        // }else{
-        // }
-    }
+    //     // }else{
+    //     // }
+    // }
 
-    public void ClearAndAddElement(ElementPair elementPair, GameObject callingGameObject, GameObject otherObject, bool isSameElement = false){
-        // interactingElements.Add(callingGameObject);
-        // Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
+    // public void ClearAndAddElement(ElementPair elementPair, GameObject callingGameObject, GameObject otherObject, bool isSameElement = false){
+    //     // interactingElements.Add(callingGameObject);
+    //     // Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
 
-        // if(interactingElements.Count > 1 ){
+    //     // if(interactingElements.Count > 1 ){
 
-        //     string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
-        //     if (resultPrefabName == null) {
+    //     //     string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
+    //     //     if (resultPrefabName == null) {
 
-        //         resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
+    //     //         resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
 
-        //         ElementPair elementPairBis = new ElementPair(elementPair.Element2, elementPair.Element1);
-        //         if (!ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
-        //             SpawnPopUpNotExits();
+    //     //         ElementPair elementPairBis = new ElementPair(elementPair.Element2, elementPair.Element1);
+    //     //         if (!ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
+    //     //             SpawnPopUpNotExits();
 
-        //     }
+    //     //     }
 
-        //     if (resultPrefabName == null) {
-        //         Debug.Log("Elemento non trovato...");
-        //         foreach(GameObject element in interactingElements){
-        //             element.SetActive(false);
-        //             Destroy(element);
-        //         }
+    //     //     if (resultPrefabName == null) {
+    //     //         Debug.Log("Elemento non trovato...");
+    //     //         foreach(GameObject element in interactingElements){
+    //     //             element.SetActive(false);
+    //     //             Destroy(element);
+    //     //         }
 
-        //         interactingElements.Clear();
-        //         return;
-        //     }
+    //     //         interactingElements.Clear();
+    //     //         return;
+    //     //     }
 
             
-        //     bool newElementAdded = elementFilesManager.AddFoundElement(resultPrefabName.ToLower());
-        //     SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), resultPrefabName);
+    //     //     bool newElementAdded = elementFilesManager.AddFoundElement(resultPrefabName.ToLower());
+    //     //     SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), resultPrefabName);
 
-        //     foreach(GameObject element in interactingElements){
-        //         element.SetActive(false);
-        //         Destroy(element);
-        //     }
+    //     //     foreach(GameObject element in interactingElements){
+    //     //         element.SetActive(false);
+    //     //         Destroy(element);
+    //     //     }
 
-        //     interactingElements.Clear();
+    //     //     interactingElements.Clear();
             
 
-        //     AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+    //     //     AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
 
-        //     if (!newElementAdded)
-        //     {
-        //         clip = Resources.Load<AudioClip>("Sounds/wrong");
-        //         SpawnPopUp(resultPrefabName, true);
-        //         Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
-        //     } else {   
-        //         createButtonsComponent.ResetButtons();
-        //         Debug.Log("ButtonLabels aggiornato con successo");
-        //         SpawnPopUp(resultPrefabName);
-        //     }
-        //     GameObject tempAudioObject = new GameObject("TempAudioObject");
-        //     AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
-        //     audioSource.clip = clip;
+    //     //     if (!newElementAdded)
+    //     //     {
+    //     //         clip = Resources.Load<AudioClip>("Sounds/wrong");
+    //     //         SpawnPopUp(resultPrefabName, true);
+    //     //         Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
+    //     //     } else {   
+    //     //         createButtonsComponent.ResetButtons();
+    //     //         Debug.Log("ButtonLabels aggiornato con successo");
+    //     //         SpawnPopUp(resultPrefabName);
+    //     //     }
+    //     //     GameObject tempAudioObject = new GameObject("TempAudioObject");
+    //     //     AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+    //     //     audioSource.clip = clip;
 
-        //     audioSource.Play();
+    //     //     audioSource.Play();
 
-        //     Destroy(tempAudioObject, clip.length);
+    //     //     Destroy(tempAudioObject, clip.length);
 
-        // }else{}
-    }
+    //     // }else{}
+    // }
 
     // void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     // {
