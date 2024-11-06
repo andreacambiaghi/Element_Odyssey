@@ -12,8 +12,8 @@
         },
         {
             "Key": "volcano",
-            "Value": 1,
-            "Requirements": ["volcano"]
+            "Value": 0,
+            "Requirements": ["volcano", "steam"]
         }
     ]
 }

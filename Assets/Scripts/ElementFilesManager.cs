@@ -342,9 +342,9 @@ public class ElementFilesManager : MonoBehaviour
         }
 
         string villageDataString = File.ReadAllText(filePath);
-        Debug.LogWarning("saved Village data: " + villageDataString);
+        //Debug.LogWarning("saved Village data: " + villageDataString);
 
-        Debug.LogWarning("now creating the village data object");
+        //Debug.LogWarning("now creating the village data object");
 
         VillageData villageData = JsonUtility.FromJson<VillageData>(villageDataString);
 
@@ -363,14 +363,66 @@ public class ElementFilesManager : MonoBehaviour
         Debug.Log("This is the village data:");
         Debug.LogWarning("Village data: " + villageData.toString());
 
-        Debug.LogError("writing village data");
+        //Debug.LogError("writing village data");
         foreach (var villageObject in villageData.villageObjects)
         {
             Debug.Log($"Key: {villageObject.Key}, Value: {villageObject.Value}");
             Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
         }
-        Debug.LogError("Finshed writing village data");
+        //Debug.LogError("Finshed writing village data");
         return villageData;
+    }
+
+    public void RefreshVillageData()
+    {
+        UpdateAll();
+        VillageData villageData = GetVillageData();
+        foreach(var villageObject in villageData.villageObjects)
+        {
+            if (villageObject.Requirements != null)
+            {
+                bool allRequirementsSatisfied = true;
+                foreach (var requirement in villageObject.Requirements)
+                {
+                    if (!foundElements.Contains(requirement.ToLower()) && !initialElements.Contains(requirement.ToLower()))
+                    {
+                        allRequirementsSatisfied = false;
+                        break;
+                    }
+                    if(allRequirementsSatisfied)
+                    {
+                        villageObject.Value = 1;
+                    } else
+                    {
+                        villageObject.Value = 0;
+                    }
+                }
+            }
+        }
+        UpdateVillageData(villageData);
+    }
+
+    public void ResetVillageData()
+    {
+        string filePath = villageObjectsFilePath;
+        File.WriteAllText(filePath, getDefaultVillageObjects());
+    }
+
+    public void UpdateVillageData(VillageData villageData)
+    {
+        string filePath = villageObjectsFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso, an empty one will be created: " + filePath);
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string villageDataString = JsonUtility.ToJson(villageData);
+        File.WriteAllText(filePath, villageDataString);
     }
 
     [Serializable]

@@ -12,7 +12,7 @@
         },
         {
             "Key": "volcano",
-            "Value": 1,
+            "Value": 0,
             "Requirements": ["volcano"]
         }
     ]

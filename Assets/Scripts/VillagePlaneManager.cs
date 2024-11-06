@@ -60,11 +60,10 @@ public class VillagePlaneManager : MonoBehaviour
         } 
         planeManager = XROrigin.GetComponent<ARPlaneManager>(); 
         elementFilesManager = ElementFilesManager.Instance;
-        createButtonsComponent = createButton.GetComponent<CreateButtons>();
-
+        
         Debug.Log("Current gamemode: " + GameModeManager.Instance.GameMode);
+        elementFilesManager.RefreshVillageData();
 
-        //createButtonsComponent.ResetButtons();
         ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
         if (villageData != null)
         {
@@ -74,6 +73,10 @@ public class VillagePlaneManager : MonoBehaviour
         {
             Debug.LogError("Failed to load village data");
         }
+
+        createButtonsComponent = createButton.GetComponent<CreateButtons>();
+        createButtonsComponent.ResetButtons();
+        
 
     } 
  
@@ -210,6 +213,11 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     private static List<GameObject> interactingElements = new List<GameObject>();
+
+
+    public void AddObject(){
+        // TODO
+    }
 
     public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
         // interactingElements.Add(callingGameObject);
