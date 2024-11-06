@@ -20,11 +20,6 @@ public class CreateButtons : MonoBehaviour
         gameModeManager = GameModeManager.Instance;
 
         ResetButtons();
-
-        // foreach (string label in buttonLabels)
-        // {
-        //     CreateButton(label);
-        // }
     }
 
     public void CreateButton(string label)
@@ -52,14 +47,7 @@ public class CreateButtons : MonoBehaviour
             newButton.onClick.AddListener(() => {
                 VillagePlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
             });
-        }
-
-        // else if (gameModeManager.GameMode == "Village")
-        //     newButton.onClick.AddListener(() => {
-        //         VillageManager.Instance.OnPrefabSelected(buttonLabelLowercase);
-        //         elementSelected.GetComponentInChildren<TextMeshProUGUI>().text = "You selected: " + buttonLabelLowercase;
-        //     });
-        else
+        } else
             Debug.LogError("Game mode not recognized");
 
         // Carica lo sprite corrispondente dal percorso Resources/Icon
@@ -126,7 +114,6 @@ public class CreateButtons : MonoBehaviour
             }
         }
 
-        // TODO: aggiustare
         buttonLabels = buttonLabels.Distinct().ToList();
 
         Debug.LogWarning("Button labels to update: " + string.Join(", ", buttonLabels));

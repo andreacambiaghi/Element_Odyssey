@@ -133,27 +133,15 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
-    {
+    {       
         Debug.Log("Spawning a " + prefabName);
         
-        // GameObject newARObject;
-        // if (_othersElements.Contains(prefabName)) {
-        //     newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
-        //     TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
-        //     foreach (TextMeshProUGUI text in texts)
-        //     {
-        //         text.text = prefabName;
-        //     }
-        // }
-        // else
-        // {
-        //     newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
-        // }
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         
-        // newARObject.name = prefabName;
-        // newARObject.transform.position = position;
+        newARObject.name = prefabName;
+        newARObject.transform.position = position;
 
-        // newARObject.SetActive(true);
+        newARObject.SetActive(true);
     }
 
     private Color GetInvertedColor(GameObject gameObject){
@@ -213,11 +201,6 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     private static List<GameObject> interactingElements = new List<GameObject>();
-
-
-    public void AddObject(){
-        // TODO
-    }
 
     public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
         // interactingElements.Add(callingGameObject);
@@ -414,7 +397,6 @@ public class VillagePlaneManager : MonoBehaviour
             DeselectSelectedGameObject();
         }
     }
-
 
     private class PlaneCoords
     {
