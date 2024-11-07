@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System;
 
 public class VillagePlaneManager : MonoBehaviour 
 { 
@@ -34,7 +35,11 @@ public class VillagePlaneManager : MonoBehaviour
 
     private GameObject selectedObject;          // the object selected by touch interactions in the arplane
 
-    private string selectedPrefab = "water";    // the prefab selected from the menu
+    private string selectedPrefab = null;    // the prefab selected from the menu
+
+    private bool isPlanePlaced = false;
+
+    private GameObject VillagePlane;
 
     private void Awake()
     {
@@ -85,7 +90,21 @@ public class VillagePlaneManager : MonoBehaviour
         {
             Debug.Log("Plane Touched at " + planeTouchCoords);
 
-            if(selectedObject != null) moveSelectedObject(planeTouchCoords.coords);
+            if(!isPlanePlaced){
+                createVillagePlane(planeTouchCoords.coords);
+                isPlanePlaced = true;
+                ARPlaneManager planeManager = FindObjectOfType<ARPlaneManager>();
+                ARPlane[] planes = new ARPlane[planeManager.trackables.count];
+                if (planeManager != null)
+                {
+                    planeManager.enabled = false;
+                    foreach (ARPlane plane in planeManager.trackables)
+                    {
+                        plane.gameObject.SetActive(false);
+                    }
+                }
+
+            }else if(selectedObject != null) moveSelectedObject(planeTouchCoords.coords);
             else  SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
            
         }
@@ -107,7 +126,10 @@ public class VillagePlaneManager : MonoBehaviour
                     ARPlane hitPlane = hit.transform.GetComponent<ARPlane>(); 
                     if (hitPlane != null && !uiHit){
                         return new PlaneCoords(hit.point, hitPlane); 
+                    } else if (hit.transform.gameObject == VillagePlane) {
+                        return new PlaneCoords(hit.point, null);
                     }
+                    } else {
                     return null;
                 }
             }
@@ -132,6 +154,8 @@ public class VillagePlaneManager : MonoBehaviour
     {       
         Debug.Log("Spawning a " + prefabName);
         
+        if (prefabName == null) return; 
+
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePrefabs/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
         
         newARObject.name = prefabName;
@@ -141,26 +165,27 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     private Color GetInvertedColor(GameObject gameObject){
-        Renderer renderer = gameObject.GetComponent<Renderer>();
-        Texture2D texture = renderer.material.mainTexture as Texture2D;
-        Color averageColor = Color.black;
+        // Renderer renderer = gameObject.GetComponent<Renderer>();
+        // Texture2D texture = renderer.material.mainTexture as Texture2D;
+        // Color averageColor = Color.black;
 
-        if (texture != null)
-        {
-            Color[] pixels = texture.GetPixels();
-            foreach (Color pixel in pixels)
-            {
-                averageColor += pixel;
-            }
-            averageColor /= pixels.Length;
-        }
-        else
-        {
-            averageColor = renderer.material.color;
-        }
+        // if (texture != null)
+        // {
+        //     Color[] pixels = texture.GetPixels();
+        //     foreach (Color pixel in pixels)
+        //     {
+        //         averageColor += pixel;
+        //     }
+        //     averageColor /= pixels.Length;
+        // }
+        // else
+        // {
+        //     averageColor = renderer.material.color;
+        // }
 
-        Color invertedColor = new Color(1 - averageColor.r, 1 - averageColor.g, 1 - averageColor.b);
+        // Color invertedColor = new Color(1 - averageColor.r, 1 - averageColor.g, 1 - averageColor.b);
 
+        Color invertedColor = new Color(1, 1, 1);
         return invertedColor;
     }
 
@@ -186,7 +211,7 @@ public class VillagePlaneManager : MonoBehaviour
 
     public void SelectGameObject(GameObject gameObject)
     {
-        Debug.LogError("SelectGameObject: " + gameObject.name);
+        Debug.Log("SelectGameObject: " + gameObject.name);
         if(selectedObject != null) DeselectSelectedGameObject();
 
         selectedObject = gameObject;
@@ -196,183 +221,16 @@ public class VillagePlaneManager : MonoBehaviour
         outline.OutlineWidth = 10f;
     }
 
-    private static List<GameObject> interactingElements = new List<GameObject>();
+    public void createVillagePlane(Vector3 position){
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        
+        newARObject.name = "VillagePlane";
+        newARObject.transform.position = position;
 
-    // public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
-    //     // interactingElements.Add(callingGameObject);
-    //     // Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
+        newARObject.SetActive(true);
 
-    //     // if(interactingElements.Count > 1 ){
-            
-    //     //     bool newElementAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
-    //     //     SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
-
-    //     //     foreach(GameObject element in interactingElements){
-    //     //         element.SetActive(false);
-    //     //         Destroy(element);
-    //     //     }
-
-    //     //     interactingElements.Clear();
-
-    //     //     AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
-
-    //     // if (!newElementAdded)
-    //     // {
-    //     //     clip = Resources.Load<AudioClip>("Sounds/wrong");
-    //     //     Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
-    //     // } else {   
-    //     //     createButtonsComponent.ResetButtons();
-    //     //     Debug.Log("ButtonLabels aggiornato con successo");
-    //     //     Debug.Log("ECCOMI FRA" + AchievementsCheck.Instance);
-    //     //     AchievementsCheck.Instance.FoundedElement(prefabName);
-    //     //     SpawnPopUp(prefabName);
-    //     // }
-
-    //     // GameObject tempAudioObject = new GameObject("TempAudioObject");
-    //     // AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
-    //     // audioSource.clip = clip;
-
-    //     // audioSource.Play();
-
-    //     // Destroy(tempAudioObject, clip.length);
-
-    //     // }else{
-    //     // }
-    // }
-
-    // public void ClearAndAddElement(ElementPair elementPair, GameObject callingGameObject, GameObject otherObject, bool isSameElement = false){
-    //     // interactingElements.Add(callingGameObject);
-    //     // Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
-
-    //     // if(interactingElements.Count > 1 ){
-
-    //     //     string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
-    //     //     if (resultPrefabName == null) {
-
-    //     //         resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(new ElementPair(elementPair.Element2, elementPair.Element1));
-
-    //     //         ElementPair elementPairBis = new ElementPair(elementPair.Element2, elementPair.Element1);
-    //     //         if (!ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
-    //     //             SpawnPopUpNotExits();
-
-    //     //     }
-
-    //     //     if (resultPrefabName == null) {
-    //     //         Debug.Log("Elemento non trovato...");
-    //     //         foreach(GameObject element in interactingElements){
-    //     //             element.SetActive(false);
-    //     //             Destroy(element);
-    //     //         }
-
-    //     //         interactingElements.Clear();
-    //     //         return;
-    //     //     }
-
-            
-    //     //     bool newElementAdded = elementFilesManager.AddFoundElement(resultPrefabName.ToLower());
-    //     //     SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), resultPrefabName);
-
-    //     //     foreach(GameObject element in interactingElements){
-    //     //         element.SetActive(false);
-    //     //         Destroy(element);
-    //     //     }
-
-    //     //     interactingElements.Clear();
-            
-
-    //     //     AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
-
-    //     //     if (!newElementAdded)
-    //     //     {
-    //     //         clip = Resources.Load<AudioClip>("Sounds/wrong");
-    //     //         SpawnPopUp(resultPrefabName, true);
-    //     //         Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
-    //     //     } else {   
-    //     //         createButtonsComponent.ResetButtons();
-    //     //         Debug.Log("ButtonLabels aggiornato con successo");
-    //     //         SpawnPopUp(resultPrefabName);
-    //     //     }
-    //     //     GameObject tempAudioObject = new GameObject("TempAudioObject");
-    //     //     AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
-    //     //     audioSource.clip = clip;
-
-    //     //     audioSource.Play();
-
-    //     //     Destroy(tempAudioObject, clip.length);
-
-    //     // }else{}
-    // }
-
-    // void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
-    // {
-    //     GameObject spawnedObject;
-    //     if (alreadyFound) {
-    //         spawnedObject = Instantiate(popUpElementAlreadyFound, transform.position, Quaternion.identity);
-    //     }
-    //     else
-    //     {
-    //         spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
-    //     }
-    //     Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
-    //     if (backgroundTransform != null)
-    //     {
-    //         Image backgroundImage = backgroundTransform.GetComponent<Image>();
-    //         if (backgroundImage != null)
-    //         {
-    //             Sprite loadedSprite;
-    //             if (_othersElements.Contains(prefabName)) {
-    //                 loadedSprite = Resources.Load<Sprite>("Icon/other");
-    //             }
-    //             else
-    //             {
-    //                 loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
-    //             }
-
-    //             if (loadedSprite != null)
-    //             {
-    //                 backgroundImage.sprite = loadedSprite;
-    //                 // Debug.Log("Loaded sprite: " + loadedSprite.name);
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Background not found");
-    //     }
-
-    //     Transform nameElementTransform = FindInChildren(spawnedObject.transform, "NameElement");
-    //     if (nameElementTransform != null)
-    //     {
-    //         TextMeshProUGUI nameText = nameElementTransform.GetComponent<TextMeshProUGUI>();
-    //         if (nameText != null)
-    //         {
-    //             nameText.text = char.ToUpper(prefabName[0]) + prefabName[1..];
-    //             // Debug.Log("Loaded name: " + nameText.text);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("NameElement not found");
-    //     }
-
-    //     Destroy(spawnedObject, 3f);
-    // }
-
-    // public void SpawnPopUpNotExits() {
-    //     GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
-            
-    //     AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
-    //     GameObject audioObject = new GameObject("TempAudioObject");
-    //     AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
-    //     audioSourceTemp.clip = sound;
-
-    //     audioSourceTemp.Play();
-
-    //     Destroy(audioObject, sound.length);
-
-    //     Destroy(spawnedObject, 3f);
-    // }
-
+        VillagePlane = newARObject;
+    }
     Transform FindInChildren(Transform parent, string name)
     {
         foreach (Transform child in parent)
@@ -407,6 +265,7 @@ public class VillagePlaneManager : MonoBehaviour
 
         public override string ToString()
         {
+            if(plane == null) return $"Coords: {coords.ToString()}";
             return $"Coords: {coords.ToString()}, Plane: {plane.ToString()}";
         }
     }
