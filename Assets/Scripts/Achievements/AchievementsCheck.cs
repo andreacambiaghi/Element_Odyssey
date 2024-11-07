@@ -53,7 +53,7 @@ public class AchievementsCheck : MonoBehaviour
 
     [SerializeField] private GameObject achievementPanel;
 
-    public void Awake()
+    public void Start()
     {
         if(Instance != null && Instance != this)
         {

@@ -12,7 +12,7 @@ public class AchievementManager : MonoBehaviour
     public static AchievementManager Instance;
 
 
-    void Awake()
+    public void Awake()
     {
         // filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
 

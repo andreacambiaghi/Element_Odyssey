@@ -15,6 +15,7 @@ public class AchievementsMenu : MonoBehaviour
 
     public void OpenPanel()
     {
+        Debug.Log("OpenPaneeeeeeeeeeeeeeeeeeeeeeel");
         if (panel != null)
         {
             panel.SetActive(!panel.activeSelf);
@@ -53,6 +54,7 @@ public class AchievementsMenu : MonoBehaviour
     }
     public void ClosePanel()
     {
+        Debug.Log("ClosePaneeeeeeeeeeeeeeeeeeeeeeel");
         if (panel != null)
         {
             panel.SetActive(false);

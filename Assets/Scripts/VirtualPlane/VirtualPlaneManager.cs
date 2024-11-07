@@ -36,8 +36,25 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private string selectedPrefab = "water";    // the prefab selected from the menu
 
-    private void Awake()
-    {
+    // private void Awake()
+    // {
+    //     if(Instance != null && Instance != this)
+    //     {
+    //        Destroy(this.gameObject);
+    //        return;
+    //     }
+    //     else
+    //     {
+    //         Instance = this;
+    //     }
+
+    //     _othersElements = ElementFilesManager.Instance.GetOthersElements();
+    //     Debug.LogWarning("Others elements: " + _othersElements.Count);
+    // }
+    
+    private void Start() 
+    { 
+
         if(Instance != null && Instance != this)
         {
            Destroy(this.gameObject);
@@ -50,11 +67,6 @@ public class VirtualPlaneManager : MonoBehaviour
 
         _othersElements = ElementFilesManager.Instance.GetOthersElements();
         Debug.LogWarning("Others elements: " + _othersElements.Count);
-    }
-    
-    private void Start() 
-    { 
-
         if (XROrigin == null) 
         { 
             Debug.LogError("XR Origin is not assigned"); 

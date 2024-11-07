@@ -34,7 +34,6 @@ public class Initialize : MonoBehaviour
             }
         }
         CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
-        Debug.LogError(labelsToAdd.Count);
         if (createButtonsComponent != null && labelsToAdd.Count > 0)
         {
             createButtonsComponent.buttonLabels.AddRange(labelsToAdd);
