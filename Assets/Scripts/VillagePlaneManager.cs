@@ -132,7 +132,7 @@ public class VillagePlaneManager : MonoBehaviour
     {       
         Debug.Log("Spawning a " + prefabName);
         
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePrefabs/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
         
         newARObject.name = prefabName;
         newARObject.transform.position = position;

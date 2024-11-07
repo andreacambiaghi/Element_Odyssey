@@ -25,8 +25,6 @@ public class ElementFilesManager : MonoBehaviour
 
     private Dictionary<ElementPair, string> elementAssociations = null;
 
-    private AchievementManager achievementManager = AchievementManager.Instance;
-
     private void Awake()
     {
         Debug.Log("ElementFilesManager init");

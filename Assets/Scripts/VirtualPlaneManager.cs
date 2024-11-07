@@ -15,7 +15,6 @@ public class VirtualPlaneManager : MonoBehaviour
     
     private CreateButtons createButtonsComponent;
 
-    private List<GameObject> spawnedObjects = new List<GameObject>(); // TODO: gestire questa lista
     private List<string> _othersElements;
 
     [SerializeField] private GameObject slider;

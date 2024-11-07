@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ArTouchManager : MonoBehaviour
 {
-    private Color defaultColor;
-    private Color selectedColor;
+    //private Color defaultColor;
+    //private Color selectedColor;
 
     private MultipleImagesTrackingManager mitm;
 
@@ -17,14 +17,17 @@ public class ArTouchManager : MonoBehaviour
 
     void Start()
     {
-        objectRenderer = GetComponent<Renderer>();
+        //objectRenderer = GetComponent<Renderer>();
         mitm = MultipleImagesTrackingManager.Instance;
-        defaultColor = objectRenderer.material.color;
+        //defaultColor = objectRenderer.material.color;
 
         gameModeManager = GameModeManager.Instance;
         vpm = VirtualPlaneManager.Instance;
 
         vlpm = VillagePlaneManager.Instance;
+
+        if(vlpm == null)
+            Debug.LogError("VillagePlaneManager is null");
         
     }
 
@@ -63,8 +66,8 @@ public class ArTouchManager : MonoBehaviour
             Debug.LogError("Game mode not recognized");
     }
 
-    public void Deselect()
-    {
-        objectRenderer.material.color = defaultColor;
-    }
+    // public void Deselect()
+    // {
+    //     objectRenderer.material.color = defaultColor;
+    // }
 }
