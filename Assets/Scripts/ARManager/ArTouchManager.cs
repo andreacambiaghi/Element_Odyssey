@@ -13,7 +13,7 @@ public class ArTouchManager : MonoBehaviour
 
     private GameModeManager gameModeManager;
 
-    private Renderer objectRenderer;
+    //private Renderer objectRenderer;
 
     void Start()
     {
@@ -33,6 +33,7 @@ public class ArTouchManager : MonoBehaviour
 
     void Update()
     {
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);

@@ -39,6 +39,8 @@ public class VillagePlaneManager : MonoBehaviour
 
     private bool isPlanePlaced = false;
 
+    private bool isPlacementEnabled = true;
+
     private GameObject VillagePlane;
 
     private void Awake()
@@ -86,27 +88,32 @@ public class VillagePlaneManager : MonoBehaviour
     private void Update() 
     { 
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
-        if (planeTouchCoords != null)
-        {
+        if (planeTouchCoords != null && isPlacementEnabled) {
             Debug.Log("Plane Touched at " + planeTouchCoords);
 
             if(!isPlanePlaced){
                 createVillagePlane(planeTouchCoords.coords);
                 isPlanePlaced = true;
                 ARPlaneManager planeManager = FindObjectOfType<ARPlaneManager>();
-                ARPlane[] planes = new ARPlane[planeManager.trackables.count];
-                if (planeManager != null)
-                {
+                if (planeManager != null) {
                     planeManager.enabled = false;
-                    foreach (ARPlane plane in planeManager.trackables)
-                    {
+                    foreach (ARPlane plane in planeManager.trackables){
                         plane.gameObject.SetActive(false);
                     }
                 }
-
-            }else if(selectedObject != null) moveSelectedObject(planeTouchCoords.coords);
-            else  SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
-           
+            }else{
+                    if(selectedObject != null){ 
+                        moveSelectedObject(planeTouchCoords.coords);
+                        return;
+                    }else{ 
+                        if(isDeletionInProgress){
+                            isDeletionInProgress = false;
+                            return;
+                        } 
+                        SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+                        return;
+                }
+            }
         }
 
     } 
@@ -119,17 +126,18 @@ public class VillagePlaneManager : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    bool uiHit = IsPointerOverUI(touch.position);
+                if (Physics.Raycast(ray, out RaycastHit hit)){
+                    //bool uiHit = IsPointerOverUI(touch.position);
+                    //bool uiHit = IsPointerOverUI();
+                    bool uiHit = IsTouchOverNonPlaneObject(hit);
                     
                     ARPlane hitPlane = hit.transform.GetComponent<ARPlane>(); 
                     if (hitPlane != null && !uiHit){
                         return new PlaneCoords(hit.point, hitPlane); 
                     } else if (hit.transform.gameObject == VillagePlane) {
                         return new PlaneCoords(hit.point, null);
-                    }
-                    } else {
+                    } else return null;
+                } else {
                     return null;
                 }
             }
@@ -137,18 +145,63 @@ public class VillagePlaneManager : MonoBehaviour
         return null;
     }
 
-    private bool IsPointerOverUI(Vector2 pos)
+    // private PlaneCoords DetectPlaneTouch(){
+    //     if (Input.touchCount > 0)
+    //     {
+    //         Touch touch = Input.GetTouch(0);
+    //         if (touch.phase == TouchPhase.Ended){
+    //             Ray ray = Camera.main.ScreenPointToRay(touch.position);
+    //             if (Physics.Raycast(ray, out RaycastHit hit)){
+    //                 if (IsPointerOverUI()){
+    //                     return null;
+    //                 }
+
+    //                 ARPlane hitPlane = hit.transform.GetComponent<ARPlane>();
+    //                 if (hitPlane != null){
+    //                     return new PlaneCoords(hit.point, hitPlane);
+    //                 } else if (hit.transform.gameObject == VillagePlane){
+    //                     return new PlaneCoords(hit.point, null);
+    //                 } else{
+    //                     return null;
+    //                 }
+    //             } else {
+    //                 return null;
+    //             }
+    //         }
+    //     }
+    //     return null;
+    // }
+
+
+    private bool IsPointerOverUI()
     {
-        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        if (Input.touchCount > 0)
         {
-            position = pos
-        };
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        return results.Count > 0;
+            Touch touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                return true;
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return true;
+            }
+        }
+        return false;
     }
+
+    private bool IsTouchOverNonPlaneObject(RaycastHit hit)
+    {
+        if (hit.transform.GetComponent<ARPlane>() == null && hit.transform.gameObject != VillagePlane)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {       
@@ -205,20 +258,49 @@ public class VillagePlaneManager : MonoBehaviour
         if(selectedObject != null) {
             Outline outline = selectedObject.GetComponent<Outline>();
             if (outline != null) Destroy(outline);
+
             selectedObject = null;
         }
     }
 
+    public void DeleteGameObject(GameObject gameObject)
+    {
+        if(gameObject == null) return;
+        Debug.Log("DeleteGameObject: " + gameObject.name);
+        gameObject.SetActive(false);
+        Destroy(gameObject);
+
+    }
+
+    private bool isDeletionInProgress = false;
+
     public void SelectGameObject(GameObject gameObject)
     {
+        if(gameObject == null) return;
+        if(selectedObject == gameObject){
+            isDeletionInProgress = true;
+
+            DeselectSelectedGameObject();
+            DeleteGameObject(gameObject);
+            
+            return;
+        } 
+        if(selectedObject != null){
+            DeselectSelectedGameObject();
+            return;
+        }
+
         Debug.Log("SelectGameObject: " + gameObject.name);
-        if(selectedObject != null) DeselectSelectedGameObject();
 
         selectedObject = gameObject;
+
         Outline outline = selectedObject.AddComponent<Outline>();
-        outline.OutlineMode = Outline.Mode.OutlineAll;
-        outline.OutlineColor = GetInvertedColor(selectedObject);
-        outline.OutlineWidth = 10f;
+        if(outline != null){
+            outline.OutlineMode = Outline.Mode.OutlineAll;
+            outline.OutlineColor = GetInvertedColor(selectedObject);
+            outline.OutlineWidth = 10f;
+        } 
+
     }
 
     public void createVillagePlane(Vector3 position){
@@ -231,6 +313,7 @@ public class VillagePlaneManager : MonoBehaviour
 
         VillagePlane = newARObject;
     }
+    
     Transform FindInChildren(Transform parent, string name)
     {
         foreach (Transform child in parent)
