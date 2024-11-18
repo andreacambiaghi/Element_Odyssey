@@ -43,6 +43,8 @@ public class VillagePlaneManager : MonoBehaviour
 
     private GameObject VillagePlane;
 
+    private List<GameObject> placedObjects = new List<GameObject>();
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -117,6 +119,7 @@ public class VillagePlaneManager : MonoBehaviour
         }
 
     } 
+
 
     private PlaneCoords DetectPlaneTouch()
     {
@@ -214,7 +217,11 @@ public class VillagePlaneManager : MonoBehaviour
         newARObject.name = prefabName;
         newARObject.transform.position = position;
 
+        placedObjects.Add(newARObject);
+
         newARObject.SetActive(true);
+
+        saveCurrentConfiguration();
     }
 
     private Color GetInvertedColor(GameObject gameObject){
@@ -267,9 +274,11 @@ public class VillagePlaneManager : MonoBehaviour
     {
         if(gameObject == null) return;
         Debug.Log("DeleteGameObject: " + gameObject.name);
+        placedObjects.Remove(gameObject);
         gameObject.SetActive(false);
         Destroy(gameObject);
 
+        saveCurrentConfiguration();
     }
 
     private bool isDeletionInProgress = false;
@@ -304,6 +313,7 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     public void createVillagePlane(Vector3 position){
+        ElementFilesManager.VillageSaveData villageSaveData = elementFilesManager.getVillageSaveData();
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), Vector3.zero, Quaternion.Euler(0, 0, 0));
         
         newARObject.name = "VillagePlane";
@@ -312,6 +322,12 @@ public class VillagePlaneManager : MonoBehaviour
         newARObject.SetActive(true);
 
         VillagePlane = newARObject;
+
+        if(villageSaveData != null){
+            foreach(ElementFilesManager.VillageObjectSaveData villageObject in villageSaveData.villageObjects){
+            SpawnObject(VillagePlane.transform.TransformPoint(villageObject.position), null, villageObject.objectName);
+            }
+        }
     }
     
     Transform FindInChildren(Transform parent, string name)
@@ -332,8 +348,30 @@ public class VillagePlaneManager : MonoBehaviour
         if(selectedObject != null){
             selectedObject.transform.position = position;
             DeselectSelectedGameObject();
+
+            saveCurrentConfiguration();
         }
     }
+
+    private void saveCurrentConfiguration(){
+        ElementFilesManager.VillageSaveData villageSaveData = new ElementFilesManager.VillageSaveData();
+        List<ElementFilesManager.VillageObjectSaveData> villageObjectSaveData = new List<ElementFilesManager.VillageObjectSaveData>();
+
+        for (int i = 0; i < placedObjects.Count; i++){
+            ElementFilesManager.VillageObjectSaveData villageObject = new ElementFilesManager.VillageObjectSaveData();
+            villageObject.objectName = placedObjects[i].name;  
+            // villageObject.position = placedObjects[i].transform.position;
+            villageObject.position = VillagePlane.transform.InverseTransformPoint(placedObjects[i].transform.position);
+
+            villageObjectSaveData.Add(villageObject);
+        }
+
+        villageSaveData.villageObjects = villageObjectSaveData;
+
+        elementFilesManager.UpdateVillageSaveData(villageSaveData);
+
+    }
+
 
     private class PlaneCoords
     {

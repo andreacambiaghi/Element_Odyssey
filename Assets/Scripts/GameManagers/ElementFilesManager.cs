@@ -17,6 +17,8 @@ public class ElementFilesManager : MonoBehaviour
 
     private string villageObjectsFilePath;
 
+    private string villageSaveDataFilePath;
+
     public static ElementFilesManager Instance;
 
     private List<string> initialElements = null;
@@ -53,11 +55,9 @@ public class ElementFilesManager : MonoBehaviour
         foundElementsFilePath = Path.Combine(Application.persistentDataPath, "FoundElements.txt");
         achievementsFilePath = Path.Combine(Application.persistentDataPath, "achievements.json");
         villageObjectsFilePath = Path.Combine(Application.persistentDataPath, "villageObjects.json");
+        villageSaveDataFilePath = Path.Combine(Application.persistentDataPath, "villageSaveData.json");
 
         UpdateAll();
-        // initialElements = GetInitialElements();
-        // foundElements = GetFoundElements();
-        // elementAssociations = GetElementAssociations();
 
         Debug.Log("-----------------");
         Debug.Log("ElementFilesManager initialized");
@@ -215,33 +215,6 @@ public class ElementFilesManager : MonoBehaviour
         elementAssociations = GetElementAssociations();
     }
 
-    private void ListDirectoriesInPersistentDataPath()
-    {
-        string persistentDataPath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources");
-
-        if (Directory.Exists(persistentDataPath))
-        {
-            string[] directories = Directory.GetDirectories(persistentDataPath);
-
-            if (directories.Length == 0)
-            {
-                Debug.Log("No directories found in the persistentDataPath.");
-            }
-            else
-            {
-                Debug.Log("Directories in persistentDataPath:");
-                foreach (string directory in directories)
-                {
-                    Debug.Log(directory);
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("The persistentDataPath does not exist.");
-        }
-    }
-
     public string getAchievementsJson(){
         //Debug.LogWarning("DEFAULT FILE -> " + defaultAchievementsJsonFile.text);
         //ListDirectoriesInPersistentDataPath();
@@ -362,11 +335,11 @@ public class ElementFilesManager : MonoBehaviour
         Debug.LogWarning("Village data: " + villageData.toString());
 
         //Debug.LogError("writing village data");
-        foreach (var villageObject in villageData.villageObjects)
-        {
-            Debug.Log($"Key: {villageObject.Key}, Value: {villageObject.Value}");
-            Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
-        }
+        // foreach (var villageObject in villageData.villageObjects)
+        // {
+        //     Debug.Log($"Key: {villageObject.Key}, Value: {villageObject.Value}");
+        //     Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
+        // }
         //Debug.LogError("Finshed writing village data");
         return villageData;
     }
@@ -423,6 +396,85 @@ public class ElementFilesManager : MonoBehaviour
         File.WriteAllText(filePath, villageDataString);
     }
 
+
+
+    public string getDefaultVillageSaveData()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("villageSaveDataDefaults");
+        return textAsset.text;
+    }
+
+    public VillageSaveData getVillageSaveData()
+    {
+        string filePath = villageSaveDataFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, getDefaultVillageSaveData());        
+        }
+        else
+        {
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string villageSaveDataString = File.ReadAllText(filePath);
+        Debug.LogWarning("saved Village save data: " + villageSaveDataString);
+
+        //Debug.LogWarning("now creating the village data object");
+
+        VillageSaveData villageSaveData = JsonUtility.FromJson<VillageSaveData>(villageSaveDataString);
+
+        if (villageSaveData == null)
+        {
+            Debug.LogError("Village save data is null after deserialization");
+            return null;
+        }
+        if (villageSaveData.villageObjects == null)
+        {
+            Debug.LogError("villageObjects is null after deserialization");
+            return null;
+        }
+
+        Debug.Log("This is the village save data:");
+        Debug.LogWarning("Village data: " + villageSaveData.toString());
+
+        //Debug.LogError("writing village data");
+        foreach (var villageObject in villageSaveData.villageObjects)
+        {
+            Debug.Log($"Key: {villageObject.objectName}, Value: {villageObject.position}");
+        }
+        //Debug.LogError("Finshed writing village data");
+        return villageSaveData;
+    }
+
+    public void UpdateVillageSaveData(VillageSaveData villageSaveData)
+    {
+        string filePath = villageSaveDataFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso, an empty one will be created: " + filePath);
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string villageSaveDataString = JsonUtility.ToJson(villageSaveData);
+        File.WriteAllText(filePath, villageSaveDataString);
+
+        Debug.LogWarning("UPDATED VILLAGE SAVE DATA: " + File.ReadAllText(filePath));
+
+    }
+
+
+
+
+
+
+
+
     [Serializable]
     public class VillageData
     {
@@ -450,4 +502,28 @@ public class ElementFilesManager : MonoBehaviour
             return $"{Key} {Value} {(Requirements != null ? string.Join(", ", Requirements) : "No requirements")}";
         }
     }
+
+    [Serializable]
+    public class VillageSaveData
+    {
+        public List<VillageObjectSaveData> villageObjects;
+
+        public string toString()
+        {
+            return string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
+        }
+    }
+
+    [Serializable]
+    public class VillageObjectSaveData
+    {
+        public string objectName;
+        public Vector3 position;
+
+        public string toString()
+        {
+            return $"{objectName} {position}";
+        }
+    }
+
 }
