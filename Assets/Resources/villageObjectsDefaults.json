@@ -1,19 +1,69 @@
 {
     "villageObjects": [
         {
+            "Key:": "airplane",
+            "Value": 0,
+            "Requirements": ["wind", "helicopter", "cloud", "engine"]
+        },
+        {
+            "Key": "angel",
+            "Value": 0,
+            "Requirements": ["lily", "cloud", "angel"]
+        },
+        {
+            "Key": "beach",
+            "Value": 0,
+            "Requirements": ["sand", "water", "beach"]
+        },
+        {
             "Key": "bee",
             "Value": 0,
-            "Requirements": ["fire"]
+            "Requirements": ["pollen", "bee"]
         },
         {
             "Key": "car",
             "Value": 0,
-            "Requirements": ["water"]
+            "Requirements": ["engine", "car"]
+        },
+        {
+            "Key": "helicopter",
+            "Value": 0,
+            "Requirements": ["helicopter", "air", "engine", "wind"]
+        },
+        {
+            "Key": "house",
+            "Value": 0,
+            "Requirements": ["house", "brick", "stone", "wood"]
+        },
+        {
+            "Key": "lake-house",
+            "Value": 0,
+            "Requirements": ["lake", "house"]
+        },
+        {
+            "Key": "mountain",
+            "Value": 0,
+            "Requirements": ["mountain", "rock", "snow"]
+        },
+        {
+            "Key": "sushi",
+            "Value": 0,
+            "Requirements": ["sushi", "seaweed"]
         },
         {
             "Key": "tree",
             "Value": 0,
-            "Requirements": ["volcano", "steam"]
+            "Requirements": ["tree", "wood"]
+        },
+        {
+            "Key": "volcano",
+            "Value": 0,
+            "Requirements": ["volcano", "lava", "rock"]
+        },
+        {
+            "_Key": "windmill",
+            "Value": 0,
+            "Requirements": ["windmill", "wind", "engine"]
         }
     ]
 }
