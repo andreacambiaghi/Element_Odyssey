@@ -133,6 +133,8 @@ public class VirtualPlaneManager : MonoBehaviour
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {
         Debug.Log("Spawning a " + prefabName);
+        AchievementsCheck.Instance.FoundedElement(prefabName);
+        Debug.Log("Element " + prefabName + " found AAAAAAAAAAAAAAAAA");
         
         GameObject newARObject;
         if (_othersElements.Contains(prefabName)) {
