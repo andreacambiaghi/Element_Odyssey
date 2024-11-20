@@ -26,12 +26,13 @@ public class Initialize : MonoBehaviour
             labelsToAdd.AddRange(elementFilesManager.GetFoundElements());
         }
         else if(GameModeManager.Instance.GameMode == "Village") {
-            ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
-            foreach(ElementFilesManager.VillageObject villageObject in villageData.villageObjects){
-                if(villageObject.Value == 1){
-                    labelsToAdd.Add(villageObject.Key);
-                }
-            }
+            // ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
+            // foreach(ElementFilesManager.VillageObject villageObject in villageData.villageObjects){
+            //     if(villageObject.Value == 1){
+            //         labelsToAdd.Add(villageObject.Key);
+            //     }
+            // }
+            return;
         }
         CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
         if (createButtonsComponent != null && labelsToAdd.Count > 0)
