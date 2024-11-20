@@ -25,10 +25,6 @@ public class ArTouchManager : MonoBehaviour
         vpm = VirtualPlaneManager.Instance;
 
         vlpm = VillagePlaneManager.Instance;
-
-        if(vlpm == null)
-            Debug.LogError("VillagePlaneManager is null");
-        
     }
 
     void Update()
