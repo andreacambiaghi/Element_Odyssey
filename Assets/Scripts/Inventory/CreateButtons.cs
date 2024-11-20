@@ -102,7 +102,7 @@ public class CreateButtons : MonoBehaviour
         Debug.LogWarning("Button labels cleared: " + string.Join(", ", buttonLabels));
 
 
-        if(GameModeManager.Instance.GameMode == "CreateMarker" || GameModeManager.Instance.GameMode == "VirtualPlane"){
+        if(GameModeManager.Instance.GameMode == "createMarker" || GameModeManager.Instance.GameMode == "VirtualPlane"){
             buttonLabels = elementFilesManager.GetInitialElements();
             buttonLabels.AddRange(elementFilesManager.GetFoundElements());
         } else if(GameModeManager.Instance.GameMode == "Village") {
