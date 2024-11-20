@@ -34,24 +34,8 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private GameObject selectedObject;          // the object selected by touch interactions in the arplane
 
-    private string selectedPrefab = "water";    // the prefab selected from the menu
+    private string selectedPrefab;    // the prefab selected from the menu
 
-    // private void Awake()
-    // {
-    //     if(Instance != null && Instance != this)
-    //     {
-    //        Destroy(this.gameObject);
-    //        return;
-    //     }
-    //     else
-    //     {
-    //         Instance = this;
-    //     }
-
-    //     _othersElements = ElementFilesManager.Instance.GetOthersElements();
-    //     Debug.LogWarning("Others elements: " + _othersElements.Count);
-    // }
-    
     private void Start() 
     { 
 
@@ -86,8 +70,17 @@ public class VirtualPlaneManager : MonoBehaviour
         {
             Debug.Log("Plane Touched at " + planeTouchCoords);
 
-            if(selectedObject != null) moveSelectedObject(planeTouchCoords.coords);
-            else  SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+            if(selectedObject != null){
+                moveSelectedObject(planeTouchCoords.coords);
+                return;
+            }else{
+                if(isDeletionInProgress){
+                    isDeletionInProgress = false;
+                    return;
+                } 
+                SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+                return;
+            }  
            
         }
 
@@ -131,14 +124,13 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {
+        if(prefabName == null) return;
+
         Debug.Log("Spawning a " + prefabName);
         
         GameObject newARObject;
         if (_othersElements.Contains(prefabName)) {
             newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
-            // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
-            // ComponentAdder ca = new();
-            // ca.AddComponentsToGameObject(newARObject);
             TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
@@ -157,7 +149,6 @@ public class VirtualPlaneManager : MonoBehaviour
         // newARObject.transform.position = new Vector3(newARObject.transform.position.x, plane.transform.position.y + newARObject.transform.localScale.y/2, newARObject.transform.position.z); 
 
         newARObject.SetActive(true);
-        // Instantiate(prefab, position, Quaternion.identity);
     }
 
     private Color GetInvertedColor(GameObject gameObject){
@@ -204,16 +195,39 @@ public class VirtualPlaneManager : MonoBehaviour
         }
     }
 
+
+    bool isDeletionInProgress = false;
+
     public void SelectGameObject(GameObject gameObject)
     {
-        Debug.LogError("SelectGameObject: " + gameObject.name);
-        if(selectedObject != null) DeselectSelectedGameObject();
+
+        if(gameObject == null) return;
+
+        if(selectedObject == gameObject){
+            isDeletionInProgress = true;
+
+            DeselectSelectedGameObject();
+            DeleteGameObject(gameObject);
+            
+            return;
+        } 
+
+        Debug.Log("SelectGameObject: " + gameObject.name);
+        if(selectedObject != null){
+            DeselectSelectedGameObject();
+            return;
+        }
+
+        Debug.Log("SelectGameObject: " + gameObject.name);
 
         selectedObject = gameObject;
+
         Outline outline = selectedObject.AddComponent<Outline>();
-        outline.OutlineMode = Outline.Mode.OutlineAll;
-        outline.OutlineColor = GetInvertedColor(selectedObject);
-        outline.OutlineWidth = 10f;
+        if(outline != null){
+            outline.OutlineMode = Outline.Mode.OutlineAll;
+            outline.OutlineColor = GetInvertedColor(selectedObject);
+            outline.OutlineWidth = 10f;
+        }
     }
 
     private static List<GameObject> interactingElements = new List<GameObject>();
@@ -430,6 +444,16 @@ public class VirtualPlaneManager : MonoBehaviour
             DeselectSelectedGameObject();
         }
     }
+
+    public void DeleteGameObject(GameObject gameObject)
+    {
+        if(gameObject == null) return;
+        Debug.Log("DeleteGameObject: " + gameObject.name);
+        gameObject.SetActive(false);
+        Destroy(gameObject);
+
+    }
+
 
 
     private class PlaneCoords
