@@ -26,6 +26,7 @@ public class VillagePlaneManager : MonoBehaviour
 
     [SerializeField] private GameObject popUpElementCreated;
     [SerializeField] private GameObject popUpElementAlreadyFound;
+    [SerializeField] private GameObject elementSelected;
 
     private VillagePlaneManager() { }
 
@@ -256,6 +257,7 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     public bool OnPrefabSelected(string prefabName){
+        elementSelected.GetComponent<TextMeshProUGUI>().text = "You have selected " + prefabName;
         DeselectSelectedGameObject();
         SetSelectedPrefab(prefabName.ToLower());
         return false;

@@ -9,6 +9,7 @@ public class ChangeScenes : MonoBehaviour
     private void Awake()
     {
         gameModeManager = GameModeManager.Instance;
+        gameModeManager.GameMode = "VirtualPlane";
     }
 
     public void CreateMarkerScene()

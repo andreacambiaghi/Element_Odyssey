@@ -623,6 +623,7 @@ MonoBehaviour:
   createButton: {fileID: 1521557835}
   popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
   popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
+  elementSelected: {fileID: 900101078}
   XROrigin: {fileID: 148266792}
 --- !u!4 &149494638
 Transform:
