@@ -13,7 +13,7 @@ public class ArTouchManager : MonoBehaviour
 
     private GameModeManager gameModeManager;
 
-    private Renderer objectRenderer;
+    //private Renderer objectRenderer;
 
     void Start()
     {
@@ -33,6 +33,7 @@ public class ArTouchManager : MonoBehaviour
 
     void Update()
     {
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -55,7 +56,6 @@ public class ArTouchManager : MonoBehaviour
 
     void Select()
     {
-        //objectRenderer.material.color = new Color(Random.value, Random.value, Random.value);
         if(gameModeManager.GameMode == "CreateMarker")
             mitm.SelectGameObject(gameObject);
         else if(gameModeManager.GameMode == "VirtualPlane")
@@ -66,8 +66,4 @@ public class ArTouchManager : MonoBehaviour
             Debug.LogError("Game mode not recognized");
     }
 
-    // public void Deselect()
-    // {
-    //     objectRenderer.material.color = defaultColor;
-    // }
 }
