@@ -133,8 +133,6 @@ public class VirtualPlaneManager : MonoBehaviour
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {
         Debug.Log("Spawning a " + prefabName);
-        AchievementsCheck.Instance.FoundedElement(prefabName);
-        Debug.Log("Element " + prefabName + " found AAAAAAAAAAAAAAAAA");
         
         GameObject newARObject;
         if (_othersElements.Contains(prefabName)) {
@@ -161,6 +159,9 @@ public class VirtualPlaneManager : MonoBehaviour
 
         newARObject.SetActive(true);
         // Instantiate(prefab, position, Quaternion.identity);
+
+        AchievementsCheck.Instance.FoundedElement(prefabName);
+
     }
 
     private Color GetInvertedColor(GameObject gameObject){
@@ -247,8 +248,6 @@ public class VirtualPlaneManager : MonoBehaviour
         } else {   
             createButtonsComponent.ResetButtons();
             Debug.Log("ButtonLabels aggiornato con successo");
-            Debug.Log("ECCOMI FRA" + AchievementsCheck.Instance);
-            AchievementsCheck.Instance.FoundedElement(prefabName);
             SpawnPopUp(prefabName);
         }
 
