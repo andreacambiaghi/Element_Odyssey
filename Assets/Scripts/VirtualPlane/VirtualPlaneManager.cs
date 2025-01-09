@@ -152,7 +152,7 @@ public class VirtualPlaneManager : MonoBehaviour
         newARObject.SetActive(true);
         // Instantiate(prefab, position, Quaternion.identity);
 
-        AchievementsCheck.Instance.FoundedElement(prefabName);
+        // AchievementsCheck.Instance.FoundedElement(prefabName);
 
     }
 
@@ -238,53 +238,6 @@ public class VirtualPlaneManager : MonoBehaviour
 
     private static List<GameObject> interactingElements = new List<GameObject>();
 
-    public void ClearAndAddElement(GameObject callingGameObject, string prefabName, bool isSameElement = false){
-        interactingElements.Add(callingGameObject);
-        Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
-
-        if(interactingElements.Count > 1 ){
-            
-            bool newElementAdded = elementFilesManager.AddFoundElement(prefabName.ToLower());
-            SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), prefabName);
-
-            foreach(GameObject element in interactingElements){
-                element.SetActive(false);
-                Destroy(element);
-            }
-
-            interactingElements.Clear();
-
-            AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
-
-        if (!newElementAdded)
-        {
-            clip = Resources.Load<AudioClip>("Sounds/wrong");
-            Debug.Log("Elemento già trovato (VirtualPlaneManager): " + prefabName);
-        } else {   
-            createButtonsComponent.ResetButtons();
-            Debug.Log("ButtonLabels aggiornato con successo");
-            SpawnPopUp(prefabName);
-        }
-
-        GameObject tempAudioObject = new GameObject("TempAudioObject");
-        AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-
-        audioSource.Play();
-
-        Destroy(tempAudioObject, clip.length);
-
-        }else{
-            //interactingElements.Add(callingGameObject);
-        }
-
-
-
-        // callingGameObject.SetActive(false);
-        //Destroy(callingGameObject);
-        
-    }
-
     public void ClearAndAddElement(ElementPair elementPair, GameObject callingGameObject, GameObject otherObject, bool isSameElement = false){
         interactingElements.Add(callingGameObject);
         Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
@@ -335,6 +288,7 @@ public class VirtualPlaneManager : MonoBehaviour
                 SpawnPopUp(resultPrefabName, true);
                 Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
             } else {   
+                AchievementsCheck.Instance.FoundedElement(resultPrefabName);
                 createButtonsComponent.ResetButtons();
                 Debug.Log("ButtonLabels aggiornato con successo");
                 SpawnPopUp(resultPrefabName);

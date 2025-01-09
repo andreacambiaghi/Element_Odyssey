@@ -216,17 +216,8 @@ public class ElementFilesManager : MonoBehaviour
     }
 
     public string getAchievementsJson(){
-        //Debug.LogWarning("DEFAULT FILE -> " + defaultAchievementsJsonFile.text);
-        //ListDirectoriesInPersistentDataPath();
-        //string filePath = Path.Combine(Application.dataPath, "Resources", "achievements.json");
-        // string filePath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources", "achievements.json");
-        //string filePath = Path.Combine(Application.persistentDataPath, "il2cpp", "Resources", "achievements.json");
         string filePath = achievementsFilePath;
 
-        //TextAsset textAsset = Resources.Load<TextAsset>("achievements");
-
-        // Debug.Log("Reading JSON file achiements");
-        // Debug.LogWarning(textAsset.text);
 
         if (!File.Exists(filePath))
         {
