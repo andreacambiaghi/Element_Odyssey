@@ -139,29 +139,48 @@ public class AchievementsCheck : MonoBehaviour
 
         if (countAllElements >= 5)
         {
-            for (int i = 0; i < countAllElements - 5; i++) 
+            bool foundInTime = false;
+
+            for (int i = 0; i <= timeList.Count - 5; i++) 
             {
                 if (timeList[i + 4] - timeList[i] <= 300)
                 {
                     achievementManager.SetAchievementValue("Achievement 8", 5);
+                    foundInTime = true;
+                    break;
                 }
-                else
+            }
+
+            if (!foundInTime)
+            {
+                for (int i = 0; i < countAllElements; i++)
                 {
-                    for (int j = 0; j < 5; j++)
+                    int maxCountInTime = 1;
+
+                    for (int j = i + 1; j < timeList.Count; j++)
                     {
-                        if (timeList[i + 4] - timeList[i + j] <= 300)
+                        if (timeList[j] - timeList[i] <= 300)
                         {
-                            achievementManager.SetAchievementValue("Achievement 8", j + 1);
+                            maxCountInTime++;
+                        }
+                        else
+                        {
                             break;
                         }
                     }
+
+                    achievementManager.SetAchievementValue("Achievement 8", Mathf.Max(
+                        achievementManager.GetAchievementValue("Achievement 8"),
+                        maxCountInTime
+                    ));
                 }
             }
-        } 
+        }
         else
         {
             achievementManager.SetAchievementValue("Achievement 8", countAllElements);
         }
+
 
         for (int i = 0; i < 10; i++)
         {
