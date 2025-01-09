@@ -1,11 +1,6 @@
 {
     "villageObjects": [
         {
-            "Key:": "airplane",
-            "Value": 0,
-            "Requirements": ["wind", "helicopter", "cloud", "engine"]
-        },
-        {
             "Key": "angel",
             "Value": 0,
             "Requirements": ["lily", "cloud", "angel"]
@@ -61,7 +56,7 @@
             "Requirements": ["volcano", "lava", "rock"]
         },
         {
-            "_Key": "windmill",
+            "Key": "windmill",
             "Value": 0,
             "Requirements": ["windmill", "wind", "engine"]
         }
