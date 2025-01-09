@@ -706,6 +706,7 @@ MonoBehaviour:
   popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
   popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
   elementSelected: {fileID: 1376006988}
+  effectUnlocked: {fileID: 3576924614362489592, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
   XROrigin: {fileID: 929886989}
 --- !u!4 &468934963
 Transform:
@@ -2581,7 +2582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed41f3e52f13a2f4394a46a15fb492b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  achievementPanel: {fileID: 1325042873786835982, guid: 922ba590595dd684b8a75ea2aa92b6c6, type: 3}
 --- !u!114 &1592425621
 MonoBehaviour:
   m_ObjectHideFlags: 0
