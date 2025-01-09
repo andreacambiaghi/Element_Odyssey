@@ -26,6 +26,8 @@ public class VirtualPlaneManager : MonoBehaviour
     [SerializeField] private GameObject popUpElementCreated;
     [SerializeField] private GameObject popUpElementAlreadyFound;
     [SerializeField] private GameObject elementSelected;
+    [SerializeField] private GameObject effectUnlocked; // effect unlocked animation between two elements
+
 
     private VirtualPlaneManager() { }
 
@@ -271,6 +273,7 @@ public class VirtualPlaneManager : MonoBehaviour
             
             bool newElementAdded = elementFilesManager.AddFoundElement(resultPrefabName.ToLower());
             SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), resultPrefabName);
+            Instantiate(effectUnlocked, callingGameObject.transform.position, Quaternion.identity);            
 
             foreach(GameObject element in interactingElements){
                 element.SetActive(false);
