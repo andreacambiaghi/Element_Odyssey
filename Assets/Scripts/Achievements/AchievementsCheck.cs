@@ -51,7 +51,7 @@ public class AchievementsCheck : MonoBehaviour
 
     private readonly AchievementManager achievementManager = AchievementManager.Instance;
 
-    [SerializeField] private GameObject achievementPanel;
+    [SerializeField] private readonly GameObject achievementPanel;
 
     public void Start()
     {
@@ -127,7 +127,7 @@ public class AchievementsCheck : MonoBehaviour
 
         achievementManager.SetAchievementValue("Achievement 0", GetCountAllElements());
         achievementManager.SetAchievementValue("Achievement 1", GetCountAllElements());
-        achievementManager.SetAchievementValue("Achievement 2", GetCountAllElements());
+        achievementManager.SetAchievementValue("Achievement 2", GetCountAllElements() - 1);
         achievementManager.SetAchievementValue("Achievement 4", countWaterElements);
         achievementManager.SetAchievementValue("Achievement 5", countFireElements);
         achievementManager.SetAchievementValue("Achievement 6", countEarthElements);
