@@ -273,8 +273,16 @@ public class VirtualPlaneManager : MonoBehaviour
             
             bool newElementAdded = elementFilesManager.AddFoundElement(resultPrefabName.ToLower());
             SpawnObject(callingGameObject.transform.position, callingGameObject.GetComponent<ARPlane>(), resultPrefabName);
-            Instantiate(effectUnlocked, callingGameObject.transform.position, Quaternion.identity);            
+            GameObject effect = Instantiate(effectUnlocked, callingGameObject.transform.position, Quaternion.identity);
 
+            ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+
+            if (particleSystem != null)
+            {
+                float totalDuration = particleSystem.main.duration + particleSystem.main.startLifetime.constantMax;
+                Destroy(effect, totalDuration);
+            }
+            
             foreach(GameObject element in interactingElements){
                 element.SetActive(false);
                 Destroy(element);
