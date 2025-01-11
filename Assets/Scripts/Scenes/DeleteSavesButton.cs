@@ -9,6 +9,10 @@ public class DeleteSavesButton : MonoBehaviour
     public void DeleteSaves()
     {
         ElementFilesManager.Instance.ResetFoundElements();
+        ElementFilesManager.Instance.ResetVillageData();
+        ElementFilesManager.Instance.ResetVillageObjects();
+
+        Debug.Log("Saves deleted!");
     }
 
     public void ChangeNameButton()

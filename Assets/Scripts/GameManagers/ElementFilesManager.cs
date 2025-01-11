@@ -205,6 +205,11 @@ public class ElementFilesManager : MonoBehaviour
         AchievementsCheck.Instance.ResetAchievements();
     }
 
+    public void ResetVillageObjects(){
+        string filePath = villageSaveDataFilePath;
+        File.WriteAllText(filePath, getDefaultVillageSaveData());
+    }
+
     public void UpdateAll(){
         initialElements = null;
         foundElements = null;
