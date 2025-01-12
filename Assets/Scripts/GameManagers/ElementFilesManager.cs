@@ -392,8 +392,6 @@ public class ElementFilesManager : MonoBehaviour
         File.WriteAllText(filePath, villageDataString);
     }
 
-
-
     public string getDefaultVillageSaveData()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("villageSaveDataDefaults");
