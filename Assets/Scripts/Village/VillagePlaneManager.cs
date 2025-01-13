@@ -149,34 +149,6 @@ public class VillagePlaneManager : MonoBehaviour
         return null;
     }
 
-    // private PlaneCoords DetectPlaneTouch(){
-    //     if (Input.touchCount > 0)
-    //     {
-    //         Touch touch = Input.GetTouch(0);
-    //         if (touch.phase == TouchPhase.Ended){
-    //             Ray ray = Camera.main.ScreenPointToRay(touch.position);
-    //             if (Physics.Raycast(ray, out RaycastHit hit)){
-    //                 if (IsPointerOverUI()){
-    //                     return null;
-    //                 }
-
-    //                 ARPlane hitPlane = hit.transform.GetComponent<ARPlane>();
-    //                 if (hitPlane != null){
-    //                     return new PlaneCoords(hit.point, hitPlane);
-    //                 } else if (hit.transform.gameObject == VillagePlane){
-    //                     return new PlaneCoords(hit.point, null);
-    //                 } else{
-    //                     return null;
-    //                 }
-    //             } else {
-    //                 return null;
-    //             }
-    //         }
-    //     }
-    //     return null;
-    // }
-
-
     private bool IsPointerOverUI()
     {
         if (Input.touchCount > 0)
@@ -206,23 +178,50 @@ public class VillagePlaneManager : MonoBehaviour
         return false;
     }
 
-
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
     {       
         Debug.Log("Spawning a " + prefabName);
         
         if (prefabName == null) return; 
+        GameObject resource = Resources.Load<GameObject>("VillagePrefabs/" + prefabName);
 
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePrefabs/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        if (resource == null){
+            Debug.LogError("Resource cannot be spawned (null): " + prefabName);
+            return;
+        } 
+
+        GameObject newARObject = Instantiate(resource, Vector3.zero, Quaternion.Euler(0, 0, 0));
         
         newARObject.name = prefabName;
         newARObject.transform.position = position;
 
+        Vector3 referenceSize = new Vector3(0.2f, 0.2f, 0.2f);
+
+        // Calculate the scale factor
+        Vector3 prefabSize = GetPrefabSize(newARObject);
+        Vector3 scaleFactor = new Vector3(
+            referenceSize.x / prefabSize.x,
+            referenceSize.y / prefabSize.y,
+            referenceSize.z / prefabSize.z
+        );
+
+        // Apply the scale factor
+        newARObject.transform.localScale = scaleFactor;
         placedObjects.Add(newARObject);
 
         newARObject.SetActive(true);
 
         saveCurrentConfiguration();
+    }
+
+    private Vector3 GetPrefabSize(GameObject prefab) {
+        Renderer renderer = prefab.GetComponent<Renderer>();
+        if (renderer == null){
+            Debug.LogError("Prefab does not have a Renderer component: " + prefab.name);
+            return Vector3.one;
+        }
+
+        return renderer.bounds.size;
     }
 
     private Color GetInvertedColor(GameObject gameObject){
@@ -373,7 +372,6 @@ public class VillagePlaneManager : MonoBehaviour
         elementFilesManager.UpdateVillageSaveData(villageSaveData);
 
     }
-
 
     private class PlaneCoords
     {

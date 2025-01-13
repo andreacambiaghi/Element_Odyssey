@@ -205,6 +205,11 @@ public class ElementFilesManager : MonoBehaviour
         AchievementsCheck.Instance.ResetAchievements();
     }
 
+    public void ResetVillageObjects(){
+        string filePath = villageSaveDataFilePath;
+        File.WriteAllText(filePath, getDefaultVillageSaveData());
+    }
+
     public void UpdateAll(){
         initialElements = null;
         foundElements = null;
@@ -323,15 +328,15 @@ public class ElementFilesManager : MonoBehaviour
         }
 
         Debug.Log("This is the village data:");
-        Debug.LogWarning("Village data: " + villageData.toString());
+        // Debug.LogWarning("Village data: \n" + villageData.toString());
 
-        //Debug.LogError("writing village data");
-        // foreach (var villageObject in villageData.villageObjects)
-        // {
-        //     Debug.Log($"Key: {villageObject.Key}, Value: {villageObject.Value}");
-        //     Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
-        // }
-        //Debug.LogError("Finshed writing village data");
+        Debug.LogError("writing village data");
+        foreach (var villageObject in villageData.villageObjects)
+        {
+            Debug.Log($"Key: {villageObject.Key}, \nValue: {villageObject.Value}, \nRequirements: [{string.Join(", ", villageObject.Requirements)}]");
+            // Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
+        }
+        Debug.LogError("Finshed writing village data");
         return villageData;
     }
 
@@ -386,8 +391,6 @@ public class ElementFilesManager : MonoBehaviour
         string villageDataString = JsonUtility.ToJson(villageData);
         File.WriteAllText(filePath, villageDataString);
     }
-
-
 
     public string getDefaultVillageSaveData()
     {
@@ -490,7 +493,7 @@ public class ElementFilesManager : MonoBehaviour
 
         public string toString()
         {
-            return $"{Key} {Value} {(Requirements != null ? string.Join(", ", Requirements) : "No requirements")}";
+            return $"Key: {Key} \nValue: {Value} \nRequirements: {(Requirements != null ? string.Join(", ", Requirements) : "No requirements")}";
         }
     }
 
@@ -513,7 +516,7 @@ public class ElementFilesManager : MonoBehaviour
 
         public string toString()
         {
-            return $"{objectName} {position}";
+            return $"Object: {objectName}, Position: {position}";
         }
     }
 
