@@ -101,6 +101,12 @@ public class AchievementManager : MonoBehaviour
         AchievementsInfo achievementsInfo = new();
         return achievementsInfo.GetMaxProgress(index);
     }
+
+    public bool isAchievementComplete(int index)
+    {
+        AchievementsInfo achievementsInfo = new();
+        return GetAchievementValue("Achievement " + index) >= achievementsInfo.GetMaxProgress(index);
+    }
     
     public void UpdateAchievements()
     {

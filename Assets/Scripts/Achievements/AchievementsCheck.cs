@@ -124,7 +124,7 @@ public class AchievementsCheck : MonoBehaviour
     }
 
     private void UpdateAchievementsJson() {
-
+        // Inizializza i valori degli achievement
         achievementManager.SetAchievementValue("Achievement 0", GetCountAllElements());
         achievementManager.SetAchievementValue("Achievement 1", GetCountAllElements());
         achievementManager.SetAchievementValue("Achievement 2", GetCountAllElements() - 1);
@@ -134,70 +134,57 @@ public class AchievementsCheck : MonoBehaviour
         achievementManager.SetAchievementValue("Achievement 7", countAirElements);
         achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
 
+        // Calcola il tempo totale giocato
         minutesPlayed = (int)(Time.time - startTime) / 60;
         achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
 
-        if (countAllElements >= 5)
-        {
+        // Controlla Achievement 8: 5 elementi in 5 minuti
+        if (countAllElements >= 5 && !achievementManager.isAchievementComplete(8)) {
             bool foundInTime = false;
 
-            for (int i = 0; i <= timeList.Count - 5; i++) 
-            {
-                if (timeList[i + 4] - timeList[i] <= 300)
-                {
+            // Controlla se ci sono esattamente 5 elementi consecutivi entro 5 minuti
+            for (int i = 0; i <= timeList.Count - 5; i++) {
+                if (timeList[i + 4] - timeList[i] <= 300) { // 300 secondi = 5 minuti
                     achievementManager.SetAchievementValue("Achievement 8", 5);
                     foundInTime = true;
                     break;
                 }
             }
 
-            if (!foundInTime)
-            {
-                for (int i = 0; i < countAllElements; i++)
-                {
-                    int maxCountInTime = 1;
-
-                    for (int j = i + 1; j < timeList.Count; j++)
-                    {
-                        if (timeList[j] - timeList[i] <= 300)
-                        {
-                            maxCountInTime++;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    achievementManager.SetAchievementValue("Achievement 8", Mathf.Max(
-                        achievementManager.GetAchievementValue("Achievement 8"),
-                        maxCountInTime
-                    ));
-                }
+            // Se non ci sono 5 elementi consecutivi in 5 minuti, mantieni il progresso massimo attuale
+            if (!foundInTime) {
+                achievementManager.SetAchievementValue("Achievement 8", Mathf.Min(
+                    achievementManager.GetAchievementValue("Achievement 8"),
+                    4 // Mantieni il valore sotto 5 se non ci sono 5 elementi consecutivi
+                ));
             }
-        }
-        else
-        {
+        } else if (!achievementManager.isAchievementComplete(8)) {
+            // Se ci sono meno di 5 elementi totali
             achievementManager.SetAchievementValue("Achievement 8", countAllElements);
         }
 
+        // Gestione degli achievement completati
+        for (int i = 0; i < 10; i++) {
+            // Salta il controllo degli achievement già completati
+            if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i)) {
+                continue;
+            }
 
-        for (int i = 0; i < 10; i++)
-        {
-            if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i))
-            {
+            // Mostra un messaggio per gli achievement completati
+            if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i)) {
                 GameObject achievement = Instantiate(achievementPanel, achievementPanel.transform.parent);
 
+                // Riproduci il suono dell'achievement
                 AudioClip clip = Resources.Load<AudioClip>("Sounds/achievement");
                 GameObject tempAudioObject = new("TempAudioObject");
                 AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
                 audioSource.clip = clip;
                 audioSource.Play();
 
+                // Distruggi il pannello dopo 3 secondi
                 Destroy(achievement, 3f);
             }
         }
-
-        
     }
+
 }
