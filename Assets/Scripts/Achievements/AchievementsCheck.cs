@@ -49,9 +49,9 @@ public class AchievementsCheck : MonoBehaviour
     private List<float> timeList;
     public static AchievementsCheck Instance;
 
-    private readonly AchievementManager achievementManager = AchievementManager.Instance;
+    private AchievementManager achievementManager = AchievementManager.Instance;
 
-    [SerializeField] private readonly GameObject achievementPanel;
+    [SerializeField] private GameObject achievementPanel;
 
     public void Start()
     {
@@ -189,7 +189,7 @@ public class AchievementsCheck : MonoBehaviour
                 GameObject achievement = Instantiate(achievementPanel, achievementPanel.transform.parent);
 
                 AudioClip clip = Resources.Load<AudioClip>("Sounds/achievement");
-                GameObject tempAudioObject = new GameObject("TempAudioObject");
+                GameObject tempAudioObject = new("TempAudioObject");
                 AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
                 audioSource.clip = clip;
                 audioSource.Play();
