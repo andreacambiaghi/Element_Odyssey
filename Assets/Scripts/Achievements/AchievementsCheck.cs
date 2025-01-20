@@ -123,6 +123,8 @@ public class AchievementsCheck : MonoBehaviour
         return countWaterElements + countFireElements + countEarthElements + countAirElements + countOtherElements;
     }
 
+    private List<float> elementTimers = new List<float>(); // Lista per i timer degli elementi
+
     private void UpdateAchievementsJson() {
         // Inizializza i valori degli achievement
         achievementManager.SetAchievementValue("Achievement 0", GetCountAllElements());
@@ -140,27 +142,27 @@ public class AchievementsCheck : MonoBehaviour
 
         // Controlla Achievement 8: 5 elementi in 5 minuti
         if (countAllElements >= 5 && !achievementManager.isAchievementComplete(8)) {
-            bool foundInTime = false;
+            // Aggiungi un nuovo elemento con timer se non abbiamo ancora 5 elementi
+            if (elementTimers.Count < 5) {
+                elementTimers.Add(Time.time);
+            }
 
-            // Controlla se ci sono esattamente 5 elementi consecutivi entro 5 minuti
-            for (int i = 0; i <= timeList.Count - 5; i++) {
-                if (timeList[i + 4] - timeList[i] <= 300) { // 300 secondi = 5 minuti
-                    achievementManager.SetAchievementValue("Achievement 8", 5);
-                    foundInTime = true;
-                    break;
+            // Rimuovi gli elementi che sono scaduti (più di 5 minuti fa)
+            for (int i = elementTimers.Count - 1; i >= 0; i--) {
+                if (Time.time - elementTimers[i] > 300) { // Se sono passati più di 5 minuti
+                    elementTimers.RemoveAt(i);
                 }
             }
 
-            // Se non ci sono 5 elementi consecutivi in 5 minuti, mantieni il progresso massimo attuale
-            if (!foundInTime) {
-                achievementManager.SetAchievementValue("Achievement 8", Mathf.Min(
-                    achievementManager.GetAchievementValue("Achievement 8"),
-                    4 // Mantieni il valore sotto 5 se non ci sono 5 elementi consecutivi
-                ));
+            // Se abbiamo esattamente 5 elementi nella lista, l'achievement è completato
+            if (elementTimers.Count == 5) {
+                achievementManager.SetAchievementValue("Achievement 8", 5);
+            } else {
+                achievementManager.SetAchievementValue("Achievement 8", elementTimers.Count);
             }
         } else if (!achievementManager.isAchievementComplete(8)) {
-            // Se ci sono meno di 5 elementi totali
-            achievementManager.SetAchievementValue("Achievement 8", countAllElements);
+            // Se ci sono meno di 5 elementi totali, aggiorna il valore con il numero attuale
+            achievementManager.SetAchievementValue("Achievement 8", elementTimers.Count);
         }
 
         // Gestione degli achievement completati
