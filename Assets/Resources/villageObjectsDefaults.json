@@ -26,6 +26,11 @@
             "Requirements": ["helicopter", "air", "engine", "wind"]
         },
         {
+            "Key": "horse",
+            "Value": 0,
+            "Requirements": ["mud", "plant", "wood"]
+        },
+        {
             "Key": "house",
             "Value": 0,
             "Requirements": ["house", "brick", "stone", "wood"]
@@ -39,6 +44,11 @@
             "Key": "mountain",
             "Value": 0,
             "Requirements": ["mountain"]
+        },
+        {
+            "Key": "statue",
+            "Value": 0,
+            "Requirements": ["stone", "wood", "sand"]
         },
         {
             "Key": "sushi",
