@@ -245,9 +245,6 @@ public class VirtualPlaneManager : MonoBehaviour
         Debug.Log("Interacting elements list: " + string.Join(", ", interactingElements));
 
         if(interactingElements.Count > 1 ){
-
-            // ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out resultPrefabName);
-            // ReadCSV.Instance.elementAssociations.TryGetValue(new ElementPair(elementPair.Element2, elementPair.Element1), out resultPrefabName);
             string resultPrefabName = ReadCSV.Instance.elementAssociations.GetValueOrDefault(elementPair);
             if (resultPrefabName == null) {
 
@@ -256,7 +253,6 @@ public class VirtualPlaneManager : MonoBehaviour
                 ElementPair elementPairBis = new ElementPair(elementPair.Element2, elementPair.Element1);
                 if (!ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
                     SpawnPopUpNotExits();
-
             }
 
             if (resultPrefabName == null) {
@@ -299,10 +295,16 @@ public class VirtualPlaneManager : MonoBehaviour
                 SpawnPopUp(resultPrefabName, true);
                 Debug.Log("Elemento già trovato (VirtualPlaneManager): " + resultPrefabName);
             } else {   
-                AchievementsCheck.Instance.FoundedElement(resultPrefabName);
                 createButtonsComponent.ResetButtons();
                 Debug.Log("ButtonLabels aggiornato con successo");
                 SpawnPopUp(resultPrefabName);
+
+                try{
+                    AchievementsCheck.Instance.FoundedElement(resultPrefabName);
+                } catch (System.Exception e){
+                    Debug.LogError("Error in AchievementsCheck: " + e.Message);
+                }
+                
             }
             GameObject tempAudioObject = new GameObject("TempAudioObject");
             AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();

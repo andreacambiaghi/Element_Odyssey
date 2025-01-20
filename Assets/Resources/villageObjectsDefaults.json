@@ -38,7 +38,7 @@
         {
             "Key": "mountain",
             "Value": 0,
-            "Requirements": ["mountain", "rock", "snow"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "sushi",

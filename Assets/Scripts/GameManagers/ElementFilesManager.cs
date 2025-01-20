@@ -327,16 +327,15 @@ public class ElementFilesManager : MonoBehaviour
             return null;
         }
 
-        Debug.Log("This is the village data:");
-        // Debug.LogWarning("Village data: \n" + villageData.toString());
+        // Debug.Log("This is the village data:");
 
-        Debug.LogError("writing village data");
-        foreach (var villageObject in villageData.villageObjects)
-        {
-            Debug.Log($"Key: {villageObject.Key}, \nValue: {villageObject.Value}, \nRequirements: [{string.Join(", ", villageObject.Requirements)}]");
-            // Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
-        }
-        Debug.LogError("Finshed writing village data");
+        // Debug.LogError("writing village data");
+        // foreach (var villageObject in villageData.villageObjects)
+        // {
+        //     Debug.Log($"Key: {villageObject.Key}, \nValue: {villageObject.Value}, \nRequirements: [{string.Join(", ", villageObject.Requirements)}]");
+        //     // Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
+        // }
+        // Debug.LogError("Finshed writing village data");
         return villageData;
     }
 
