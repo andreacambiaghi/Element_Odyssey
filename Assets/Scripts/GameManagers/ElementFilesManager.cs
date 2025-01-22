@@ -343,7 +343,7 @@ public class ElementFilesManager : MonoBehaviour
     {
         UpdateAll();
         VillageData villageData = GetVillageData();
-        foreach(var villageObject in villageData.villageObjects)
+        foreach (var villageObject in villageData.villageObjects)
         {
             if (villageObject.Requirements != null)
             {
@@ -355,13 +355,14 @@ public class ElementFilesManager : MonoBehaviour
                         allRequirementsSatisfied = false;
                         break;
                     }
-                    if(allRequirementsSatisfied)
-                    {
-                        villageObject.Value = 1;
-                    } else
-                    {
-                        villageObject.Value = 0;
-                    }
+                }
+                if (allRequirementsSatisfied)
+                {
+                    villageObject.Value = 1;
+                }
+                else
+                {
+                    villageObject.Value = 0;
                 }
             }
         }
