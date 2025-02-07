@@ -167,11 +167,7 @@ public class AchievementsCheck : MonoBehaviour
         // }
 
         // Gestione degli achievement completati
-        for (int i = 0; i < 10; i++) {
-            // Salta il controllo degli achievement già completati
-            if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i)) {
-                continue;
-            }
+        for (int i = 0; i < 10; i++) {            
 
             // Mostra un messaggio per gli achievement completati
             if (achievementManager.GetAchievementValue("Achievement " + i) == AchievementManager.Instance.GetMaxProgress(i)) {
