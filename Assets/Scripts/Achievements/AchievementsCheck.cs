@@ -129,41 +129,42 @@ public class AchievementsCheck : MonoBehaviour
         // Inizializza i valori degli achievement
         achievementManager.SetAchievementValue("Achievement 0", GetCountAllElements());
         achievementManager.SetAchievementValue("Achievement 1", GetCountAllElements());
-        achievementManager.SetAchievementValue("Achievement 2", GetCountAllElements() - 1);
+        achievementManager.SetAchievementValue("Achievement 2", GetCountAllElements() /*- 1*/); 
         achievementManager.SetAchievementValue("Achievement 4", countWaterElements);
         achievementManager.SetAchievementValue("Achievement 5", countFireElements);
         achievementManager.SetAchievementValue("Achievement 6", countEarthElements);
         achievementManager.SetAchievementValue("Achievement 7", countAirElements);
+        achievementManager.SetAchievementValue("Achievement 8", GetCountAllElements());
         achievementManager.SetAchievementValue("Achievement 9", GetCountAllElements());
 
         // Calcola il tempo totale giocato
         minutesPlayed = (int)(Time.time - startTime) / 60;
         achievementManager.SetAchievementValue("Achievement 3", minutesPlayed);
 
-        // Controlla Achievement 8: 5 elementi in 5 minuti
-        if (countAllElements >= 5 && !achievementManager.isAchievementComplete(8)) {
-            // Aggiungi un nuovo elemento con timer se non abbiamo ancora 5 elementi
-            if (elementTimers.Count < 5) {
-                elementTimers.Add(Time.time);
-            }
+        // // Controlla Achievement 8: 5 elementi in 5 minuti
+        // if (countAllElements >= 5 && !achievementManager.isAchievementComplete(8)) {
+        //     // Aggiungi un nuovo elemento con timer se non abbiamo ancora 5 elementi
+        //     if (elementTimers.Count < 5) {
+        //         elementTimers.Add(Time.time);
+        //     }
 
-            // Rimuovi gli elementi che sono scaduti (più di 5 minuti fa)
-            for (int i = elementTimers.Count - 1; i >= 0; i--) {
-                if (Time.time - elementTimers[i] > 300) { // Se sono passati più di 5 minuti
-                    elementTimers.RemoveAt(i);
-                }
-            }
+        //     // Rimuovi gli elementi che sono scaduti (più di 5 minuti fa)
+        //     for (int i = elementTimers.Count - 1; i >= 0; i--) {
+        //         if (Time.time - elementTimers[i] > 300) { // Se sono passati più di 5 minuti
+        //             elementTimers.RemoveAt(i);
+        //         }
+        //     }
 
-            // Se abbiamo esattamente 5 elementi nella lista, l'achievement è completato
-            if (elementTimers.Count == 5) {
-                achievementManager.SetAchievementValue("Achievement 8", 5);
-            } else {
-                achievementManager.SetAchievementValue("Achievement 8", elementTimers.Count);
-            }
-        } else if (!achievementManager.isAchievementComplete(8)) {
-            // Se ci sono meno di 5 elementi totali, aggiorna il valore con il numero attuale
-            achievementManager.SetAchievementValue("Achievement 8", elementTimers.Count);
-        }
+        //     // Se abbiamo esattamente 5 elementi nella lista, l'achievement è completato
+        //     if (elementTimers.Count == 5) {
+        //         achievementManager.SetAchievementValue("Achievement 8", 5);
+        //     } else {
+        //         achievementManager.SetAchievementValue("Achievement 8", elementTimers.Count);
+        //     }
+        // } else if (!achievementManager.isAchievementComplete(8)) {
+        //     // Se ci sono meno di 5 elementi totali, aggiorna il valore con il numero attuale
+        //     achievementManager.SetAchievementValue("Achievement 8", elementTimers.Count);
+        // }
 
         // Gestione degli achievement completati
         for (int i = 0; i < 10; i++) {
