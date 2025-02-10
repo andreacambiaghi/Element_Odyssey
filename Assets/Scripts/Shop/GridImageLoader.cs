@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GridImageLoader : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class GridImageLoader : MonoBehaviour
             GameObject item = Instantiate(prefab, target.transform);
             item.name = "ImageItem_" + i;
 
-            // Trova il componente Image del prefab (non il figlio Image)
+            // Trova il componente Image del prefab
             Image imgComponent = item.GetComponent<Image>();
             if (imgComponent != null)
             {
@@ -38,6 +39,29 @@ public class GridImageLoader : MonoBehaviour
             else
             {
                 Debug.LogWarning("Il prefab non possiede un componente Image.");
+            }
+
+            // Estrarre il numero dal nome dell'immagine
+            string spriteName = sprites[i].name; // ad esempio "nome_10"
+            int price = ExtractNumberFromName(spriteName);
+
+            // Impostare il valore nel componente "Price"
+            Transform priceTransform = item.transform.Find("Price");
+            if (priceTransform != null)
+            {
+                TextMeshProUGUI priceText = priceTransform.GetComponent<TextMeshProUGUI>();
+                if (priceText != null)
+                {
+                    priceText.text = price.ToString(); // Imposta il prezzo nel campo di testo
+                }
+                else
+                {
+                    Debug.LogWarning("Il figlio 'Price' non ha un componente TextMeshProUGUI.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Non è stato trovato il figlio 'Price' nel prefab.");
             }
 
             // Calcola la posizione dell'oggetto nella griglia
@@ -60,5 +84,19 @@ public class GridImageLoader : MonoBehaviour
                 item.transform.position = newPos;
             }
         }
+    }
+
+    private int ExtractNumberFromName(string name)
+    {
+        int number = 0;
+        string[] parts = name.Split('_');
+        if (parts.Length > 1)
+        {
+            string numberPart = parts[parts.Length - 1]; // Ultima parte "10.png"
+            numberPart = System.IO.Path.GetFileNameWithoutExtension(numberPart); // Rimuove ".png"
+            
+            int.TryParse(numberPart, out number); // Conversione sicura
+        }
+        return number;
     }
 }
