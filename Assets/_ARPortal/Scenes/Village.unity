@@ -925,8 +925,9 @@ GameObject:
   - component: {fileID: 478688231}
   - component: {fileID: 478688230}
   - component: {fileID: 478688229}
+  - component: {fileID: 478688232}
   m_Layer: 5
-  m_Name: Shop
+  m_Name: Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -995,9 +996,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeScenes, Assembly-CSharp
-        m_MethodName: MenuScene
+      - m_Target: {fileID: 478688232}
+        m_TargetAssemblyTypeName: OpenShop, Assembly-CSharp
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1045,6 +1046,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478688227}
   m_CullTransparentMesh: 1
+--- !u!114 &478688232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478688227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28982f14e914e44097eb796e57f8871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 105661272}
+  menu: {fileID: 154604291}
+  volume: {fileID: 2135397770}
+  home: {fileID: 1380785056}
+  elementSelected: {fileID: 1127719696}
+  openShop: {fileID: 1635408887}
+  shop: {fileID: 1794182784}
+  shopClose: {fileID: 734009076}
 --- !u!1 &607446820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,7 +1651,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 250}
+  m_AnchoredPosition: {x: 50, y: 250}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1093647196
@@ -2693,10 +2714,8 @@ GameObject:
   - component: {fileID: 1635408890}
   - component: {fileID: 1635408889}
   - component: {fileID: 1635408888}
-  - component: {fileID: 1635408892}
-  - component: {fileID: 1635408893}
   m_Layer: 5
-  m_Name: ShopButton
+  m_Name: OpenShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2785,79 +2804,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1635408892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635408887}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f28982f14e914e44097eb796e57f8871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 1014158284}
-  volume: {fileID: 2135397770}
-  home: {fileID: 1380785056}
-  shop: {fileID: 1794182784}
-  shopClose: {fileID: 734009076}
---- !u!114 &1635408893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635408887}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1635408892}
-        m_TargetAssemblyTypeName: OpenShop, Assembly-CSharp
-        m_MethodName: Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1794182784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,7 +2925,7 @@ MonoBehaviour:
   prefab: {fileID: 5496830014326476648, guid: 4be8c86acf268ff4d8a26f5cf375d558, type: 3}
   itemsPerRow: 3
   spacing: {x: 40, y: 40}
-  startPosition: {x: -100, y: 200}
+  startPosition: {x: -150, y: 200}
 --- !u!1 &1838769660
 GameObject:
   m_ObjectHideFlags: 0
@@ -3027,6 +2973,7 @@ GameObject:
   - component: {fileID: 1850883757}
   - component: {fileID: 1850883756}
   - component: {fileID: 1850883755}
+  - component: {fileID: 1850883758}
   m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
@@ -3098,9 +3045,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeScenes, Assembly-CSharp
-        m_MethodName: MenuScene
+      - m_Target: {fileID: 1850883758}
+        m_TargetAssemblyTypeName: OpenShop, Assembly-CSharp
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3148,6 +3095,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850883753}
   m_CullTransparentMesh: 1
+--- !u!114 &1850883758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850883753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28982f14e914e44097eb796e57f8871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 105661272}
+  menu: {fileID: 0}
+  volume: {fileID: 2135397770}
+  home: {fileID: 1380785056}
+  elementSelected: {fileID: 1127719696}
+  openShop: {fileID: 1635408887}
+  shop: {fileID: 1794182784}
+  shopClose: {fileID: 734009076}
 --- !u!1 &1911317418
 GameObject:
   m_ObjectHideFlags: 0
