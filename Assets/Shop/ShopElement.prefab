@@ -420,3 +420,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99bb189ee2a0524f891773999d4c200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noBalanceNotification: {fileID: 737062429545896001, guid: 1db080481258a89468a247d37d1f817a, type: 3}
