@@ -2924,7 +2924,7 @@ MonoBehaviour:
   target: {fileID: 1838769660}
   prefab: {fileID: 5496830014326476648, guid: 4be8c86acf268ff4d8a26f5cf375d558, type: 3}
   itemsPerRow: 3
-  spacing: {x: 40, y: 40}
+  spacing: {x: 40, y: 100}
   startPosition: {x: -125, y: 200}
 --- !u!1 &1838769660
 GameObject:
