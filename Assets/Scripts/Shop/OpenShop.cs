@@ -11,6 +11,7 @@ public class OpenShop : MonoBehaviour
     [SerializeField] private GameObject home;
     [SerializeField] private GameObject elementSelected;
     [SerializeField] private GameObject openShop;
+    [SerializeField] private GameObject inventoryButton;
 
     [Header("GameObject da Attivare")]
     [SerializeField] private GameObject shop;
@@ -50,6 +51,11 @@ public class OpenShop : MonoBehaviour
             openShop.SetActive(false);
         }
 
+        if (inventoryButton != null)
+        {
+            inventoryButton.SetActive(false);
+        }
+
         if (shop != null)
         {
             shop.SetActive(true);
@@ -59,6 +65,7 @@ public class OpenShop : MonoBehaviour
         {
             shopClose.SetActive(true);
         }
+
     }
     public void Close()
     {
@@ -86,6 +93,11 @@ public class OpenShop : MonoBehaviour
         if (openShop != null)
         {
             openShop.SetActive(true);
+        }
+
+        if (inventoryButton != null)
+        {
+            inventoryButton.SetActive(true);
         }
 
         if (shop != null)
