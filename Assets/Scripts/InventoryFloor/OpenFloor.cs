@@ -19,7 +19,7 @@ public class OpenFloor : MonoBehaviour
 
     public void Open()
     {
-        Debug.Log("Shop aperto");
+        Debug.Log("Inventory aperto");
         
         if (slider != null)
         {
@@ -69,7 +69,7 @@ public class OpenFloor : MonoBehaviour
     }
     public void Close()
     {
-        Debug.Log("Shop chiuso");
+        Debug.Log("Inventory chiuso");
         if (slider != null)
         {
             slider.SetActive(true);

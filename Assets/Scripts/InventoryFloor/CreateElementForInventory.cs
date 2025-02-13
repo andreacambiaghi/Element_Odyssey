@@ -16,11 +16,14 @@ public class CreateElementForInventory : MonoBehaviour
 
     void Start()
     {
-        // Carica la lista dei nomi accettati da "possessed.txt"
-        string[] validNames = LoadPossessedNames();
-        if (validNames == null || validNames.Length == 0)
+        // Carica la lista dei nomi accettati da "initialFloor.txt" e "buyFloor.txt"
+        string[] initialNames = LoadFloorNames("Floor/initialFloor");
+        string[] buyNames = LoadFloorNames("Floor/buyFloor");
+        
+        string[] validNames = initialNames.Concat(buyNames).ToArray();
+        if (validNames.Length == 0)
         {
-            Debug.LogWarning("Il file possessed.txt è vuoto o non esiste.");
+            Debug.LogWarning("I file initialFloor.txt e buyFloor.txt sono vuoti o non esistono.");
             return;
         }
 
@@ -32,11 +35,11 @@ public class CreateElementForInventory : MonoBehaviour
             return;
         }
 
-        // Filtra gli sprite per includere solo quelli presenti in "possessed.txt"
+        // Filtra gli sprite per includere solo quelli presenti nei file di testo
         sprites = sprites.Where(s => validNames.Contains(s.name)).ToArray();
         if (sprites.Length == 0)
         {
-            Debug.LogWarning("Nessuna immagine corrisponde ai nomi in possessed.txt");
+            Debug.LogWarning("Nessuna immagine corrisponde ai nomi in initialFloor.txt e buyFloor.txt");
             return;
         }
 
@@ -70,9 +73,9 @@ public class CreateElementForInventory : MonoBehaviour
         }
     }
 
-    private string[] LoadPossessedNames()
+    private string[] LoadFloorNames(string filePath)
     {
-        TextAsset file = Resources.Load<TextAsset>("Floor/possessed");
+        TextAsset file = Resources.Load<TextAsset>(filePath);
         if (file != null)
         {
             return file.text.Split('\n').Select(name => name.Trim()).Where(name => !string.IsNullOrEmpty(name)).ToArray();
