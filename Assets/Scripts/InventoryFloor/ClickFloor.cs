@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClickFloor : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Material outlineMaterial;
+    private bool isSelected = false;
+
     void Start()
     {
-        
+        outlineMaterial = GetComponent<Image>().material;
+        outlineMaterial.SetFloat("_OutlineThickness", 0f); // Contorno inizialmente spento
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ToggleOutline()
     {
-        
+        isSelected = !isSelected;
+        outlineMaterial.SetFloat("_OutlineThickness", isSelected ? 0.02f : 0f);
     }
 }
