@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 2801292257011872633}
   - component: {fileID: 9199196482184474794}
   - component: {fileID: 7293357655414162514}
+  - component: {fileID: 7091343289165021786}
   m_Layer: 0
   m_Name: bee
   m_TagString: Untagged
@@ -344,12 +345,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7091343289165021786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277873753430953175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &383144177528719707
 GameObject:
   m_ObjectHideFlags: 0
