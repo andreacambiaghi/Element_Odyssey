@@ -11,7 +11,10 @@ public class Tutorial : MonoBehaviour
 
     [SerializeField]
     private TypewriterEffectTMP typewriterEffect;
+    [SerializeField]
+    private PlaySoundTutorial playSoundTutorial;
     private string[] tutorialTexts = new string[] { "Inquadra marker", "Tocca la palla", "Apri il menu", "Scegli un elemento" };
+    private string[] tutorialAudios = new string[] { "welcome", "touch_ball", "open_menu", "choose_element" };
 
     private int currentIndex = 0;
 
@@ -31,6 +34,7 @@ public class Tutorial : MonoBehaviour
     private void Start()
     {
         UpdateText();
+        playSoundTutorial.Play(tutorialAudios[0]);
     }
 
     public void Next()
