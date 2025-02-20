@@ -12,6 +12,7 @@ public class DeleteSavesButton : MonoBehaviour
         ElementFilesManager.Instance.ResetVillageData();
         ElementFilesManager.Instance.ResetVillageObjects();
         ElementFilesManager.Instance.ResetBuyFloor();
+        // ElementFilesManager.Instance.ResetAchievements();
 
         Debug.Log("Saves deleted!");
     }
@@ -33,11 +34,5 @@ public class DeleteSavesButton : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         textMesh.text = originalText;
-    }
-
-    public void DeleteAchievements()
-    {
-        Debug.Log("Mariooo --1");
-        ElementFilesManager.Instance.ResetAchievements();
     }
 }
