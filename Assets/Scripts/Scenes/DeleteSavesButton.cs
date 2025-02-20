@@ -12,7 +12,7 @@ public class DeleteSavesButton : MonoBehaviour
         ElementFilesManager.Instance.ResetVillageData();
         ElementFilesManager.Instance.ResetVillageObjects();
         ElementFilesManager.Instance.ResetBuyFloor();
-        // ElementFilesManager.Instance.ResetAchievements();
+        ElementFilesManager.Instance.ResetAchievements();
 
         Debug.Log("Saves deleted!");
     }
