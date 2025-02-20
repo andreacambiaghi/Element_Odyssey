@@ -242,8 +242,8 @@ MonoBehaviour:
   target: {fileID: 1302629933}
   prefab: {fileID: 5496830014326476648, guid: 37ad6e4bcc7fc424fbe2a61f64039c50, type: 3}
   itemsPerRow: 3
-  spacing: {x: 40, y: 100}
-  startPosition: {x: -125, y: 200}
+  spacing: {x: 10, y: 10}
+  startPosition: {x: 0, y: 0}
 --- !u!1 &99865369
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,9 +2272,10 @@ MonoBehaviour:
   elementSelected: {fileID: 1127719696}
   openShop: {fileID: 1635408887}
   inventoryButton: {fileID: 888939711}
-  sweep: {fileID: 466129379}
+  sweep: {fileID: 2065031674}
   inventory: {fileID: 30289287}
   invClose: {fileID: 1358930550}
+  floors: {fileID: 1302629933}
 --- !u!1 &989748677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3282,7 +3283,7 @@ GameObject:
   - component: {fileID: 1302629934}
   m_Layer: 5
   m_Name: Floors
-  m_TagString: Untagged
+  m_TagString: Floors
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3770,9 +3771,10 @@ MonoBehaviour:
   elementSelected: {fileID: 1127719696}
   openShop: {fileID: 1635408887}
   inventoryButton: {fileID: 888939711}
-  sweep: {fileID: 466129379}
+  sweep: {fileID: 2065031674}
   inventory: {fileID: 30289287}
   invClose: {fileID: 1358930550}
+  floors: {fileID: 0}
 --- !u!1 &1380785056
 GameObject:
   m_ObjectHideFlags: 0
