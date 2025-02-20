@@ -353,6 +353,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             finded = false;
             AchievementsCheck.Instance.FoundedElement(prefabName);
             Debug.Log("SONO QUIII :)" + prefabName);
+            ElementFilesManager.Instance.SetBalance(ElementFilesManager.Instance.GetBalance() + 1);
         }
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");

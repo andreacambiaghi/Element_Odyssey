@@ -33,12 +33,13 @@ public class ShopItem : MonoBehaviour
 
         // Leggi il prezzo e il saldo attuale
         int itemPrice = int.Parse(priceText.text);
-        int currentBalance = int.Parse(balanceText.text);
+        int currentBalance = ElementFilesManager.Instance.GetBalance();
 
         if (currentBalance >= itemPrice)
         {
             // Aggiorna il saldo
             currentBalance -= itemPrice;
+            ElementFilesManager.Instance.SetBalance(currentBalance);
             balanceText.text = currentBalance.ToString();
 
             // Disattiva il "Lock" se esiste

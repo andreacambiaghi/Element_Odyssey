@@ -498,7 +498,7 @@ public class ElementFilesManager : MonoBehaviour
         File.WriteAllLines(buyFloorSaveDataFilePath, new string[0]);
     }
 
-    public void SaveBalance(int balance){
+    public void SetBalance(int balance){
         string filePath = balanceFilePath;
         File.WriteAllText(filePath, balance.ToString());
     }

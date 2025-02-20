@@ -298,6 +298,7 @@ public class VirtualPlaneManager : MonoBehaviour
                 createButtonsComponent.ResetButtons();
                 Debug.Log("ButtonLabels aggiornato con successo");
                 SpawnPopUp(resultPrefabName);
+                ElementFilesManager.Instance.SetBalance(ElementFilesManager.Instance.GetBalance() + 1);
 
                 try{
                     AchievementsCheck.Instance.FoundedElement(resultPrefabName);
