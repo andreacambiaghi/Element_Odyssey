@@ -435,6 +435,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayImage: {fileID: 620641533}
+  TutorialPanel: {fileID: 0}
+  slider: {fileID: 0}
+  soundButton: {fileID: 0}
+  homeButton: {fileID: 0}
+  achievementButton: {fileID: 0}
 --- !u!1 &214411739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1104,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayImage: {fileID: 620641533}
+  TutorialPanel: {fileID: 1553079085}
+  slider: {fileID: 782628375}
+  soundButton: {fileID: 326580907}
+  homeButton: {fileID: 214411739}
+  achievementButton: {fileID: 2139607542}
 --- !u!1 &680379172
 GameObject:
   m_ObjectHideFlags: 0
@@ -4091,6 +4101,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayImage: {fileID: 620641533}
+  TutorialPanel: {fileID: 0}
+  slider: {fileID: 0}
+  soundButton: {fileID: 0}
+  homeButton: {fileID: 0}
+  achievementButton: {fileID: 0}
 --- !u!1 &1961652369
 GameObject:
   m_ObjectHideFlags: 0

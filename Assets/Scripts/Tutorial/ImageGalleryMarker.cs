@@ -4,6 +4,11 @@ using UnityEngine.UI;
 public class ImageGallery : MonoBehaviour
 {
     [SerializeField] private Image displayImage;
+    [SerializeField] private GameObject TutorialPanel;
+    [SerializeField] private GameObject slider;
+    [SerializeField] private GameObject soundButton;
+    [SerializeField] private GameObject homeButton;
+    [SerializeField] private GameObject achievementButton;
     private Sprite[] images;
     private int currentIndex = 0;
 
@@ -11,11 +16,24 @@ public class ImageGallery : MonoBehaviour
     {
         images = Resources.LoadAll<Sprite>("Tutorial");
         displayImage.sprite = images[currentIndex];
+        slider.SetActive(false);
+        soundButton.SetActive(false);
+        homeButton.SetActive(false);
+        achievementButton.SetActive(false);
     }
 
     public void NextImage()
     {
         if (images.Length == 0) return;
+
+        if(currentIndex == images.Length - 1)
+        {
+            TutorialPanel.SetActive(false);
+            slider.SetActive(true);
+            soundButton.SetActive(true);
+            homeButton.SetActive(true);
+            achievementButton.SetActive(true);
+        }
 
         currentIndex = (currentIndex + 1) % images.Length;
         displayImage.sprite = images[currentIndex];
