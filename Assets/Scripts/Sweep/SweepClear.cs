@@ -5,6 +5,6 @@ using UnityEngine;
 public class SweepClear : MonoBehaviour
 {
     public void Click() {
-        
+        VillagePlaneManager.Instance.resetConfiguration();
     }
 }

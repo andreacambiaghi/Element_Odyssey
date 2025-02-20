@@ -17,8 +17,6 @@ public class VillagePlaneManager : MonoBehaviour
     
     private CreateButtons createButtonsComponent;
 
-    private List<GameObject> spawnedObjects = new List<GameObject>(); // TODO: gestire questa lista
-
     [SerializeField] private GameObject slider;
     
     [SerializeField] private SliderMenuAnim menu;
@@ -396,6 +394,15 @@ public class VillagePlaneManager : MonoBehaviour
 
         elementFilesManager.UpdateVillageSaveData(villageSaveData);
 
+    }
+
+    public void resetConfiguration(){
+        foreach(GameObject placedObject in placedObjects){
+            Destroy(placedObject);
+        }
+        placedObjects.Clear();
+        
+        saveCurrentConfiguration();
     }
 
     private class PlaneCoords
