@@ -1122,7 +1122,6 @@ GameObject:
   - component: {fileID: 466129384}
   - component: {fileID: 466129383}
   - component: {fileID: 466129382}
-  - component: {fileID: 466129381}
   m_Layer: 5
   m_Name: Sweep
   m_TagString: Untagged
@@ -1150,28 +1149,6 @@ RectTransform:
   m_AnchoredPosition: {x: -100, y: -600}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &466129381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466129379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1f1be753a100e949b8933d80ad3a649, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 105661272}
-  menu: {fileID: 154604291}
-  volume: {fileID: 2135397770}
-  home: {fileID: 1380785056}
-  elementSelected: {fileID: 1127719696}
-  openShop: {fileID: 1635408887}
-  inventoryButton: {fileID: 2065031674}
-  sweep: {fileID: 0}
-  inventory: {fileID: 30289287}
-  invClose: {fileID: 1358930550}
 --- !u!114 &466129382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,19 +1192,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 466129383}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 466129381}
-        m_TargetAssemblyTypeName: OpenFloor, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &466129383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3780,7 +3745,7 @@ MonoBehaviour:
   elementSelected: {fileID: 1127719696}
   openShop: {fileID: 1635408887}
   inventoryButton: {fileID: 888939711}
-  sweep: {fileID: 0}
+  sweep: {fileID: 466129379}
   inventory: {fileID: 30289287}
   invClose: {fileID: 1358930550}
 --- !u!1 &1380785056
@@ -4436,7 +4401,7 @@ MonoBehaviour:
   elementSelected: {fileID: 1127719696}
   openShop: {fileID: 1635408887}
   inventoryButton: {fileID: 888939711}
-  sweepButton: {fileID: 0}
+  sweepButton: {fileID: 466129379}
   shop: {fileID: 1794182784}
   shopClose: {fileID: 734009076}
   itemList: {fileID: 1838769660}
