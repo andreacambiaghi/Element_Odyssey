@@ -415,21 +415,23 @@ public class ElementFilesManager : MonoBehaviour
             Debug.LogError("Village save data is null after deserialization");
             return null;
         }
+        
+        if(villageSaveData.floor == null){
+            villageSaveData.floor = "black";
+        }
         if (villageSaveData.villageObjects == null)
         {
             Debug.LogError("villageObjects is null after deserialization");
-            return null;
+            // return null;
         }
 
         Debug.Log("This is the village save data:");
         Debug.LogWarning("Village data: " + villageSaveData.toString());
 
-        //Debug.LogError("writing village data");
-        foreach (var villageObject in villageSaveData.villageObjects)
-        {
-            Debug.Log($"Key: {villageObject.objectName}, Value: {villageObject.position}");
-        }
-        //Debug.LogError("Finshed writing village data");
+        // foreach (var villageObject in villageSaveData.villageObjects)
+        // {
+        //     Debug.Log($"Key: {villageObject.objectName}, Value: {villageObject.position}");
+        // }
         return villageSaveData;
     }
 
@@ -548,10 +550,11 @@ public class ElementFilesManager : MonoBehaviour
     public class VillageSaveData
     {
         public List<VillageObjectSaveData> villageObjects;
+        public string floor;
 
         public string toString()
         {
-            return string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
+            return "Floor: "+ floor + "\n" + string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
         }
     }
 

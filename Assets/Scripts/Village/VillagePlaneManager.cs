@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System;
+using UnityEngine.UIElements;
 
 public class VillagePlaneManager : MonoBehaviour 
 { 
@@ -43,6 +44,7 @@ public class VillagePlaneManager : MonoBehaviour
     private bool isPlacementEnabled = true;
 
     private GameObject VillagePlane;
+    private string currentFloor = "black";
 
     private List<GameObject> placedObjects = new List<GameObject>();
 
@@ -325,10 +327,33 @@ public class VillagePlaneManager : MonoBehaviour
         VillagePlane = newARObject;
 
         if(villageSaveData != null){
+            string floor = villageSaveData.floor;
+            changeVillagePlane(floor);
+
+            if(villageSaveData.villageObjects == null) return;
+
             foreach(ElementFilesManager.VillageObjectSaveData villageObject in villageSaveData.villageObjects){
             SpawnObject(VillagePlane.transform.TransformPoint(villageObject.position), null, villageObject.objectName);
             }
         }
+    }
+
+    public void changeVillagePlane(string prefabName){
+        if(VillagePlane == null) return;
+
+        GameObject newPlane = Resources.Load<GameObject>("Floor/Planes/"+prefabName);
+         if(prefabName == null) {
+            Debug.LogWarning("Piano non trovato: "+prefabName);
+            return;
+        }
+
+        Material newMaterial = Resources.Load<Material>("Floor/Materials/"+prefabName);
+
+        VillagePlane.GetComponent<MeshRenderer>().material = newMaterial;
+
+        currentFloor = prefabName;
+
+        saveCurrentConfiguration();
     }
     
     Transform FindInChildren(Transform parent, string name)
@@ -356,12 +381,12 @@ public class VillagePlaneManager : MonoBehaviour
 
     private void saveCurrentConfiguration(){
         ElementFilesManager.VillageSaveData villageSaveData = new ElementFilesManager.VillageSaveData();
+        villageSaveData.floor = currentFloor;
         List<ElementFilesManager.VillageObjectSaveData> villageObjectSaveData = new List<ElementFilesManager.VillageObjectSaveData>();
 
         for (int i = 0; i < placedObjects.Count; i++){
             ElementFilesManager.VillageObjectSaveData villageObject = new ElementFilesManager.VillageObjectSaveData();
             villageObject.objectName = placedObjects[i].name;  
-            // villageObject.position = placedObjects[i].transform.position;
             villageObject.position = VillagePlane.transform.InverseTransformPoint(placedObjects[i].transform.position);
 
             villageObjectSaveData.Add(villageObject);
