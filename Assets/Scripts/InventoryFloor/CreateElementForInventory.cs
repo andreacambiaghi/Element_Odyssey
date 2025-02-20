@@ -14,19 +14,11 @@ public class CreateElementForInventory : MonoBehaviour
     [SerializeField] private Vector2 spacing = new Vector2(10f, 10f); // Spazio tra gli oggetti
     [SerializeField] private Vector2 startPosition = new Vector2(0f, 0f); // Posizione iniziale
 
-    void Start()
+    void OnEnable()
     {
         // Carica la lista dei nomi accettati da "initialFloor.txt" e "buyFloor.txt"
         string[] initialNames = LoadFloorNames("initialFloor");
-        //string[] buyNames = LoadFloorNames("buyFloor");
         string[] buyNames = ElementFilesManager.Instance.GetBuyFloorSaveData().ToArray();
-        
-        string[] validNames = initialNames.Concat(buyNames).ToArray();
-        if (validNames.Length == 0)
-        {
-            Debug.LogWarning("I file initialFloor.txt e buyFloor.txt sono vuoti o non esistono.");
-            return;
-        }
 
         // Carica tutti gli sprite dalla cartella "Resources/Floor/Icon"
         Sprite[] sprites = Resources.LoadAll<Sprite>("Floor/Icon");
@@ -36,16 +28,20 @@ public class CreateElementForInventory : MonoBehaviour
             return;
         }
 
-        // Filtra gli sprite per includere solo quelli presenti nei file di testo
-        sprites = sprites.Where(s => validNames.Contains(s.name)).ToArray();
-        if (sprites.Length == 0)
+        // Ordina gli sprite in modo che quelli di initialNames vengano prima di quelli di buyNames
+        var orderedSprites = sprites
+            .Where(s => initialNames.Contains(s.name))
+            .Concat(sprites.Where(s => buyNames.Contains(s.name)))
+            .ToArray();
+
+        if (orderedSprites.Length == 0)
         {
             Debug.LogWarning("Nessuna immagine corrisponde ai nomi in initialFloor.txt e buyFloor.txt");
             return;
         }
 
         // Genera gli oggetti nella griglia
-        for (int i = 0; i < sprites.Length; i++)
+        for (int i = 0; i < orderedSprites.Length; i++)
         {
             GameObject item = Instantiate(prefab, target.transform);
             item.name = "InventoryItem_" + i;
@@ -53,7 +49,7 @@ public class CreateElementForInventory : MonoBehaviour
             Image imgComponent = item.GetComponent<Image>();
             if (imgComponent != null)
             {
-                imgComponent.sprite = sprites[i];
+                imgComponent.sprite = orderedSprites[i];
             }
             else
             {
@@ -81,7 +77,6 @@ public class CreateElementForInventory : MonoBehaviour
         {
             Debug.Log("Floor caricati: " + file.text);
             return file.text.Split('\n').Select(name => name.Trim()).Where(name => !string.IsNullOrEmpty(name)).ToArray();
-            
         }
 
         return new string[0];
