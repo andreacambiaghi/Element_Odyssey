@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 public class GridImageLoader : MonoBehaviour
 {
@@ -14,8 +15,24 @@ public class GridImageLoader : MonoBehaviour
     [SerializeField] private Vector2 spacing = new Vector2(10f, 10f); // Spazio orizzontale e verticale tra gli oggetti
     [SerializeField] private Vector2 startPosition = new Vector2(0f, 0f); // Posizione iniziale (in coordinate locali del target)
 
-    void Start()
+    public void Start()
     {
+       SpawnItem();
+    }
+
+    public void SpawnItem() {
+
+        // Prima di tutto distrugge tutti gli elementi figli del target, tranne quello che si chiama "Low"
+        foreach (Transform child in target.transform)
+        {
+            if (child.name != "Low")
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        string[] buyNames = ElementFilesManager.Instance.GetBuyFloorSaveData().ToArray();
+
         // Carica tutti gli sprite dalla cartella Resources/ImageShop
         Sprite[] sprites = Resources.LoadAll<Sprite>("ImageShop");
         if (sprites == null || sprites.Length == 0)
@@ -25,8 +42,18 @@ public class GridImageLoader : MonoBehaviour
         }
 
         // Cicla attraverso gli sprite e crea gli oggetti in base al numero di immagini trovate
+        int k = 0;
+        Debug.Log(buyNames + "Griglia");
         for (int i = 0; i < sprites.Length; i++)
         {
+            Debug.Log("Sprite: " + sprites[i].name);
+            // Se l'oggetto è già stato acquistato, salta il ciclo
+            if (buyNames.Contains(sprites[i].name.Split('_')[0]))
+            {
+                Debug.Log("Elemento già acquistato: " + sprites[i].name);
+                continue;
+            }
+
             // Istanzia il prefab come figlio del target
             GameObject item = Instantiate(prefab, target.transform);
 
@@ -66,8 +93,9 @@ public class GridImageLoader : MonoBehaviour
             }
 
             // Calcola la posizione dell'oggetto nella griglia
-            int row = i / itemsPerRow;  // Indice della riga
-            int col = i % itemsPerRow;  // Indice della colonna
+            int row = k / itemsPerRow;  // Indice della riga
+            int col = k % itemsPerRow;  // Indice della colonna
+            k++;
 
             // Se l'oggetto ha un RectTransform (tipico degli elementi UI), usiamo l'anchoredPosition
             RectTransform rt = item.GetComponent<RectTransform>();

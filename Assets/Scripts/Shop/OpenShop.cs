@@ -20,11 +20,6 @@ public class OpenShop : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private GameObject itemList;
 
-    private void Start()
-    {
-        CheckBuy();
-    }
-
     public void Open()
     {
         CheckBuy();
@@ -125,15 +120,17 @@ public class OpenShop : MonoBehaviour
     {
         string[] buyNames = ElementFilesManager.Instance.GetBuyFloorSaveData().ToArray();
         Debug.Log("Elementi acquistati: " + string.Join(", ", buyNames));
-            
-        // Ciclo sui figli di itemList e se il nome dell'elemento è contenuto in buyNames, disabilito il Lock
-        foreach (Transform child in itemList.transform)
-        {
-            Debug.Log("Nome figlio: " + child.name.Split('_')[0]);
-            if (Array.Exists(buyNames, element => element == child.name.Split('_')[0]))
-            {
-                child.Find("Lock")?.gameObject.SetActive(false);
-            }
-        }
+
+        //gridImageLoader.CreateGrid();
+
+        // // Ciclo sui figli di itemList e se il nome dell'elemento è contenuto in buyNames, disabilito il Lock
+        // foreach (Transform child in itemList.transform)
+        // {
+        //     Debug.Log("Nome figlio: " + child.name.Split('_')[0]);
+        //     if (Array.Exists(buyNames, element => element == child.name.Split('_')[0]))
+        //     {
+        //         child.Find("Lock")?.gameObject.SetActive(false);
+        //     }
+        // }
     }
 }
