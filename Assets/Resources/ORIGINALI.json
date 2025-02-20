@@ -3,42 +3,42 @@
         {
             "Key": "angel",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["lily", "cloud", "angel"]
         },
         {
             "Key": "beach",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["sand", "water", "beach"]
         },
         {
             "Key": "bee",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["pollen", "bee"]
         },
         {
             "Key": "car",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["engine", "car"]
         },
         {
             "Key": "helicopter",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["helicopter", "air", "engine", "wind"]
         },
         {
             "Key": "horse",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["mud", "plant", "wood"]
         },
         {
             "Key": "house",
             "Value": 0,
-            "Requirements":["mountain"]
+            "Requirements": ["house", "brick", "stone", "wood"]
         },
         {
             "Key": "lake-house",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["lake", "house"]
         },
         {
             "Key": "mountain",
@@ -48,27 +48,27 @@
         {
             "Key": "statue",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["stone", "wood", "sand"]
         },
         {
             "Key": "sushi",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["sushi", "seaweed"]
         },
         {
             "Key": "tree",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["tree", "wood"]
         },
         {
             "Key": "volcano",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["volcano", "lava", "rock"]
         },
         {
             "Key": "windmill",
             "Value": 0,
-            "Requirements": ["mountain"]
+            "Requirements": ["windmill", "wind", "engine"]
         }
     ]
 }

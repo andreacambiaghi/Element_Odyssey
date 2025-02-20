@@ -12,6 +12,7 @@ public class OpenFloor : MonoBehaviour
     [SerializeField] private GameObject elementSelected;
     [SerializeField] private GameObject openShop;
     [SerializeField] private GameObject inventoryButton;
+    [SerializeField] private GameObject sweep;
 
     [Header("GameObject da Attivare")]
     [SerializeField] private GameObject inventory;
@@ -56,6 +57,11 @@ public class OpenFloor : MonoBehaviour
             inventoryButton.SetActive(false);
         }
 
+        if (sweep != null)
+        {
+            sweep.SetActive(false);
+        }
+
         if (inventory != null)
         {
             inventory.SetActive(true);
@@ -98,6 +104,11 @@ public class OpenFloor : MonoBehaviour
         if (inventoryButton != null)
         {
             inventoryButton.SetActive(true);
+        }
+
+        if (sweep != null)
+        {
+            sweep.SetActive(true);
         }
 
         if (inventory != null)
