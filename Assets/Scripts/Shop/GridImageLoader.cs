@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class GridImageLoader : MonoBehaviour
 {
@@ -28,7 +29,6 @@ public class GridImageLoader : MonoBehaviour
         {
             // Istanzia il prefab come figlio del target
             GameObject item = Instantiate(prefab, target.transform);
-            item.name = "ImageItem_" + i;
 
             // Trova il componente Image del prefab
             Image imgComponent = item.GetComponent<Image>();
@@ -44,6 +44,7 @@ public class GridImageLoader : MonoBehaviour
             // Estrarre il numero dal nome dell'immagine
             string spriteName = sprites[i].name; // ad esempio "nome_10"
             int price = ExtractNumberFromName(spriteName);
+            item.name = spriteName; // Imposta il nome dell'oggetto
 
             // Impostare il valore nel componente "Price"
             Transform priceTransform = item.transform.Find("Price");
@@ -83,6 +84,7 @@ public class GridImageLoader : MonoBehaviour
                 Vector3 newPos = target.transform.position + new Vector3(col * (spacing.x + 1f), -row * (spacing.y + 1f), 0f);
                 item.transform.position = newPos;
             }
+
         }
     }
 

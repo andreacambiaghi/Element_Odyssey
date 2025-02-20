@@ -1264,6 +1264,7 @@ MonoBehaviour:
   inventoryButton: {fileID: 888939711}
   shop: {fileID: 1794182784}
   shopClose: {fileID: 734009076}
+  itemList: {fileID: 1838769660}
 --- !u!1 &607446820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4148,6 +4149,7 @@ MonoBehaviour:
   inventoryButton: {fileID: 888939711}
   shop: {fileID: 1794182784}
   shopClose: {fileID: 734009076}
+  itemList: {fileID: 1838769660}
 --- !u!1 &1911317418
 GameObject:
   m_ObjectHideFlags: 0
