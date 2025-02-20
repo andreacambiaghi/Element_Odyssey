@@ -24,6 +24,7 @@ public class ShopItem : MonoBehaviour
 
     private void OnItemClicked()
     {
+        Debug.Log("Hai cliccato su: " + gameObject.GetComponent<Image>().sprite.texture.name.Split('_')[0]);
         if (priceText == null || balanceText == null)
         {
             Debug.Log("Prezzo o saldo mancanti nello ShopItem: " + gameObject.name);
@@ -45,6 +46,11 @@ public class ShopItem : MonoBehaviour
             {
                 lockObject.SetActive(false);
             }
+
+            // ElementFilesManager.Instance.SaveBalance(currentBalance); //TODO
+
+            ElementFilesManager.Instance.SaveBuyFloor(gameObject.GetComponent<Image>().sprite.texture.name.Split('_')[0]);
+
         }
         else
         {

@@ -19,6 +19,9 @@ public class ElementFilesManager : MonoBehaviour
 
     private string villageSaveDataFilePath;
 
+    private string buyFloorSaveDataFilePath;
+    private string balanceFilePath;
+
     public static ElementFilesManager Instance;
 
     private List<string> initialElements = null;
@@ -56,6 +59,9 @@ public class ElementFilesManager : MonoBehaviour
         achievementsFilePath = Path.Combine(Application.persistentDataPath, "achievements.json");
         villageObjectsFilePath = Path.Combine(Application.persistentDataPath, "villageObjects.json");
         villageSaveDataFilePath = Path.Combine(Application.persistentDataPath, "villageSaveData.json");
+        buyFloorSaveDataFilePath = Path.Combine(Application.persistentDataPath, "buyFloor.txt");
+        balanceFilePath = Path.Combine(Application.persistentDataPath, "balance.txt");
+
 
         UpdateAll();
 
@@ -109,27 +115,12 @@ public class ElementFilesManager : MonoBehaviour
             foundItems.AddRange(lines);
         }
 
-        // Debug.Log("Reading JSON file achiements.json");
         Debug.LogWarning("FOUND ELEMENTS: " + File.ReadAllText(filePath));
         return foundItems;
-
-        // List<string> foundItems = new List<string>();
-        // TextAsset textAsset = Resources.Load<TextAsset>("FoundElements");
-        // if (textAsset != null)
-        // {
-        //     string[] lines = textAsset.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-        //     foundItems.AddRange(lines);
-        // }
-        // else
-        // {
-        //     Debug.LogError("File non trovato");
-        // }
-        // return foundItems;
     }
 
     private void UpdateFoundElementsFile(List<string> foundElements)
     {
-        //TODO: mettere anche funzione con append per singolo foundelement
         string filePath = foundElementsFilePath;
         File.WriteAllLines(filePath, foundElements);
         Debug.LogWarning("UPDATED FOUND ELEMENTS: " + File.ReadAllText(filePath));
@@ -462,10 +453,66 @@ public class ElementFilesManager : MonoBehaviour
 
     }
 
+    public List<string> GetBuyFloorSaveData(){
+        string filePath = buyFloorSaveDataFilePath;
+        List<string> boughtFloors = new List<string>();
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, "");
+            Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
+        }
+        else
+        {
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+            string[] lines = File.ReadAllText(filePath).Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            boughtFloors.AddRange(lines);
+        }
 
+        Debug.LogWarning("BOUGHT FLOORS: " + File.ReadAllText(filePath));
+        return boughtFloors;
+    }
 
+    public bool SaveBuyFloor(string boughtFloor)
+    {
+        List<string> boughtFloors = GetBuyFloorSaveData();
 
+        if (boughtFloors.Contains(boughtFloor.ToLower()))
+        {
+            Debug.LogWarning("Floor già comprato" +  boughtFloor);
+            return false;
+        }
 
+        boughtFloors.Add(boughtFloor.ToLower());
+        UpdateFoundElementsFile(foundElements);
+
+        File.WriteAllLines(buyFloorSaveDataFilePath, boughtFloors);
+        Debug.LogWarning("UPDATED BOUGHT FLOORS: " + File.ReadAllText(buyFloorSaveDataFilePath));
+        return true;
+    }
+
+    public void ResetBuyFloor()
+    {
+        File.WriteAllLines(buyFloorSaveDataFilePath, new string[0]);
+    }
+
+    public void SaveBalance(int balance){
+        string filePath = balanceFilePath;
+        File.WriteAllText(filePath, balance.ToString());
+    }
+
+    public int GetBalance(){
+        string filePath = balanceFilePath;
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, "0");
+
+            Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
+        }
+        Debug.LogWarning("BALANCE: " + File.ReadAllText(filePath));
+        return int.Parse(File.ReadAllText(filePath));
+    }
 
 
 

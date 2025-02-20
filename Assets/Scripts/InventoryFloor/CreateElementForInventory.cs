@@ -17,8 +17,9 @@ public class CreateElementForInventory : MonoBehaviour
     void Start()
     {
         // Carica la lista dei nomi accettati da "initialFloor.txt" e "buyFloor.txt"
-        string[] initialNames = LoadFloorNames("Floor/initialFloor");
-        string[] buyNames = LoadFloorNames("Floor/buyFloor");
+        string[] initialNames = LoadFloorNames("initialFloor");
+        //string[] buyNames = LoadFloorNames("buyFloor");
+        string[] buyNames = ElementFilesManager.Instance.GetBuyFloorSaveData().ToArray();
         
         string[] validNames = initialNames.Concat(buyNames).ToArray();
         if (validNames.Length == 0)
@@ -78,8 +79,11 @@ public class CreateElementForInventory : MonoBehaviour
         TextAsset file = Resources.Load<TextAsset>(filePath);
         if (file != null)
         {
+            Debug.Log("Floor caricati: " + file.text);
             return file.text.Split('\n').Select(name => name.Trim()).Where(name => !string.IsNullOrEmpty(name)).ToArray();
+            
         }
+
         return new string[0];
     }
 }
