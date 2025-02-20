@@ -34,6 +34,12 @@ public class ChangeScenes : MonoBehaviour
         gameModeManager.GameMode = "Village";
         SceneManager.LoadScene("Village");
     }
+
+    public void CreditsScene()
+    {
+        gameModeManager.GameMode = "Credits";
+        SceneManager.LoadScene("Credits");
+    }
 }
 
 

@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_ARPortal/Scenes/Village.unity
     guid: e66edf940f0ec5b46819488645c819b6
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: a41ce368af60288459afae58cd18eee4
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: ac8a4c1ba77e03745b09117a2548cd22, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c33d94a42cd812f479bb16f9f1adafe7, type: 2}
