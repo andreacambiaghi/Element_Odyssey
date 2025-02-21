@@ -10,6 +10,7 @@ public class AchievementsMenu : MonoBehaviour
     [SerializeField] private GameObject homeButton;
     [SerializeField] private GameObject soundButton;
     [SerializeField] private GameObject elementSelected;
+    [SerializeField] private GameObject coin;
 
     public void OpenPanel()
     {
@@ -48,6 +49,11 @@ public class AchievementsMenu : MonoBehaviour
             }
             slider.SetActive(false);
         }
+        
+        if (coin != null)
+        {
+            coin.SetActive(false);
+        }
 
     }
     public void ClosePanel()
@@ -81,6 +87,11 @@ public class AchievementsMenu : MonoBehaviour
         if (GameModeManager.Instance.GameMode == "VirtualPlane" && elementSelected != null)
         {
             elementSelected.SetActive(true);
+        }
+
+        if (coin != null)
+        {
+            coin.SetActive(true);
         }
     }
 

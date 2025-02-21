@@ -9,6 +9,7 @@ public class ImageGallery : MonoBehaviour
     [SerializeField] private GameObject soundButton;
     [SerializeField] private GameObject homeButton;
     [SerializeField] private GameObject achievementButton;
+    [SerializeField] private GameObject coin;
     private Sprite[] images;
     private int currentIndex = 0;
 
@@ -20,6 +21,7 @@ public class ImageGallery : MonoBehaviour
         soundButton.SetActive(false);
         homeButton.SetActive(false);
         achievementButton.SetActive(false);
+        coin.SetActive(false);
     }
 
     public void NextImage()
@@ -33,6 +35,7 @@ public class ImageGallery : MonoBehaviour
             soundButton.SetActive(true);
             homeButton.SetActive(true);
             achievementButton.SetActive(true);
+            coin.SetActive(true);
         }
 
         currentIndex = (currentIndex + 1) % images.Length;
