@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEngine.Audio;
 
 public class VirtualPlaneManager : MonoBehaviour 
 { 
@@ -309,6 +310,8 @@ public class VirtualPlaneManager : MonoBehaviour
             }
             GameObject tempAudioObject = new GameObject("TempAudioObject");
             AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+
             audioSource.clip = clip;
 
             audioSource.Play();
@@ -387,6 +390,8 @@ public class VirtualPlaneManager : MonoBehaviour
         AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
         GameObject audioObject = new GameObject("TempAudioObject");
         AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+
         audioSourceTemp.clip = sound;
 
         audioSourceTemp.Play();
