@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlaySoundOnClick : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class PlaySoundOnClick : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+
     }
 
     void OnMouseDown()
