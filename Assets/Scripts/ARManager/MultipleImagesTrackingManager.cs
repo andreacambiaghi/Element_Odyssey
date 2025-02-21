@@ -6,6 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 using System.IO;
 using System;
 using TMPro;
+using UnityEngine.Audio;
 
 public class MultipleImagesTrackingManager : MonoBehaviour
 {
@@ -358,6 +359,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
         audioSource.clip = clip;
 
         if (soundOn) {
@@ -443,6 +445,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
         GameObject audioObject = new GameObject("TempAudioObject");
         AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
         audioSourceTemp.clip = sound;
 
         audioSourceTemp.Play();
