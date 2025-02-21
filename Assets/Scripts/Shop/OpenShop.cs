@@ -13,6 +13,7 @@ public class OpenShop : MonoBehaviour
     [SerializeField] private GameObject openShop;
     [SerializeField] private GameObject inventoryButton;
     [SerializeField] private GameObject sweepButton;
+    [SerializeField] private GameObject coin;
 
     [Header("GameObject da Attivare")]
     [SerializeField] private GameObject shop;
@@ -67,6 +68,11 @@ public class OpenShop : MonoBehaviour
             sweepButton.SetActive(false);
         }   
 
+        if (coin != null)
+        {
+            coin.SetActive(false);
+        }
+
         if (shop != null)
         {
             shop.SetActive(true);
@@ -114,6 +120,11 @@ public class OpenShop : MonoBehaviour
         if (sweepButton != null)
         {
             sweepButton.SetActive(true);
+        }
+
+        if (coin != null)
+        {
+            coin.SetActive(true);
         }
 
         if (shop != null)
