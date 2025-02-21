@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlaySoundTutorial : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlaySoundTutorial : MonoBehaviour
         if (clip != null)
         {
             AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
 
             if (audioSource != null)
             {
