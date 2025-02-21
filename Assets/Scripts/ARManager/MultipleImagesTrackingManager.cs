@@ -360,7 +360,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
 
-        if (soundOn && SoundManager.Instance.IsSoundOn()) {
+        if (soundOn) {
             audioSource.Play();
             SpawnPopUp(prefabName, finded);
         }
