@@ -4,25 +4,17 @@ using UnityEngine.UI;
 public class Sounds : MonoBehaviour
 {
     [SerializeField] private Image soundIcon;
-    [SerializeField] private Sprite soundOnSprite;
-    [SerializeField] private Sprite soundOffSprite;
+    // [SerializeField] private Sprite soundOnSprite;
+    // [SerializeField] private Sprite soundOffSprite;
+    [SerializeField] private GameObject volumeSlider;
 
-    private void Start()
-    {
-        UpdateSoundIcon();
+    public void Click() {
+        volumeSlider.SetActive(!volumeSlider.gameObject.activeSelf);
+        // dopo 5 secondi nascondi il volumeSlider
+        Invoke("HideVolumeSlider", 5);
     }
-
-    public void ToggleSound()
-    {
-        SoundManager.Instance.ToggleSound();
-        UpdateSoundIcon();
+    void HideVolumeSlider() {
+        volumeSlider.SetActive(false);
     }
-
-    private void UpdateSoundIcon()
-    {
-        if (soundIcon != null)
-        {
-            soundIcon.sprite = SoundManager.Instance.IsSoundOn() ? soundOnSprite : soundOffSprite;
-        }
-    }
+    
 }
