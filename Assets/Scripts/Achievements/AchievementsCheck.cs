@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AchievementsCheck : MonoBehaviour
 {
@@ -177,6 +178,8 @@ public class AchievementsCheck : MonoBehaviour
                 AudioClip clip = Resources.Load<AudioClip>("Sounds/achievement");
                 GameObject tempAudioObject = new("TempAudioObject");
                 AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+                // imposta il mixer come master
+                audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
                 audioSource.clip = clip;
                 audioSource.Play();
 
