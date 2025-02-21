@@ -24,6 +24,7 @@ public class ClickFloor : MonoBehaviour
         Debug.Log("Bottone cliccato: "+ gameObject.GetComponent<Image>().sprite.texture.name.Split('_')[0]);
         // UpdateARPlane(gameObject.GetComponent<Image>().sprite.texture.name.Split('_')[0]);
         VillagePlaneManager.Instance.changeVillagePlane(gameObject.GetComponent<Image>().sprite.texture.name.Split('_')[0]);
+        Debug.Log("Piano cambiato: "+ ElementFilesManager.Instance.getVillageSaveData().floor);
 
         // floors è l'oggetto con tag Floors nella gerarchia
         GameObject floors = GameObject.FindGameObjectWithTag("Floors");
