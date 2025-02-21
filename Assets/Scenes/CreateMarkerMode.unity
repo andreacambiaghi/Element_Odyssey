@@ -941,7 +941,7 @@ MonoBehaviour:
   homeButton: {fileID: 1668687889}
   soundButton: {fileID: 1218078475}
   elementSelected: {fileID: 0}
-  coin: {fileID: 0}
+  coin: {fileID: 1606258969}
 --- !u!1 &299367158
 GameObject:
   m_ObjectHideFlags: 0
