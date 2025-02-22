@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Audio;
 
-public class WelcomeMarker : MonoBehaviour
+public class Welcome : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI tutorialTextDisplay;
@@ -14,7 +14,7 @@ public class WelcomeMarker : MonoBehaviour
 
     private void Start()
     {
-        typewriterEffect.StartTyping("Hi! Welcome to Element Odyssey! You're in marker mode");
+        typewriterEffect.StartTyping(tutorialTextDisplay.text); // Inizia a scrivere il testo
 
         // Ottieni il componente AudioSource
         audioSource = GetComponent<AudioSource>();
