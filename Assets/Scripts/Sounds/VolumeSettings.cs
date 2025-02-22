@@ -12,11 +12,13 @@ public class VolumeSettings : MonoBehaviour
     void Awake()
     {
         volumeSlider.onValueChanged.AddListener(SetMusicVolume);
+        audioMixer.SetFloat(VOLUME_KEY, 0);
     }
 
     void SetMusicVolume(float volume)
     {
         audioMixer.SetFloat(VOLUME_KEY, Mathf.Log10(volume) * 20);
+        volumeSlider.value = volume;
     }
 
 }

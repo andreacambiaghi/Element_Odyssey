@@ -4804,6 +4804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundIcon: {fileID: 2122790066}
   volumeSlider: {fileID: 1459729096}
+  slider: {fileID: 2091293448}
 --- !u!114 &2122790066
 MonoBehaviour:
   m_ObjectHideFlags: 0
