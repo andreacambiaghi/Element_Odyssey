@@ -16,6 +16,12 @@ public class CreateElementForInventory : MonoBehaviour
 
     void OnEnable()
     {
+        // Distrugge tutti i figli di target
+        foreach (Transform child in target.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
         // Carica la lista dei nomi accettati da "initialFloor.txt" e "buyFloor.txt"
         string[] initialNames = LoadFloorNames("initialFloor");
         string[] buyNames = ElementFilesManager.Instance.GetBuyFloorSaveData().ToArray();
@@ -44,7 +50,7 @@ public class CreateElementForInventory : MonoBehaviour
         for (int i = 0; i < orderedSprites.Length; i++)
         {
             GameObject item = Instantiate(prefab, target.transform);
-            item.name = "InventoryItem_" + i;
+            item.name = orderedSprites[i].name.Split('_')[0]; // Nome dell'oggetto senza il numero
 
             Image imgComponent = item.GetComponent<Image>();
             if (imgComponent != null)
@@ -68,6 +74,7 @@ public class CreateElementForInventory : MonoBehaviour
                 rt.anchoredPosition = new Vector2(posX, posY);
             }
         }
+
     }
 
     private string[] LoadFloorNames(string filePath)

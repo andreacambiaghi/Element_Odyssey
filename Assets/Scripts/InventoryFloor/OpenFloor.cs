@@ -19,6 +19,9 @@ public class OpenFloor : MonoBehaviour
     [SerializeField] private GameObject inventory;
     [SerializeField] private GameObject invClose;
 
+    [Header("Floors")]
+    [SerializeField] private GameObject floors;
+
     public void Open()
     {
         Debug.Log("Inventory aperto");
@@ -78,6 +81,39 @@ public class OpenFloor : MonoBehaviour
             invClose.SetActive(true);
         }
 
+        // // prendo i figli del floor in una lista e stampo quanti sono 
+        // Transform[] children = floors.GetComponentsInChildren<Transform>();
+        // Debug.Log("Numero di figli: " + children.Length);
+        // // stampo i nomi dei figli
+        // foreach (Transform child in children)
+        // {
+        //     Debug.Log("Nome figlio: " + child.name);
+        // }
+        // Debug.Log("MUCCAMUCCA: " + ElementFilesManager.Instance.getVillageSaveData().floor);
+        // // scorro i figli e se un figlio si chiama mario lo attivo
+        // foreach (Transform child in children)
+        // {
+        //     if (child.name == ElementFilesManager.Instance.getVillageSaveData().floor)
+        //     {
+        //         child.gameObject.SetActive(true);
+        //     }
+        // }
+
+        Debug.Log("Piano selezionato: " + ElementFilesManager.Instance.getVillageSaveData().floor);
+        // stampo i figli del floor
+        foreach (Transform child in floors.transform)
+        {
+            Debug.Log("Nome figlio: " + child.name);
+            if (child.name == ElementFilesManager.Instance.getVillageSaveData().floor)
+            {
+                // prendo il suo unico figlio del figlio e lo attivo
+                foreach (Transform child2 in child)
+                {
+                    child2.gameObject.SetActive(true);
+                }
+                
+            }
+        }
 
     }
     public void Close()
@@ -132,5 +168,6 @@ public class OpenFloor : MonoBehaviour
         {
             invClose.SetActive(false);
         }
+        
     }
 }
