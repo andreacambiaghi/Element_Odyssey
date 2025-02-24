@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class ShopItem : MonoBehaviour
 {
@@ -51,6 +52,12 @@ public class ShopItem : MonoBehaviour
             // ElementFilesManager.Instance.SaveBalance(currentBalance); //TODO
 
             ElementFilesManager.Instance.SaveBuyFloor(gameObject.GetComponent<Image>().sprite.texture.name.Split('_')[0]);
+
+            // riproduce il suono cash che sta dentro a Resources/Sounds usando AudioSource
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+            audioSource.clip = Resources.Load<AudioClip>("Sounds/cash");
+            audioSource.Play();
 
         }
         else
