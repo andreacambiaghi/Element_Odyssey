@@ -1,4 +1,6 @@
-public class GameModeManager 
+using UnityEngine;
+
+public class GameModeManager : MonoBehaviour
 {
     private static GameModeManager instance;
 
@@ -9,6 +11,8 @@ public class GameModeManager
         get { return gameMode; }
         set { gameMode = value; }
     }
+
+    public bool IsMenuOpen { get; set; }
 
     private GameModeManager() { }
 
@@ -22,6 +26,13 @@ public class GameModeManager
             }
             return instance;
         }
+    }
+
+    public void ChangeMenuState()
+    {
+        // Toggle boolean state with NOT operator
+        IsMenuOpen = !IsMenuOpen;
+        Debug.LogError("Menu state changed to: " + IsMenuOpen);
     }
 
 }

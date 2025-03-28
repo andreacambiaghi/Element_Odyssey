@@ -227,7 +227,7 @@ public class ElementFilesManager : MonoBehaviour
         }
 
         // Debug.Log("Reading JSON file achiements.json");
-        Debug.LogWarning("SAVED ACHIEVEMENTS: " + File.ReadAllText(filePath));
+        // Debug.LogWarning("SAVED ACHIEVEMENTS: " + File.ReadAllText(filePath));
         return File.ReadAllText(filePath);
 
         //return textAsset.text;
@@ -512,7 +512,7 @@ public class ElementFilesManager : MonoBehaviour
 
             Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
         }
-        Debug.LogWarning("BALANCE: " + File.ReadAllText(filePath));
+        // Debug.LogWarning("BALANCE: " + File.ReadAllText(filePath));
         return int.Parse(File.ReadAllText(filePath));
     }
 

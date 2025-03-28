@@ -91,7 +91,7 @@ public class VillagePlaneManager : MonoBehaviour
     private void Update() 
     { 
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
-        if (planeTouchCoords != null && isPlacementEnabled) {
+        if (planeTouchCoords != null && isPlacementEnabled && !GameModeManager.Instance.IsMenuOpen) {
             Debug.Log("Plane Touched at " + planeTouchCoords);
 
             if(!isPlanePlaced){

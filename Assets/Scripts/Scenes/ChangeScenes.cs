@@ -15,6 +15,7 @@ public class ChangeScenes : MonoBehaviour
     {
         DestroyPersistentObjects();
         gameModeManager.GameMode = "CreateMarker";
+        gameModeManager.IsMenuOpen = false;
         SceneManager.LoadScene("CreateMarkerMode");
     }
 
@@ -22,6 +23,7 @@ public class ChangeScenes : MonoBehaviour
     {
         DestroyPersistentObjects();
         gameModeManager.GameMode = "Menu";
+        gameModeManager.IsMenuOpen = false;
         SceneManager.LoadScene("Menu");
     }
 
@@ -29,6 +31,7 @@ public class ChangeScenes : MonoBehaviour
     {
         DestroyPersistentObjects();
         gameModeManager.GameMode = "VirtualPlane";
+        gameModeManager.IsMenuOpen = false;
         SceneManager.LoadScene("VirtualPlaneMode");
     }
 
@@ -36,6 +39,7 @@ public class ChangeScenes : MonoBehaviour
     {
         DestroyPersistentObjects();
         gameModeManager.GameMode = "Village";
+        gameModeManager.IsMenuOpen = false;
         SceneManager.LoadScene("Village");
     }
 
@@ -43,6 +47,7 @@ public class ChangeScenes : MonoBehaviour
     {
         DestroyPersistentObjects();
         gameModeManager.GameMode = "Credits";
+        gameModeManager.IsMenuOpen = false;
         SceneManager.LoadScene("Credits");
     }
 
