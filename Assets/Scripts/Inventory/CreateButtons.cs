@@ -10,6 +10,9 @@ public class CreateButtons : MonoBehaviour
     [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
     [SerializeField] private GameObject elementSelected; // Elemento selezionato 
 
+    [SerializeField] private GameObject slider;
+    [SerializeField] private SliderMenuAnim menu;
+
     private GameModeManager gameModeManager;
 
     private ElementFilesManager elementFilesManager;
@@ -38,14 +41,49 @@ public class CreateButtons : MonoBehaviour
         string buttonLabelLowercase = label.ToLower();
 
         if (gameModeManager.GameMode == "CreateMarker")
-            newButton.onClick.AddListener(() => MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase));
+            newButton.onClick.AddListener(() => {
+                MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase);
+
+                if (slider != null)
+                {
+                    if (menu.GetState())
+                    {
+                        Button button = slider.GetComponent<Button>();
+                        button.onClick.Invoke();
+                    }
+                    slider.SetActive(false);
+                }
+
+            });
         else if (gameModeManager.GameMode == "VirtualPlane")
             newButton.onClick.AddListener(() => {
                 VirtualPlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
+
+                if (slider != null)
+                {
+                    if (menu.GetState())
+                    {
+                        Button button = slider.GetComponent<Button>();
+                        button.onClick.Invoke();
+                    }
+                    slider.SetActive(false);
+                }
+
             });
         else if (gameModeManager.GameMode == "Village") {
             newButton.onClick.AddListener(() => {
                 VillagePlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
+
+                if (slider != null)
+                {
+                    if (menu.GetState())
+                    {
+                        Button button = slider.GetComponent<Button>();
+                        button.onClick.Invoke();
+                    }
+                    slider.SetActive(false);
+                }
+
             });
         } else
             Debug.LogError("Game mode not recognized");

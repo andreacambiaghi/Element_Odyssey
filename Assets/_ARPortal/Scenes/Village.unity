@@ -5452,6 +5452,8 @@ MonoBehaviour:
   buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
   buttonLabels: []
   elementSelected: {fileID: 1127719696}
+  slider: {fileID: 105661272}
+  menu: {fileID: 154604291}
 --- !u!1 &1635408887
 GameObject:
   m_ObjectHideFlags: 0
