@@ -51,7 +51,6 @@ public class CreateButtons : MonoBehaviour
                         Button button = slider.GetComponent<Button>();
                         button.onClick.Invoke();
                     }
-                    slider.SetActive(false);
                 }
 
             });
@@ -66,7 +65,6 @@ public class CreateButtons : MonoBehaviour
                         Button button = slider.GetComponent<Button>();
                         button.onClick.Invoke();
                     }
-                    slider.SetActive(false);
                 }
 
             });
@@ -81,7 +79,6 @@ public class CreateButtons : MonoBehaviour
                         Button button = slider.GetComponent<Button>();
                         button.onClick.Invoke();
                     }
-                    slider.SetActive(false);
                 }
 
             });
