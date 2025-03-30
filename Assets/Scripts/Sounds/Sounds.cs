@@ -15,14 +15,14 @@ public class Sounds : MonoBehaviour
     {
         // mette lo slider al livello giusto rispetto al volume del mixer Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
         Resources.Load<AudioMixer>("Mixer").GetFloat("Volume", out float volume);
-        Debug.Log(volume + " volumeeeeeeeeeeeee");
+        // Debug.Log(volume + " volumeeeeeeeeeeeee");
         slider.value = Mathf.Pow(10, volume / 20f);
     }
 
     public void Click() {
         volumeSlider.SetActive(!volumeSlider.gameObject.activeSelf);
         Resources.Load<AudioMixer>("Mixer").GetFloat("Volume", out float volume);
-        Debug.Log(volume + " volumeeeeeeeeeeeee");
+        // Debug.Log(volume + " volumeeeeeeeeeeeee");
         // dopo 5 secondi nascondi il volumeSlider
         Invoke("HideVolumeSlider", 5);
     }

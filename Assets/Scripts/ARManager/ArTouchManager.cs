@@ -52,6 +52,10 @@ public class ArTouchManager : MonoBehaviour
 
     void Select()
     {
+        if(gameModeManager.IsMenuOpen)
+        {
+            return;
+        }
         if(gameModeManager.GameMode == "CreateMarker")
             mitm.SelectGameObject(gameObject);
         else if(gameModeManager.GameMode == "VirtualPlane")

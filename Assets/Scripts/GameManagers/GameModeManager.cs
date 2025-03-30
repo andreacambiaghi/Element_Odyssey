@@ -1,6 +1,6 @@
-using UnityEngine;
+// using UnityEngine;
 
-public class GameModeManager : MonoBehaviour
+public class GameModeManager
 {
     private static GameModeManager instance;
 
@@ -32,7 +32,7 @@ public class GameModeManager : MonoBehaviour
     {
         // Toggle boolean state with NOT operator
         IsMenuOpen = !IsMenuOpen;
-        Debug.LogError("Menu state changed to: " + IsMenuOpen);
+        // Debug.LogError("Menu state changed to: " + IsMenuOpen);
     }
 
 }
