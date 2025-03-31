@@ -134,7 +134,7 @@ public class VirtualPlaneManager : MonoBehaviour
         
         GameObject newARObject;
         if (_othersElements.Contains(prefabName)) {
-            newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0180, 0));
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 180, 0));
             TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
