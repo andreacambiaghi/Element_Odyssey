@@ -207,7 +207,9 @@ public class VillagePlaneManager : MonoBehaviour
 
         // // Apply the scale factor
         // newARObject.transform.localScale = scaleFactor;
-        // placedObjects.Add(newARObject);
+        
+        
+        placedObjects.Add(newARObject);
 
         newARObject.SetActive(true);
 
