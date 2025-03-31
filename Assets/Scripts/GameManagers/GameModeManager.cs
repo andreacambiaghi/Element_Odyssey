@@ -1,4 +1,3 @@
-// using UnityEngine;
 
 public class GameModeManager
 {
@@ -30,9 +29,7 @@ public class GameModeManager
 
     public void ChangeMenuState()
     {
-        // Toggle boolean state with NOT operator
         IsMenuOpen = !IsMenuOpen;
-        // Debug.LogError("Menu state changed to: " + IsMenuOpen);
     }
 
 }
