@@ -337,6 +337,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: tree
       objectReference: {fileID: 0}
+    - target: {fileID: 2683047656733267947, guid: a93aad2f3aa82934e9864f08ad057572, type: 3}
+      propertyPath: m_Size.x
+      value: 0.6731379
+      objectReference: {fileID: 0}
+    - target: {fileID: 2683047656733267947, guid: a93aad2f3aa82934e9864f08ad057572, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5132215
+      objectReference: {fileID: 0}
+    - target: {fileID: 2683047656733267947, guid: a93aad2f3aa82934e9864f08ad057572, type: 3}
+      propertyPath: m_Center.x
+      value: -0.16343105
+      objectReference: {fileID: 0}
+    - target: {fileID: 2683047656733267947, guid: a93aad2f3aa82934e9864f08ad057572, type: 3}
+      propertyPath: m_Center.y
+      value: 0.24338925
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

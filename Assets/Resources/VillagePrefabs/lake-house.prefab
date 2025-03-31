@@ -2510,7 +2510,7 @@ GameObject:
   - component: {fileID: 1988401741891236900}
   - component: {fileID: 6671009883815105711}
   m_Layer: 0
-  m_Name: house_lake
+  m_Name: lake-house
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2525,8 +2525,8 @@ Transform:
   m_GameObject: {fileID: 4215006901555467485}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalPosition: {x: 2.1522386, y: 0, z: 1.0025256}
+  m_LocalScale: {x: 0.0049167, y: 0.0049167, z: 0.0049167}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7477479207063848922}
@@ -2710,8 +2710,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 64.03309, y: 23.286999, z: 64.48977}
+  m_Center: {x: -0.011613734, y: 7.937174, z: -0.07236762}
 --- !u!114 &6671009883815105711
 MonoBehaviour:
   m_ObjectHideFlags: 0
