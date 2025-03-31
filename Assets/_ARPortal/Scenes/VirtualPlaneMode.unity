@@ -3060,6 +3060,8 @@ MonoBehaviour:
   buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
   buttonLabels: []
   elementSelected: {fileID: 1929457939}
+  slider: {fileID: 782628375}
+  menu: {fileID: 1577749885}
 --- !u!114 &1328013460
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -195,18 +195,20 @@ public class VillagePlaneManager : MonoBehaviour
         newARObject.name = prefabName;
         newARObject.transform.position = position;
 
-        Vector3 referenceSize = new Vector3(0.2f, 0.2f, 0.2f);
+        // Vector3 referenceSize = new Vector3(0.2f, 0.2f, 0.2f);
 
-        // Calculate the scale factor
-        Vector3 prefabSize = GetPrefabSize(newARObject);
-        Vector3 scaleFactor = new Vector3(
-            referenceSize.x / prefabSize.x,
-            referenceSize.y / prefabSize.y,
-            referenceSize.z / prefabSize.z
-        );
+        // // Calculate the scale factor
+        // Vector3 prefabSize = GetPrefabSize(newARObject);
+        // Vector3 scaleFactor = new Vector3(
+        //     referenceSize.x / prefabSize.x,
+        //     referenceSize.y / prefabSize.y,
+        //     referenceSize.z / prefabSize.z
+        // );
 
-        // Apply the scale factor
-        newARObject.transform.localScale = scaleFactor;
+        // // Apply the scale factor
+        // newARObject.transform.localScale = scaleFactor;
+        
+        
         placedObjects.Add(newARObject);
 
         newARObject.SetActive(true);
