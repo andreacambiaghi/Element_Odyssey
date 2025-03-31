@@ -503,6 +503,11 @@ public class ElementFilesManager : MonoBehaviour
         File.WriteAllText(filePath, balance.ToString());
     }
 
+    public void resetBalance(){
+        string filePath = balanceFilePath;
+        File.WriteAllText(filePath, "0");
+    }
+
     public int GetBalance(){
         string filePath = balanceFilePath;
         if (!File.Exists(filePath))
@@ -515,7 +520,6 @@ public class ElementFilesManager : MonoBehaviour
         // Debug.LogWarning("BALANCE: " + File.ReadAllText(filePath));
         return int.Parse(File.ReadAllText(filePath));
     }
-
 
 
     [Serializable]
