@@ -190,7 +190,7 @@ public class VillagePlaneManager : MonoBehaviour
             return;
         } 
 
-        GameObject newARObject = Instantiate(resource, new Vector3(0, 0.2f, 0), Quaternion.Euler(0, 180, 0));
+        GameObject newARObject = Instantiate(resource, new Vector3(0, 1f, 0), Quaternion.Euler(0, 180, 0));
         // GameObject newARObject = Instantiate(resource, resource.transform.position, resource.transform.rotation);
 
         
@@ -319,7 +319,7 @@ public class VillagePlaneManager : MonoBehaviour
 
     public void createVillagePlane(Vector3 position){
         ElementFilesManager.VillageSaveData villageSaveData = elementFilesManager.getVillageSaveData();
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), new Vector3(0, 0.2f, 0), Quaternion.Euler(0, 180, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), new Vector3(0, 1f, 0), Quaternion.Euler(0, 180, 0));
         // GameObject newARObject = Instantiate(resource, resource.transform.position, resource.transform.rotation);
         
         newARObject.name = "VillagePlane";
