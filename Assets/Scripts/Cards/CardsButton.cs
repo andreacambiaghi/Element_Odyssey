@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AchievementsMenu : MonoBehaviour
+public class CardsButton : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject openButton;
+    [SerializeField] private GameObject closeButton;
     [SerializeField] private GameObject slider;
     [SerializeField] private SliderMenuAnim menu;
     [SerializeField] private GameObject homeButton;
     [SerializeField] private GameObject soundButton;
-    [SerializeField] private GameObject elementSelected;
     [SerializeField] private GameObject coin;
-    [SerializeField] private GameObject yourCardsButton;
+    [SerializeField] private GameObject achivementsButton;
 
     public void OpenPanel()
     {
@@ -26,6 +26,11 @@ public class AchievementsMenu : MonoBehaviour
             openButton.SetActive(false);
         }
 
+        if (closeButton != null)
+        {
+            closeButton.SetActive(true);
+        }
+
         if (homeButton != null)
         {
             homeButton.SetActive(false);
@@ -36,14 +41,9 @@ public class AchievementsMenu : MonoBehaviour
             soundButton.SetActive(false);
         }
 
-        if (GameModeManager.Instance.GameMode == "VirtualPlane" && elementSelected != null)
+        if (achivementsButton != null)
         {
-            elementSelected.SetActive(false);
-        }
-
-        if (GameModeManager.Instance.GameMode == "CreateMarker" && yourCardsButton != null)
-        {
-            yourCardsButton.SetActive(false);
+            achivementsButton.SetActive(false);
         }
 
         if (slider != null)
@@ -75,6 +75,11 @@ public class AchievementsMenu : MonoBehaviour
             openButton.SetActive(true);
         }
 
+        if (closeButton != null)
+        {
+            closeButton.SetActive(false);
+        }
+
         if (homeButton != null)
         {
             homeButton.SetActive(true);
@@ -90,24 +95,14 @@ public class AchievementsMenu : MonoBehaviour
             slider.SetActive(true);
         }
 
-        if (GameModeManager.Instance.GameMode == "VirtualPlane" && elementSelected != null)
+        if (achivementsButton != null)
         {
-            elementSelected.SetActive(true);
-        }
-
-        if (GameModeManager.Instance.GameMode == "CreateMarker" && yourCardsButton != null)
-        {
-            yourCardsButton.SetActive(true);
+            achivementsButton.SetActive(true);
         }
 
         if (coin != null)
         {
             coin.SetActive(true);
         }
-    }
-
-    public void UpdateAchievements()
-    {
-        AchievementManager.Instance.UpdateAchievements();
     }
 }
