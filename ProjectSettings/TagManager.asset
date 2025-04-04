@@ -10,6 +10,7 @@ TagManager:
   - Slider
   - Info
   - Special
+  - Floors
   layers:
   - Default
   - TransparentFX
@@ -46,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HeaderInventory
+    uniqueID: 1522772723
     locked: 0
