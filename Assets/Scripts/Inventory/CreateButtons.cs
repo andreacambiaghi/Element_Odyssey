@@ -27,6 +27,7 @@ public class CreateButtons : MonoBehaviour
 
     public void CreateButton(string label)
     {
+        
         // Creazione del bottone
         Button newButton = Instantiate(buttonPrefab, transform);
 
