@@ -165,7 +165,6 @@ public class CreateButtons : MonoBehaviour
         if(GameModeManager.Instance.GameMode == "CreateMarker" || GameModeManager.Instance.GameMode == "VirtualPlane"){
             buttonLabels = elementFilesManager.GetInitialElements();
             buttonLabels.AddRange(elementFilesManager.GetFoundElements());
-            buttonLabels.Add("mountain");
 
         } else if(GameModeManager.Instance.GameMode == "Village") {
             ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
