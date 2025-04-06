@@ -35,8 +35,17 @@ public class Initialize : MonoBehaviour
             return;
         }
         CreateButtons createButtonsComponent = createButton.GetComponent<CreateButtons>();
-        if (createButtonsComponent != null && labelsToAdd.Count > 0)
+        if (createButtonsComponent != null /*&& labelsToAdd.Count > 0*/)
         {
+            // SOLO PER TESTARE LA CREAZIONE DEI BOTTONI
+            labelsToAdd.Add("water");
+            labelsToAdd.Add("fire");
+            labelsToAdd.Add("earth");
+            labelsToAdd.Add("wind");
+            labelsToAdd.Add("brick");
+            labelsToAdd.Add("mountain");
+            labelsToAdd.Add("tree");
+            labelsToAdd.Add("volcano");
             createButtonsComponent.buttonLabels.AddRange(labelsToAdd);
             Debug.Log("ButtonLabels aggiornato con successo");
         }

@@ -1460,7 +1460,7 @@ GameObject:
   - component: {fileID: 161779454}
   - component: {fileID: 161779455}
   m_Layer: 5
-  m_Name: WindCircle
+  m_Name: Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1508,6 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 877111917}
+  panel: {fileID: 1328013456}
 --- !u!1 &182931678
 GameObject:
   m_ObjectHideFlags: 0
@@ -8010,7 +8011,7 @@ GameObject:
   - component: {fileID: 1087155757}
   - component: {fileID: 1087155758}
   m_Layer: 5
-  m_Name: FireCircle
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8058,6 +8059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 877111917}
+  panel: {fileID: 1328013456}
 --- !u!1 &1092334117
 GameObject:
   m_ObjectHideFlags: 0
@@ -8681,7 +8683,7 @@ GameObject:
   - component: {fileID: 1146463147}
   - component: {fileID: 1146463148}
   m_Layer: 5
-  m_Name: WaterCircle
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8729,6 +8731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 877111917}
+  panel: {fileID: 1328013456}
 --- !u!1 &1169077178
 GameObject:
   m_ObjectHideFlags: 0
@@ -10180,7 +10183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143c15bf4d4461d4d929a04b2831439d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
+  buttonPrefabWater: {fileID: 1055148524419307021, guid: 7b5d57bdf0e69ad478f4385ea85847ad, type: 3}
+  buttonPrefabFire: {fileID: 1055148524419307021, guid: eef2b4eeabe0c3244a19d6fd2b82eac7, type: 3}
+  buttonPrefabEarth: {fileID: 1055148524419307021, guid: 085c7c0f60bf3894d9c11913b2433956, type: 3}
+  buttonPrefabWind: {fileID: 1055148524419307021, guid: c318b59e4b7f89142aa2109f9fbd1cc7, type: 3}
   buttonLabels: []
   elementSelected: {fileID: 0}
   slider: {fileID: 782628375}
@@ -11682,7 +11688,7 @@ GameObject:
   - component: {fileID: 1527178174}
   - component: {fileID: 1527178175}
   m_Layer: 5
-  m_Name: EarthCircle
+  m_Name: Earth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11730,6 +11736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 877111917}
+  panel: {fileID: 1328013456}
 --- !u!1 &1531094642
 GameObject:
   m_ObjectHideFlags: 0

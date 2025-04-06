@@ -6,7 +6,11 @@ using System.Linq;
 
 public class CreateButtons : MonoBehaviour
 {
-    [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
+    //[SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
+    [SerializeField] private Button buttonPrefabWater;
+    [SerializeField] private Button buttonPrefabFire;
+    [SerializeField] private Button buttonPrefabEarth;
+    [SerializeField] private Button buttonPrefabWind;
     [SerializeField] public List<string> buttonLabels; // Lista di etichette per i bottoni
     [SerializeField] private GameObject elementSelected; // Elemento selezionato 
 
@@ -22,14 +26,34 @@ public class CreateButtons : MonoBehaviour
         elementFilesManager = ElementFilesManager.Instance;
         gameModeManager = GameModeManager.Instance;
 
-        ResetButtons();
+        ResetButtons();  
     }
 
     public void CreateButton(string label)
     {
         
         // Creazione del bottone
-        Button newButton = Instantiate(buttonPrefab, transform);
+        //Button newButton = Instantiate(buttonPrefab, transform);
+        Button newButton = null;
+        Debug.Log($"Creating button for label: {label}");
+        switch (ElementDataManager.Instance.GetElementsType(label.ToLower()).ToLower())
+        {
+            case "water":
+                newButton = Instantiate(buttonPrefabWater, transform);
+                break;
+            case "fire":
+                newButton = Instantiate(buttonPrefabFire, transform);
+                break;
+            case "earth":
+                newButton = Instantiate(buttonPrefabEarth, transform);
+                break;
+            case "wind":
+                newButton = Instantiate(buttonPrefabWind, transform);
+                break;
+            default:
+                Debug.LogError($"Label '{label}' non riconosciuta. Non è stato creato alcun bottone.");
+                return;
+        }
 
         // Modifica dell'etichetta del bottone
         TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -141,6 +165,8 @@ public class CreateButtons : MonoBehaviour
         if(GameModeManager.Instance.GameMode == "CreateMarker" || GameModeManager.Instance.GameMode == "VirtualPlane"){
             buttonLabels = elementFilesManager.GetInitialElements();
             buttonLabels.AddRange(elementFilesManager.GetFoundElements());
+            buttonLabels.Add("mountain");
+
         } else if(GameModeManager.Instance.GameMode == "Village") {
             ElementFilesManager.VillageData villageData = elementFilesManager.GetVillageData();
             foreach(ElementFilesManager.VillageObject villageObject in villageData.villageObjects){
