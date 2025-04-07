@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5475,8 +5475,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
+  buttonPrefabWater: {fileID: 1055148524419307021, guid: 7b5d57bdf0e69ad478f4385ea85847ad, type: 3}
+  buttonPrefabFire: {fileID: 1055148524419307021, guid: eef2b4eeabe0c3244a19d6fd2b82eac7, type: 3}
+  buttonPrefabEarth: {fileID: 1055148524419307021, guid: 085c7c0f60bf3894d9c11913b2433956, type: 3}
+  buttonPrefabWind: {fileID: 1055148524419307021, guid: c318b59e4b7f89142aa2109f9fbd1cc7, type: 3}
   buttonLabels: []
   elementSelected: {fileID: 1127719696}
+  slider: {fileID: 105661272}
+  menu: {fileID: 154604291}
 --- !u!1 &1635408887
 GameObject:
   m_ObjectHideFlags: 0

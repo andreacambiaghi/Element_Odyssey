@@ -10183,6 +10183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143c15bf4d4461d4d929a04b2831439d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
   buttonPrefabWater: {fileID: 1055148524419307021, guid: 7b5d57bdf0e69ad478f4385ea85847ad, type: 3}
   buttonPrefabFire: {fileID: 1055148524419307021, guid: eef2b4eeabe0c3244a19d6fd2b82eac7, type: 3}
   buttonPrefabEarth: {fileID: 1055148524419307021, guid: 085c7c0f60bf3894d9c11913b2433956, type: 3}

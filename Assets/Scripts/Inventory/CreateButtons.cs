@@ -6,7 +6,7 @@ using System.Linq;
 
 public class CreateButtons : MonoBehaviour
 {
-    //[SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
+    [SerializeField] private Button buttonPrefab; // Prefab del bottone da clonare
     [SerializeField] private Button buttonPrefabWater;
     [SerializeField] private Button buttonPrefabFire;
     [SerializeField] private Button buttonPrefabEarth;
@@ -33,7 +33,7 @@ public class CreateButtons : MonoBehaviour
     {
         
         // Creazione del bottone
-        //Button newButton = Instantiate(buttonPrefab, transform);
+        // Button newButton = Instantiate(buttonPrefab, transform);
         Button newButton = null;
         Debug.Log($"Creating button for label: {label}");
         switch (ElementDataManager.Instance.GetElementsType(label.ToLower()).ToLower())
@@ -94,6 +94,9 @@ public class CreateButtons : MonoBehaviour
 
             });
         else if (gameModeManager.GameMode == "Village") {
+
+            newButton = Instantiate(buttonPrefab, transform);
+
             newButton.onClick.AddListener(() => {
                 VillagePlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
 

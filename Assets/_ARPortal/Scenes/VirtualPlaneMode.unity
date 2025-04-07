@@ -364,6 +364,7 @@ MonoBehaviour:
   soundButton: {fileID: 311711124}
   elementSelected: {fileID: 1929457939}
   coin: {fileID: 1125051783}
+  yourCardsButton: {fileID: 0}
 --- !u!114 &179795965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3058,6 +3059,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 1055148524419307021, guid: c6dc379cd036ad24ca2e1ff3d0fca54c, type: 3}
+  buttonPrefabWater: {fileID: 1055148524419307021, guid: 7b5d57bdf0e69ad478f4385ea85847ad, type: 3}
+  buttonPrefabFire: {fileID: 1055148524419307021, guid: eef2b4eeabe0c3244a19d6fd2b82eac7, type: 3}
+  buttonPrefabEarth: {fileID: 1055148524419307021, guid: 085c7c0f60bf3894d9c11913b2433956, type: 3}
+  buttonPrefabWind: {fileID: 1055148524419307021, guid: c318b59e4b7f89142aa2109f9fbd1cc7, type: 3}
   buttonLabels: []
   elementSelected: {fileID: 1929457939}
   slider: {fileID: 782628375}
@@ -4257,6 +4262,7 @@ MonoBehaviour:
   soundButton: {fileID: 311711124}
   elementSelected: {fileID: 1929457939}
   coin: {fileID: 1125051783}
+  yourCardsButton: {fileID: 0}
 --- !u!114 &1772566445
 MonoBehaviour:
   m_ObjectHideFlags: 0
