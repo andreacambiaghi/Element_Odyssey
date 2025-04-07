@@ -97,6 +97,12 @@ public class CreateButtons : MonoBehaviour
 
             newButton = Instantiate(buttonPrefab, transform);
 
+            buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
+            {
+                buttonText.text = label;
+            }
+
             newButton.onClick.AddListener(() => {
                 VillagePlaneManager.Instance.OnPrefabSelected(buttonLabelLowercase);
 
