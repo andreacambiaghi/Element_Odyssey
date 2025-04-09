@@ -387,12 +387,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             if (backgroundImage != null)
             {
                 Sprite loadedSprite;
-                if (_othersElements.Contains(prefabName)) {
+                /*if (_othersElements.Contains(prefabName)) {
                     loadedSprite = Resources.Load<Sprite>("Icon/other");
+                }*/
+                /*else
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                }*/
+
+                if(PresentIconPrefab(prefabName.ToLower()))
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName.ToLower());
                 }
                 else
                 {
-                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                    loadedSprite = Resources.Load<Sprite>("Icon/other");
                 }
 
                 if (loadedSprite != null)
@@ -453,6 +462,25 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         Destroy(audioObject, sound.length);
 
         Destroy(spawnedObject, 3f);
+    }
+
+    private bool PresentIconPrefab(string label)
+    {
+        TextAsset file = Resources.Load<TextAsset>("others");
+        if (file == null)
+        {
+            Debug.LogError("File non trovato in Resources.");
+            return false;
+        }
+
+        string[] righe = file.text.Split('\n');
+        foreach (string riga in righe)
+        {
+            if (riga.Trim() == label)
+                return true;
+        }
+
+        return false;
     }
 
 }
