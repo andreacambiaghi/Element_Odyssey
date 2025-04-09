@@ -466,21 +466,13 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private bool PresentIconPrefab(string label)
     {
-        TextAsset file = Resources.Load<TextAsset>("others");
-        if (file == null)
-        {
-            Debug.LogError("File non trovato in Resources.");
-            return false;
-        }
+        // Costruisce il path del prefab (senza estensione)
+        string path = $"Prefabs/Icon/{label}";
 
-        string[] righe = file.text.Split('\n');
-        foreach (string riga in righe)
-        {
-            if (riga.Trim() == label)
-                return true;
-        }
+        // Prova a caricare il prefab come GameObject
+        GameObject prefab = Resources.Load<GameObject>(path);
 
-        return false;
+        return prefab != null;
     }
 
 }
