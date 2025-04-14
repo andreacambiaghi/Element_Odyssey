@@ -1,0 +1,835 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
+using System.IO;
+using System;
+using TMPro;
+using UnityEngine.Audio;
+using UnityEngine.Timeline;
+using System.Collections;
+
+public class MultipleImagesTrackingManager : MonoBehaviour
+{
+    public static MultipleImagesTrackingManager Instance;
+
+    private ElementFilesManager _elementFilesManager;
+
+    private ARTrackedImageManager _arTrackedImageManager;
+
+    private Dictionary<ARTrackedImage, GameObject> _imageObjectMap; // Marker name -> GameObject
+
+    public GameObject defaultObject;
+
+    private ARTrackedImage SelectedImageObject;
+
+    private CreateButtons _createButtonsComponent;
+
+    private List<string> _othersElements;
+
+    [SerializeField] private GameObject slider;
+
+    [SerializeField] private SliderMenuAnim menu;
+
+    [SerializeField] private GameObject createButton;
+
+    [SerializeField] private GameObject popUpElementCreated;
+
+    [SerializeField] private GameObject popUpElementAlreadyFound;
+
+    ElementFilesManager.ArMarkerAssociations arMarkerAssociations;
+
+    private bool _isSelecting = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
+
+
+        _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
+        _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
+        _createButtonsComponent = createButton.GetComponent<CreateButtons>();
+        _elementFilesManager = ElementFilesManager.Instance;
+        arMarkerAssociations = _elementFilesManager.GetArMarkerAssociations();
+
+        Debug.LogWarning("Associations found (MITM Awake): " + arMarkerAssociations.associations.Count);
+        foreach (KeyValuePair<string, string> association in arMarkerAssociations.associations)
+        {
+            Debug.LogWarning("Marker: " + association.Key + " -> Element: " + association.Value);
+        }
+
+        _othersElements = ElementFilesManager.Instance.GetOthersElements();
+    }
+
+    private void Start()
+    {
+        // Listen the event when the tracked images are changed
+        _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+        ReloadMarkerImageAssociations();
+        _imageObjectMap.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        // Remove the listener when the script is destroyed
+        _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+    }
+
+    private Vector3 GetRandomDistantPosition()
+    {
+        // Generate random direction
+        Vector3 randomDirection = new Vector3(
+            UnityEngine.Random.Range(-1f, 1f),
+            UnityEngine.Random.Range(-1f, 1f),
+            UnityEngine.Random.Range(-1f, 1f)
+        ).normalized;
+
+        // Make it very far away (1000 units)
+        return randomDirection * 1000f;
+    }
+
+    private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    {
+        // Identify the changes in the tracked images
+        foreach (ARTrackedImage trackedImage in eventArgs.added)
+        {
+            // Spawn the prefab when the tracked image is found
+            if (arMarkerAssociations.associations.ContainsKey(trackedImage.referenceImage.name))
+            {
+                string prefabName = arMarkerAssociations.associations[trackedImage.referenceImage.name];
+                Debug.Log("Found association for marker " + trackedImage.referenceImage.name + ": " + prefabName);
+                AssociateGameObjectToMarker(trackedImage, prefabName);
+            }
+            else
+            {
+                Debug.LogWarning("No association found for marker " + trackedImage.referenceImage.name);
+                GameObject newARObject = Instantiate(defaultObject, GetRandomDistantPosition(), Quaternion.Euler(-90, 0, 0));
+                newARObject.name = defaultObject.name;
+                newARObject.SetActive(false);
+                _imageObjectMap.Add(trackedImage, newARObject);
+                Debug.Log("Added: " + trackedImage.referenceImage.name + " -> " + newARObject.name);
+                // AssociateGameObjectToMarker(trackedImage, defaultObject.name);
+                AssociateMarkerImage(trackedImage.referenceImage.name, defaultObject.name);
+                // newARObject.SetActive(true);
+            }
+
+            UpdatedTrackedImage(trackedImage);
+        }
+        foreach (ARTrackedImage trackedImage in eventArgs.updated)
+        {
+            UpdatedTrackedImage(trackedImage);
+        }
+        // foreach (ARTrackedImage trackedImage in eventArgs.removed)
+        // {
+        //     // Remove the prefab when the tracked image is removed
+        //     _imageObjectMap[trackedImage].SetActive(false);
+        // }
+        foreach (ARTrackedImage trackedImage in eventArgs.removed)
+        {
+            if (_imageObjectMap.ContainsKey(trackedImage))
+            {
+                _imageObjectMap[trackedImage].SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning($"Keys in dictionary: {string.Join(", ", _imageObjectMap.Keys)}");
+                Debug.LogWarning($"Tracked image {trackedImage.referenceImage.name} not found in dictionary");
+                // _imageObjectMap.Clear();
+            }
+        }
+    }
+
+    private void AssociateGameObjectToMarker(ARTrackedImage trackedImage, string prefabName)
+    {
+        if (_imageObjectMap.ContainsKey(trackedImage) && _imageObjectMap[trackedImage] != null)
+        {
+            _imageObjectMap[trackedImage].gameObject.SetActive(false);
+            DeselectSelectedGameObject();
+            _isSelecting = false;
+        }
+
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName))
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), GetRandomDistantPosition(), Quaternion.Euler(0, 0, 0));
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
+        }
+        else
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), GetRandomDistantPosition(), Quaternion.Euler(-90, 0, 0));
+        }
+
+        newARObject.name = prefabName;
+        newARObject.SetActive(false);
+        _imageObjectMap[trackedImage] = newARObject;
+        AssociateMarkerImage(trackedImage.referenceImage.name, prefabName);
+        UpdatedTrackedImage(trackedImage);
+
+
+        if (slider != null)
+        {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+        }
+
+    }
+
+    private void AssociateMarkerImage(string markerName, string prefabName)
+    {
+
+        Debug.Log($"[MITM] Before update - Association count: {arMarkerAssociations.associationList.Count}");
+        Debug.Log($"[MITM] Adding association: {markerName} -> {prefabName}");
+
+        arMarkerAssociations.AddAssociation(markerName, prefabName);
+
+        Debug.Log($"[MITM] After update - Association count: {arMarkerAssociations.associationList.Count}");
+        Debug.Log($"[MITM] Dumping all associations:");
+        foreach (var assoc in arMarkerAssociations.associationList)
+        {
+            Debug.Log($"[MITM] Marker: {assoc.markerId} -> Element: {assoc.elementType}");
+        }
+
+        _elementFilesManager.UpdateMarkerAssociations(arMarkerAssociations);
+    }
+
+    private void UpdatedTrackedImage(ARTrackedImage trackedImage)
+    {
+        // Check tracking status of the tracked image
+        if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
+        {
+            _imageObjectMap[trackedImage].SetActive(false);
+            return;
+        }
+
+        // Show, hide or position the game object based on the tracking image
+
+        _imageObjectMap[trackedImage].gameObject.SetActive(true);
+        _imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
+    }
+
+    // private void UpdatedTrackedImage(ARTrackedImage trackedImage)
+    // {
+    //     // Check if dictionary contains key
+    //     if (!_imageObjectMap.ContainsKey(trackedImage))
+    //     {
+    //         Debug.LogWarning($"Keys in dictionary: {string.Join(", ", _imageObjectMap.Keys)}");
+    //         Debug.LogWarning($"Tracked image {trackedImage.referenceImage.name} not found in dictionary");
+    //         // _imageObjectMap.Clear();
+    //         Debug.LogWarning($"Keys in dictionary (cleared): {string.Join(", ", _imageObjectMap.Keys)}");
+    //         return;
+    //     }
+
+    //     // Check tracking status of the tracked image
+    //     if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
+    //     {
+    //         _imageObjectMap[trackedImage].SetActive(false);
+    //         return;
+    //     }
+
+    //     // Show, hide or position the game object based on the tracking image
+    //     _imageObjectMap[trackedImage].gameObject.SetActive(true);
+    //     _imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
+    // }
+    // private void UpdatedTrackedImage(ARTrackedImage trackedImage)
+    // {
+    //     if (!_imageObjectMap.ContainsKey(trackedImage))
+    //     {
+    //         ReloadMarkerImageAssociations();
+    //         Debug.LogWarning($"Tracked image {trackedImage.referenceImage.name} not found in dictionary");
+
+    //         if (trackedImage != null && trackedImage.referenceImage != null)
+    //         {
+    //             string markerName = trackedImage.referenceImage.name;
+    //             string prefabName = defaultObject.name;
+
+    //             // Try to find any existing association for this marker
+    //             if (arMarkerAssociations.associations.ContainsKey(markerName))
+    //             {
+    //                 prefabName = arMarkerAssociations.associations[markerName];
+    //                 Debug.Log($"Found association for marker {markerName}: {prefabName}");
+    //             }
+
+    //             GameObject newARObject;
+    //             if (_othersElements != null && _othersElements.Contains(prefabName))
+    //             {
+    //                 newARObject = Instantiate(Resources.Load<GameObject>("other"), trackedImage.transform.position, Quaternion.Euler(0, 0, 0));
+    //                 TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+    //                 foreach (TextMeshProUGUI text in texts)
+    //                 {
+    //                     text.text = prefabName;
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 try
+    //                 {
+    //                     newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), trackedImage.transform.position, Quaternion.Euler(-90, 0, 0));
+    //                 }
+    //                 catch (Exception e)
+    //                 {
+    //                     Debug.LogError($"Failed to load prefab {prefabName}: {e.Message}");
+    //                     newARObject = Instantiate(defaultObject, trackedImage.transform.position, Quaternion.Euler(-90, 0, 0));
+    //                 }
+    //             }
+    //             newARObject.name = prefabName;
+    //             _imageObjectMap.Add(trackedImage, newARObject);
+    //             Debug.Log("Re-added missing image: " + trackedImage.referenceImage.name);
+    //         }
+    //         return;
+    //     }
+
+    //     // Rest of the method remains the same
+    //     if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
+    //     {
+    //         _imageObjectMap[trackedImage].SetActive(false);
+    //         return;
+    //     }
+
+    //     _imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
+    //     _imageObjectMap[trackedImage].gameObject.SetActive(true);
+    // }
+
+
+
+
+
+    // private void UpdatedTrackedImage(ARTrackedImage trackedImage)
+    // {
+    //     // Handle case where the tracked image is not in dictionary
+    //     if (!_imageObjectMap.ContainsKey(trackedImage))
+    //     {
+    //         ReloadMarkerImageAssociations();
+    //         Debug.LogWarning($"Tracked image {trackedImage.referenceImage.name} not found in dictionary");
+
+    //         if (trackedImage != null && trackedImage.referenceImage != null)
+    //         {
+    //             string markerName = trackedImage.referenceImage.name;
+    //             string prefabName = defaultObject.name;
+
+    //             // Try to find any existing association for this marker
+    //             if (arMarkerAssociations.associations.ContainsKey(markerName))
+    //             {
+    //                 prefabName = arMarkerAssociations.associations[markerName];
+    //                 Debug.Log($"Found association for marker {markerName}: {prefabName}");
+    //             }
+
+    //             // Create object at random distant position first
+    //             Vector3 spawnPosition = GetRandomDistantPosition();
+    //             GameObject newARObject;
+
+    //             if (_othersElements != null && _othersElements.Contains(prefabName))
+    //             {
+    //                 newARObject = Instantiate(Resources.Load<GameObject>("other"), spawnPosition, Quaternion.Euler(0, 0, 0));
+    //                 TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+    //                 foreach (TextMeshProUGUI text in texts)
+    //                 {
+    //                     text.text = prefabName;
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 try
+    //                 {
+    //                     newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), spawnPosition, Quaternion.Euler(-90, 0, 0));
+    //                 }
+    //                 catch (Exception e)
+    //                 {
+    //                     Debug.LogError($"Failed to load prefab {prefabName}: {e.Message}");
+    //                     newARObject = Instantiate(defaultObject, spawnPosition, Quaternion.Euler(-90, 0, 0));
+    //                 }
+    //             }
+
+    //             newARObject.name = prefabName;
+    //             newARObject.SetActive(false);
+    //             _imageObjectMap.Add(trackedImage, newARObject);
+    //             Debug.Log("Re-added missing image: " + trackedImage.referenceImage.name);
+
+    //             // Handle positioning in a delayed way
+    //             StartCoroutine(SafelyPositionObject(trackedImage, newARObject));
+    //         }
+    //         return;
+    //     }
+
+    //     // Check tracking status
+    //     if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
+    //     {
+    //         _imageObjectMap[trackedImage].SetActive(false);
+    //         return;
+    //     }
+
+    //     // Handle positioning of existing object
+    //     GameObject trackedObject = _imageObjectMap[trackedImage];
+    //     StartCoroutine(SafelyPositionObject(trackedImage, trackedObject));
+    // }
+
+    // private IEnumerator SafelyPositionObject(ARTrackedImage trackedImage, GameObject trackedObject)
+    // {
+    //     // Wait a frame to ensure we have the latest tracking data
+    //     yield return null;
+
+    //     // Temporarily disable any physics components
+    //     Rigidbody rb = trackedObject.GetComponent<Rigidbody>();
+    //     bool wasKinematic = false;
+    //     bool hadGravity = true;
+
+    //     if (rb != null)
+    //     {
+    //         wasKinematic = rb.isKinematic;
+    //         hadGravity = rb.useGravity;
+    //         rb.isKinematic = true;
+    //         rb.useGravity = false;
+    //     }
+
+    //     // Position and activate the object
+    //     trackedObject.transform.position = trackedImage.transform.position;
+    //     trackedObject.SetActive(true);
+
+    //     // Give time for the object to stabilize in its new position
+    //     yield return new WaitForSeconds(1f);
+
+    //     // Restore physics components if they existed
+    //     if (rb != null)
+    //     {
+    //         rb.isKinematic = wasKinematic;
+    //         rb.useGravity = hadGravity;
+    //     }
+
+    //     // Handle any Colliders
+    //     Collider[] colliders = trackedObject.GetComponentsInChildren<Collider>();
+    //     foreach (Collider collider in colliders)
+    //     {
+    //         // Make sure colliders are properly initialized
+    //         if (!collider.enabled)
+    //         {
+    //             collider.enabled = true;
+    //         }
+    //     }
+    // }
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void ReloadMarkerImageAssociations()
+    {
+        Debug.LogWarning("Reloading marker image associations...");
+        ElementFilesManager.ArMarkerAssociations arMarkerAssociations = _elementFilesManager.GetArMarkerAssociations();
+
+        foreach (KeyValuePair<string, string> entry in arMarkerAssociations.associations)
+        {
+            string markerName = entry.Key;
+            string prefabName = entry.Value;
+
+            Debug.Log($"Association (MITM): {markerName} -> {prefabName}");
+
+            // Find the ARTrackedImage with the matching reference image name
+            ARTrackedImage matchingTrackedImage = null;
+            foreach (ARTrackedImage trackedImage in _imageObjectMap.Keys)
+            {
+                if (trackedImage != null && trackedImage.referenceImage != null &&
+                    trackedImage.referenceImage.name == markerName)
+                {
+                    matchingTrackedImage = trackedImage;
+                    break;
+                }
+            }
+
+            if (matchingTrackedImage != null)
+            {
+                GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), GetRandomDistantPosition(), Quaternion.Euler(-90, 0, 0));
+                newARObject.name = prefabName;
+                newARObject.SetActive(false);
+                _imageObjectMap[matchingTrackedImage] = newARObject;
+            }
+        }
+        Debug.LogWarning($"Reloaded {arMarkerAssociations.associations.Count} image associations");
+    }
+
+    // private void ReloadMarkerImageAssociations()
+    // {
+    //     Debug.LogWarning("Reloading marker image associations...");
+    //     // Only load the associations data but don't create objects yet
+    //     arMarkerAssociations = _elementFilesManager.GetArMarkerAssociations();
+
+    //     // Don't create any GameObjects here - they'll be created when markers are detected
+    //     Debug.LogWarning($"Reloaded {arMarkerAssociations.associations.Count} image associations");
+
+    //     // Clear the dictionary to prevent old objects from persisting
+    //     foreach (var kvp in _imageObjectMap)
+    //     {
+    //         if (kvp.Value != null)
+    //         {
+    //             Destroy(kvp.Value);
+    //         }
+    //     }
+    //     _imageObjectMap.Clear();
+    // }
+
+
+    private Color GetInvertedColor(GameObject gameObject)
+    {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Texture2D texture = renderer.material.mainTexture as Texture2D;
+        Color averageColor = Color.black;
+
+        if (texture != null)
+        {
+            Color[] pixels = texture.GetPixels();
+            foreach (Color pixel in pixels)
+            {
+                averageColor += pixel;
+            }
+            averageColor /= pixels.Length;
+        }
+        else
+        {
+            averageColor = renderer.material.color;
+        }
+
+        Color invertedColor = new Color(1 - averageColor.r, 1 - averageColor.g, 1 - averageColor.b);
+
+        return invertedColor;
+    }
+
+    public void SelectGameObject(GameObject selectedObject)
+    {
+
+        // Se l'oggetto è già selezionato, deselezionalo e rimuovi il bordo
+        if (_isSelecting && _imageObjectMap.ContainsValue(selectedObject) && SelectedImageObject != null && _imageObjectMap[SelectedImageObject] == selectedObject)
+        {
+            DeselectSelectedGameObject();
+            _isSelecting = false;
+            return;
+        }
+
+        //get the ar tracked image associated to this object
+        foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+        {
+            if (entry.Value == null || entry.Key == null)
+            {
+                continue;
+            }
+            Debug.Log("Selected GO: " + entry.Key.referenceImage.name + " -> " + entry.Value.name);
+            if (entry.Value == selectedObject)
+            {
+                if (SelectedImageObject != null && SelectedImageObject != entry.Key) DeselectSelectedGameObject();
+
+                SelectedImageObject = entry.Key;
+                Debug.Log("Selected: " + SelectedImageObject.referenceImage.name);
+
+                var outline = selectedObject.AddComponent<Outline>();
+                outline.OutlineMode = Outline.Mode.OutlineAll;
+                Color originalColor = selectedObject.GetComponent<Renderer>().material.color;
+                outline.OutlineColor = GetInvertedColor(selectedObject);
+                outline.OutlineWidth = 10f;
+
+                _isSelecting = true;
+
+                break;
+            }
+        }
+    }
+
+    public void DeselectSelectedGameObject()
+    {
+        if (SelectedImageObject == null || !_imageObjectMap.ContainsKey(SelectedImageObject)) return;
+
+        Outline outline = _imageObjectMap[SelectedImageObject].GetComponent<Outline>();
+
+        if (outline != null)
+        {
+            Destroy(outline);
+        }
+
+        Color color = _imageObjectMap[SelectedImageObject].GetComponent<Renderer>().material.color;
+
+        SelectedImageObject = null;
+    }
+
+    public bool SetPrefabOnSelected(string prefabName)
+    {
+        Debug.Log("Loading (SetPrefabOnSelected) -> " + prefabName);
+        if (SelectedImageObject == null) return false;
+        GameObject oldGO = _imageObjectMap[SelectedImageObject];
+        ARTrackedImage aRTrackedImage = SelectedImageObject;
+
+        if (_imageObjectMap[aRTrackedImage] != null)
+        {
+            DeselectSelectedGameObject();
+            _imageObjectMap[aRTrackedImage].gameObject.SetActive(false);
+            _isSelecting = false;
+        }
+
+
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName))
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), aRTrackedImage.transform.position, Quaternion.Euler(0, 0, 0));
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
+        }
+        else
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), aRTrackedImage.transform.position, Quaternion.Euler(-90, 0, 0));
+        }
+        newARObject.name = prefabName;
+        newARObject.SetActive(false);
+        _imageObjectMap[aRTrackedImage] = newARObject;
+        AssociateMarkerImage(aRTrackedImage.referenceImage.name, prefabName);
+        UpdatedTrackedImage(aRTrackedImage);
+
+        // Print dictionary contents
+        Debug.Log("ImageObjectMap contents after update:");
+        foreach (var kvp in _imageObjectMap)
+        {
+            string trackedImageName = kvp.Key?.referenceImage.name ?? "null";
+            string objectName = kvp.Value?.name ?? "null";
+            Debug.Log($"Marker (setPrefabOnSelected): {trackedImageName} -> GameObject: {objectName}");
+        }
+
+
+        if (slider != null)
+        {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+        }
+
+        return true;
+    }
+
+    public bool OnPrefabSelected(string prefabName)
+    {
+        if (SelectedImageObject == null) return false; //aggiungere errore nella gui che indica che è necessario fare una selezione
+        return SetPrefabOnSelected(prefabName);
+    }
+
+
+    bool soundOn = true;
+
+    bool sameElementSoundCount = false;
+
+    public void ClearAndAddElement(string prefabName, bool isSameElement = false)
+    {
+
+        soundOn = (!sameElementSoundCount && isSameElement) || !isSameElement;
+
+        sameElementSoundCount = !sameElementSoundCount && isSameElement;
+
+        bool elementAlreadyAdded = _elementFilesManager.AddFoundElement(prefabName.ToLower());
+
+        DeselectSelectedGameObject();
+
+        ARTrackedImage targetImage = null;
+        bool first = true;
+        List<ARTrackedImage> imagesToReset = new();
+
+        foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+        {
+            if (entry.Value == null || entry.Key == null)
+            {
+                continue;
+            }
+            if (first)
+            {
+                targetImage = entry.Key;
+                first = false;
+            }
+            imagesToReset.Add(entry.Key);
+
+        }
+
+        foreach (ARTrackedImage image in imagesToReset)
+        {
+            AssociateGameObjectToMarker(image, defaultObject.name);
+        }
+
+        if (targetImage != null)
+        {
+            AssociateGameObjectToMarker(targetImage, prefabName);
+        }
+
+        bool finded = false;
+        AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+
+        //string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
+        //string buttonLabel = prefabName;
+        // if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
+        //     clip = Resources.Load<AudioClip>("Sounds/wrong");
+        // }
+        // if (_elementFilesManager.GetFoundElements().Contains(prefabName.ToLower()))
+        if (!elementAlreadyAdded)
+        {
+            clip = Resources.Load<AudioClip>("Sounds/wrong");
+            Debug.Log("Elemento già trovato (MITM): " + prefabName);
+            finded = true;
+        }
+        else
+        {
+            // _createButtonsComponent.CreateButton(buttonLabel);
+            // _createButtonsComponent.buttonLabels.Add(buttonLabel);
+
+            _createButtonsComponent.ResetButtons();
+            //_createButtonsComponent.ClearButtons();
+            Debug.Log("ButtonLabels aggiornato con successo");
+            finded = false;
+            AchievementsCheck.Instance.FoundedElement(prefabName);
+            Debug.Log("SONO QUIII :)" + prefabName);
+            ElementFilesManager.Instance.SetBalance(ElementFilesManager.Instance.GetBalance() + 1);
+        }
+
+        GameObject tempAudioObject = new GameObject("TempAudioObject");
+        AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+        audioSource.clip = clip;
+
+        if (soundOn)
+        {
+            audioSource.Play();
+            SpawnPopUp(prefabName, finded);
+        }
+
+        Destroy(tempAudioObject, clip.length);
+    }
+
+    void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
+    {
+        GameObject spawnedObject;
+        if (alreadyFound)
+        {
+            spawnedObject = Instantiate(popUpElementAlreadyFound, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        }
+        Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
+        if (backgroundTransform != null)
+        {
+            Image backgroundImage = backgroundTransform.GetComponent<Image>();
+            if (backgroundImage != null)
+            {
+                Sprite loadedSprite;
+                if (_othersElements.Contains(prefabName))
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/other");
+                }
+                else
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                }
+
+                if (loadedSprite != null)
+                {
+                    backgroundImage.sprite = loadedSprite;
+                    // Debug.Log("Loaded sprite: " + loadedSprite.name);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Background not found");
+        }
+
+        Transform nameElementTransform = FindInChildren(spawnedObject.transform, "NameElement");
+        if (nameElementTransform != null)
+        {
+            TextMeshProUGUI nameText = nameElementTransform.GetComponent<TextMeshProUGUI>();
+            if (nameText != null)
+            {
+                nameText.text = char.ToUpper(prefabName[0]) + prefabName[1..];
+                // Debug.Log("Loaded name: " + nameText.text);
+            }
+        }
+        else
+        {
+            Debug.Log("NameElement not found");
+        }
+
+        Destroy(spawnedObject, 3f);
+    }
+
+    Transform FindInChildren(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            Transform result = FindInChildren(child, name);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    public void SpawnPopUpNotExits()
+    {
+        GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+
+        AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
+        GameObject audioObject = new GameObject("TempAudioObject");
+        AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+        audioSourceTemp.clip = sound;
+
+        audioSourceTemp.Play();
+
+        Destroy(audioObject, sound.length);
+
+        Destroy(spawnedObject, 3f);
+    }
+
+}

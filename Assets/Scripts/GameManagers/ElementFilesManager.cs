@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class ElementFilesManager : MonoBehaviour
+public class ElementFilesManager : Singleton<ElementFilesManager>
 {
 
     [SerializeField]
@@ -20,9 +20,12 @@ public class ElementFilesManager : MonoBehaviour
     private string villageSaveDataFilePath;
 
     private string buyFloorSaveDataFilePath;
+
     private string balanceFilePath;
 
-    public static ElementFilesManager Instance;
+    private string arMarkerAssociationsFilePath;
+
+    // public static ElementFilesManager Instance;
 
     private List<string> initialElements = null;
 
@@ -32,26 +35,37 @@ public class ElementFilesManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("ElementFilesManager init");
-        if(Instance != null && Instance != this)
+        // Debug.Log("ElementFilesManager init");
+        // if (Instance != null && Instance != this)
+        // {
+        //     Destroy(this.gameObject);
+        //     return;
+        // }
+        // else
+        // {
+        //     Instance = this;
+        //     Initialize();
+        // }
+        if (FindObjectsOfType(typeof(ElementFilesManager)).Length > 1)
         {
-           Destroy(this.gameObject);
-           return;
+            Destroy(gameObject);
         }
         else
         {
-            Instance = this;
             Initialize();
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    private static ElementFilesManager GetInstance(){
-        if(Instance == null){
-            Instance = new ElementFilesManager();
-        }
+    // private static ElementFilesManager GetInstance()
+    // {
+    //     if (Instance == null)
+    //     {
+    //         Instance = new ElementFilesManager();
+    //     }
 
-        return Instance;
-    }   
+    //     return Instance;
+    // }
 
     private void Initialize()
     {
@@ -61,6 +75,7 @@ public class ElementFilesManager : MonoBehaviour
         villageSaveDataFilePath = Path.Combine(Application.persistentDataPath, "villageSaveData.json");
         buyFloorSaveDataFilePath = Path.Combine(Application.persistentDataPath, "buyFloor.txt");
         balanceFilePath = Path.Combine(Application.persistentDataPath, "balance.txt");
+        arMarkerAssociationsFilePath = Path.Combine(Application.persistentDataPath, "arMarkersAssociations.json");
 
 
         UpdateAll();
@@ -70,8 +85,9 @@ public class ElementFilesManager : MonoBehaviour
         Debug.Log("InitialElements: " + initialElements.Count);
         Debug.Log("FoundElements: " + foundElements.Count);
         Debug.Log("ElementAssociations: " + elementAssociations.Count);
+        Debug.Log("ArMarkerAssociations: " + GetArMarkerAssociations().associationList.Count);
         Debug.Log("-----------------");
-        
+
     }
 
     public List<string> GetInitialElements()
@@ -104,7 +120,7 @@ public class ElementFilesManager : MonoBehaviour
         List<string> foundItems = new List<string>();
         if (!File.Exists(filePath))
         {
-            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            Debug.LogWarning("Il file JSON non esiste nel percorso: " + filePath);
             File.WriteAllText(filePath, "");
             Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
         }
@@ -115,7 +131,7 @@ public class ElementFilesManager : MonoBehaviour
             foundItems.AddRange(lines);
         }
 
-        Debug.LogWarning("FOUND ELEMENTS: " + File.ReadAllText(filePath));
+        Debug.Log("FOUND ELEMENTS: " + File.ReadAllText(filePath));
         return foundItems;
     }
 
@@ -196,22 +212,26 @@ public class ElementFilesManager : MonoBehaviour
         AchievementsCheck.Instance.ResetAchievements();
     }
 
-    public void ResetVillageObjects(){
+    public void ResetVillageObjects()
+    {
         string filePath = villageSaveDataFilePath;
         File.WriteAllText(filePath, getDefaultVillageSaveData());
     }
 
-    public void UpdateAll(){
+    public void UpdateAll()
+    {
         initialElements = null;
         foundElements = null;
         elementAssociations = null;
+
 
         initialElements = GetInitialElements();
         foundElements = GetFoundElements();
         elementAssociations = GetElementAssociations();
     }
 
-    public string getAchievementsJson(){
+    public string getAchievementsJson()
+    {
         string filePath = achievementsFilePath;
 
 
@@ -234,7 +254,8 @@ public class ElementFilesManager : MonoBehaviour
         //return achievementsJsonFile.text;
     }
 
-    public void UpdateAchievementsJson(string json){
+    public void UpdateAchievementsJson(string json)
+    {
         string filePath = achievementsFilePath;
 
         if (!File.Exists(filePath))
@@ -396,7 +417,7 @@ public class ElementFilesManager : MonoBehaviour
         if (!File.Exists(filePath))
         {
             Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
-            File.WriteAllText(filePath, getDefaultVillageSaveData());        
+            File.WriteAllText(filePath, getDefaultVillageSaveData());
         }
         else
         {
@@ -415,8 +436,9 @@ public class ElementFilesManager : MonoBehaviour
             Debug.LogError("Village save data is null after deserialization");
             return null;
         }
-        
-        if(villageSaveData.floor == null){
+
+        if (villageSaveData.floor == null)
+        {
             villageSaveData.floor = "black";
         }
         if (villageSaveData.villageObjects == null)
@@ -455,7 +477,8 @@ public class ElementFilesManager : MonoBehaviour
 
     }
 
-    public List<string> GetBuyFloorSaveData(){
+    public List<string> GetBuyFloorSaveData()
+    {
         string filePath = buyFloorSaveDataFilePath;
         List<string> boughtFloors = new List<string>();
         if (!File.Exists(filePath))
@@ -481,7 +504,7 @@ public class ElementFilesManager : MonoBehaviour
 
         if (boughtFloors.Contains(boughtFloor.ToLower()))
         {
-            Debug.LogWarning("Floor già comprato" +  boughtFloor);
+            Debug.LogWarning("Floor già comprato" + boughtFloor);
             return false;
         }
 
@@ -498,17 +521,20 @@ public class ElementFilesManager : MonoBehaviour
         File.WriteAllLines(buyFloorSaveDataFilePath, new string[0]);
     }
 
-    public void SetBalance(int balance){
+    public void SetBalance(int balance)
+    {
         string filePath = balanceFilePath;
         File.WriteAllText(filePath, balance.ToString());
     }
 
-    public void resetBalance(){
+    public void resetBalance()
+    {
         string filePath = balanceFilePath;
         File.WriteAllText(filePath, "0");
     }
 
-    public int GetBalance(){
+    public int GetBalance()
+    {
         string filePath = balanceFilePath;
         if (!File.Exists(filePath))
         {
@@ -521,6 +547,143 @@ public class ElementFilesManager : MonoBehaviour
         return int.Parse(File.ReadAllText(filePath));
     }
 
+    private ArMarkerAssociations createDefaultMarkerAssociations()
+    {
+        ArMarkerAssociations defaultAssociations = new ArMarkerAssociations();
+        for (int i = 0; i <= 20; i++)
+        {
+            string defaultValue = "";
+            if (i <= 5)
+            {
+                defaultValue = "water";
+            }
+            else if (i <= 10)
+            {
+                defaultValue = "fire";
+            }
+            else if (i <= 15)
+            {
+                defaultValue = "wind";
+            }
+            else if (i <= 20)
+            {
+                defaultValue = "earth";
+            }
+            defaultAssociations.AddAssociation(i + "", defaultValue);
+        }
+
+        Debug.Log("Creating default AR marker associations:");
+        Debug.Log($"Created {defaultAssociations.associationList.Count} marker associations");
+
+        int displayCount = Math.Min(5, defaultAssociations.associationList.Count);
+        for (int i = 0; i < displayCount; i++)
+        {
+            var assoc = defaultAssociations.associationList[i];
+            Debug.Log($"Marker {assoc.markerId} -> {assoc.elementType}");
+        }
+
+        return defaultAssociations;
+    }
+
+    public void UpdateMarkerAssociations(ArMarkerAssociations arMarkerAssociations)
+    {
+
+
+        string filePath = arMarkerAssociationsFilePath;
+
+
+        if (arMarkerAssociations == null)
+        {
+            Debug.LogError("[EFM] UpdateMarkerAssociations called with null parameter!");
+            return;
+        }
+
+        if (arMarkerAssociations.associationList == null)
+        {
+            Debug.LogError("[EFM] UpdateMarkerAssociations called with null associationList!");
+            return;
+        }
+
+        Debug.Log($"[EFM] UpdateMarkerAssociations called with {arMarkerAssociations.associationList.Count} associations");
+
+        if (arMarkerAssociations.associationList.Count == 0)
+        {
+            Debug.LogWarning("[EFM] Warning: Updating with empty association list");
+        }
+
+
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso, a default one will be created: " + filePath);
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string associationsString = JsonUtility.ToJson(arMarkerAssociations);
+        Debug.Log($"[EFM] Serialized JSON: {associationsString}");
+
+        File.WriteAllText(filePath, associationsString);
+
+        try
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            var parsedJson = JsonUtility.FromJson<ArMarkerAssociations>(jsonContent);
+            string prettyJson = JsonUtility.ToJson(parsedJson, true); // true enables pretty printing
+            Debug.LogWarning("[EFM] UPDATED AR MARKER ASSOCIATIONS:\n" + prettyJson);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("[EFM] UPDATED AR MARKER ASSOCIATIONS (failed to format):\n" + File.ReadAllText(filePath));
+            Debug.LogException(e);
+        }
+        Debug.Log($"[EFM] Serialized {arMarkerAssociations.associationList.Count} marker associations");
+    }
+
+    public ArMarkerAssociations GetArMarkerAssociations()
+    {
+        string filePath = arMarkerAssociationsFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+
+            ArMarkerAssociations defaultAssociations = createDefaultMarkerAssociations();
+
+            string defaultAssociationsString = JsonUtility.ToJson(defaultAssociations);
+            File.WriteAllText(filePath, defaultAssociationsString);
+
+            // Debug output to verify serialization worked
+            Debug.LogWarning("Generated association: " + defaultAssociationsString);
+            Debug.LogWarning("UPDATED AR MARKER ASSOCIATIONS: " + File.ReadAllText(filePath));
+            Debug.Log($"Created default marker associations with {defaultAssociations.associationList.Count} entries");
+
+            return defaultAssociations;
+        }
+        else
+        {
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string associationsString = File.ReadAllText(filePath);
+
+        ArMarkerAssociations arMarkerAssociations = JsonUtility.FromJson<ArMarkerAssociations>(associationsString);
+
+        if (arMarkerAssociations == null)
+        {
+            Debug.LogError("ArMarkerAssociations is null after deserialization");
+            return null;
+        }
+
+        Debug.Log($"Loaded {arMarkerAssociations.associationList.Count} marker associations");
+
+        Debug.LogWarning("Generated association: " + associationsString);
+        Debug.LogWarning("UPDATED AR MARKER ASSOCIATIONS: " + File.ReadAllText(filePath));
+
+        return arMarkerAssociations;
+    }
 
     [Serializable]
     public class VillageData
@@ -540,7 +703,7 @@ public class ElementFilesManager : MonoBehaviour
     [Serializable]
     public class VillageObject
     {
-        public string Key; 
+        public string Key;
         public int Value;
         public List<string> Requirements;
 
@@ -558,7 +721,7 @@ public class ElementFilesManager : MonoBehaviour
 
         public string toString()
         {
-            return "Floor: "+ floor + "\n" + string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
+            return "Floor: " + floor + "\n" + string.Join("\n", villageObjects.ConvertAll(v => v.toString()));
         }
     }
 
@@ -571,6 +734,93 @@ public class ElementFilesManager : MonoBehaviour
         public string toString()
         {
             return $"Object: {objectName}, Position: {position}";
+        }
+    }
+
+    [Serializable]
+    public class ArMarkerAssociations
+    {
+        [Serializable]
+        public class MarkerAssociation
+        {
+            public string markerId;
+            public string elementType;
+
+            // Parameterless constructor needed for deserialization
+            public MarkerAssociation() { }
+
+            public MarkerAssociation(string markerId, string elementType)
+            {
+                this.markerId = markerId;
+                this.elementType = elementType;
+            }
+
+        }
+
+        // This is the serializable list that JsonUtility will use
+        public List<MarkerAssociation> associationList = new List<MarkerAssociation>();
+
+        // Dictionary for easier runtime access (not serialized)
+        [NonSerialized]
+        private Dictionary<string, string> _associations = new Dictionary<string, string>();
+
+        // Initialize/sync dictionary from list after deserialization
+        public Dictionary<string, string> associations
+        {
+            get
+            {
+                // Rebuild dictionary if needed
+                if (_associations.Count != associationList.Count)
+                {
+                    _associations.Clear();
+                    foreach (var assoc in associationList)
+                    {
+                        _associations[assoc.markerId] = assoc.elementType;
+                    }
+                }
+                return _associations;
+            }
+        }
+
+        public void AddAssociation(string key, string value)
+        {
+            // Check if this key already exists in the list
+            MarkerAssociation existingAssoc = associationList.Find(a => a.markerId == key);
+
+            if (existingAssoc != null)
+            {
+                // Update existing association
+                existingAssoc.elementType = value;
+            }
+            else
+            {
+                // Add new association
+                associationList.Add(new MarkerAssociation(key, value));
+            }
+
+            // Always update the dictionary
+            _associations[key] = value;
+        }
+
+        public void RemoveAssociation(string key)
+        {
+            // Remove from list
+            associationList.RemoveAll(a => a.markerId == key);
+
+            // Remove from dictionary
+            if (_associations.ContainsKey(key))
+            {
+                _associations.Remove(key);
+            }
+        }
+
+        public string GetValue(string key)
+        {
+            if (associations.ContainsKey(key))
+            {
+                return associations[key];
+            }
+            return null;
         }
     }
 

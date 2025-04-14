@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -536,7 +536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &209387142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,6 +1783,58 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 80, y: 100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &606227505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 606227507}
+  - component: {fileID: 606227506}
+  m_Layer: 0
+  m_Name: MultipleImagesTrackingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &606227506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606227505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a2a3b88dd01cc4e967f7486e0082fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultObject: {fileID: 4568593010163852625, guid: 2561df3c8295d5148988d09ecba26c77, type: 3}
+  slider: {fileID: 782628375}
+  menu: {fileID: 1577749885}
+  createButton: {fileID: 1328013456}
+  popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
+  popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
+  xrOrigin: {fileID: 1586463271}
+  elementFileManagerPrefab: {fileID: 99667892}
+--- !u!4 &606227507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606227505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.997005, y: -0.036525033, z: -9.151477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3208,6 +3260,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114040580}
   m_CullTransparentMesh: 1
+--- !u!1 &1180816136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180816138}
+  - component: {fileID: 1180816137}
+  m_Layer: 0
+  m_Name: ARDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1180816137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180816136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f771ea8a3d44294d95e7751f669d6c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1180816138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180816136}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.997005, y: -0.036525033, z: -9.151477}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218078475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,7 +4592,6 @@ GameObject:
   - component: {fileID: 1586463274}
   - component: {fileID: 1586463273}
   - component: {fileID: 1586463272}
-  - component: {fileID: 1586463275}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -4517,7 +4612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedLibrary: {fileID: 11400000, guid: a2885d259cdaeaa4bae61c0f1fa99ed7, type: 2}
-  m_MaxNumberOfMovingImages: 2
+  m_MaxNumberOfMovingImages: 20
   m_TrackedImagePrefab: {fileID: 0}
 --- !u!114 &1586463273
 MonoBehaviour:
@@ -4552,24 +4647,6 @@ Transform:
   - {fileID: 1092334118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1586463275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586463271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5a2a3b88dd01cc4e967f7486e0082fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultObject: {fileID: 4568593010163852625, guid: 2561df3c8295d5148988d09ecba26c77, type: 3}
-  slider: {fileID: 782628375}
-  menu: {fileID: 1577749885}
-  createButton: {fileID: 1328013456}
-  popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
-  popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
 --- !u!1 &1600812346
 GameObject:
   m_ObjectHideFlags: 0
@@ -4898,7 +4975,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1668687893}
         m_TargetAssemblyTypeName: ChangeScenes, Assembly-CSharp
-        m_MethodName: MenuScene
+        m_MethodName: MenuSceneResetMarkers
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6501,6 +6578,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 600672837}
   - {fileID: 99667894}
+  - {fileID: 606227507}
+  - {fileID: 1180816138}
   - {fileID: 680379175}
   - {fileID: 1586463274}
   - {fileID: 72001327}

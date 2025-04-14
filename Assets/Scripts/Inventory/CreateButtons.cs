@@ -42,7 +42,9 @@ public class CreateButtons : MonoBehaviour
 
         if (gameModeManager.GameMode == "CreateMarker")
             newButton.onClick.AddListener(() => {
-                MultipleImagesTrackingManager.Instance.OnPrefabSelected(buttonLabelLowercase);
+                
+                MultipleImagesTrackingManager mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
+                mitm.OnPrefabSelected(buttonLabelLowercase);
 
                 if (slider != null)
                 {
@@ -134,7 +136,7 @@ public class CreateButtons : MonoBehaviour
     {
         ClearButtons();
 
-        Debug.LogWarning("Button labels cleared: " + string.Join(", ", buttonLabels));
+        // Debug.LogWarning("Button labels cleared: " + string.Join(", ", buttonLabels));
 
 
         if(GameModeManager.Instance.GameMode == "CreateMarker" || GameModeManager.Instance.GameMode == "VirtualPlane"){
@@ -151,7 +153,7 @@ public class CreateButtons : MonoBehaviour
 
         buttonLabels = buttonLabels.Distinct().ToList();
 
-        Debug.LogWarning("Button labels to update: " + string.Join(", ", buttonLabels));
+        Debug.Log("Button labels to update: " + string.Join(", ", buttonLabels));
     
         foreach (string label in buttonLabels)
         {
