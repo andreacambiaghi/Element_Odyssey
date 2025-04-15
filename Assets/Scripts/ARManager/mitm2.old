@@ -1,0 +1,884 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
+using System.IO;
+using System;
+using TMPro;
+using UnityEngine.Audio;
+using System.ComponentModel.Design;
+using System.Collections;
+
+public class MultipleImagesTrackingManager : MonoBehaviour
+{
+    public static MultipleImagesTrackingManager Instance;
+
+    private ElementFilesManager _elementFilesManager;
+
+    private ARTrackedImageManager _arTrackedImageManager;
+
+    private Dictionary<ARTrackedImage, GameObject> _imageObjectMap; // Marker name -> GameObject
+
+    private List<GameObject> _allElements = new List<GameObject>();
+
+    public GameObject defaultObject;
+
+    private ARTrackedImage SelectedImageObject;
+
+    private CreateButtons _createButtonsComponent;
+
+    private List<string> _othersElements;
+
+    [SerializeField] private GameObject slider;
+
+    [SerializeField] private SliderMenuAnim menu;
+
+    [SerializeField] private GameObject createButton;
+
+    [SerializeField] private GameObject popUpElementCreated;
+    [SerializeField] private GameObject popUpElementAlreadyFound;
+
+    ElementFilesManager.ArMarkerAssociations arMarkerAssociations;
+
+    public bool isSceneBeingStarted = false;
+
+
+    private bool _isSelecting = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+
+        _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
+        _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
+        _createButtonsComponent = createButton.GetComponent<CreateButtons>();
+        _elementFilesManager = ElementFilesManager.Instance;
+        _othersElements = ElementFilesManager.Instance.GetOthersElements();
+
+        ReloadMarkerImageAssociations();
+
+    }
+
+    private void Start()
+    {
+        // Listen the event when the tracked images are changed
+        _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+    }
+
+    private void OnDestroy()
+    {
+        // Remove the listener when the script is destroyed
+        _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+    }
+
+private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    {
+
+        if (isSceneBeingStarted)
+        {
+            Debug.LogWarning("The scene is being restarted.");
+            ResetTracking();
+            isSceneBeingStarted = false;
+        }
+
+        // Identify the changes in the tracked images
+        foreach (ARTrackedImage trackedImage in eventArgs.added)
+        {
+            AssociateGameObjectToMarker(trackedImage, arMarkerAssociations.associations[trackedImage.referenceImage.name]);
+        }
+
+        foreach (ARTrackedImage trackedImage in eventArgs.updated)
+        {
+            if (!_imageObjectMap.ContainsKey(trackedImage))
+            {
+                ResetTracking();
+                // trackedImage.transform.position = GetRandomDistantPosition();
+                ResetTrackedImageAssociation(trackedImage);
+
+            }
+            else
+            {
+                UpdatedTrackedImage(trackedImage);
+            }
+
+        }
+
+        foreach (ARTrackedImage trackedImage in eventArgs.removed)
+        {
+            if (_imageObjectMap.ContainsKey(trackedImage))
+            {
+                _imageObjectMap[trackedImage].SetActive(false);
+            }
+        }
+    }
+
+    private void AssociateGameObjectToMarker(ARTrackedImage trackedImage, string prefabName)
+    {
+        if (_imageObjectMap.ContainsKey(trackedImage) && _imageObjectMap[trackedImage] != null)
+        {
+            _imageObjectMap[trackedImage].gameObject.SetActive(false);
+            DeselectSelectedGameObject();
+            _isSelecting = false;
+        }
+
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName))
+        {
+            // newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+            newARObject = GetGameObject("other");
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
+        }
+        else
+        {
+            // newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+            newARObject = GetGameObject(prefabName);
+        }
+
+        newARObject.name = prefabName;
+        newARObject.SetActive(false);
+        _imageObjectMap[trackedImage] = newARObject;
+        AssociateMarkerImageAndUpdate(trackedImage.referenceImage.name, prefabName);
+
+
+        UpdatedTrackedImage(trackedImage);
+
+        if (slider != null)
+        {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+        }
+
+    }
+
+    private void UpdatedTrackedImage(ARTrackedImage trackedImage)
+    {
+        // Check tracking status of the tracked image
+        if (trackedImage.trackingState is TrackingState.Limited or TrackingState.None)
+        {
+            _imageObjectMap[trackedImage].SetActive(false);
+            return;
+        }
+        if (trackedImage.trackingState == TrackingState.Tracking)
+        {
+            _imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
+            _imageObjectMap[trackedImage].gameObject.SetActive(true);
+        }
+
+    }
+
+    private void ReloadMarkerImageAssociations()
+    {
+        arMarkerAssociations = _elementFilesManager.GetArMarkerAssociations();
+        if (arMarkerAssociations == null)
+        {
+            Debug.LogError("(MITM) ArMarkerAssociations is null");
+            return;
+        }
+        Debug.LogWarning($"Reloaded {arMarkerAssociations.associations.Count} image associations");
+    }
+
+    // private void SpawnObjectOnMarker(ARTrackedImage trackedImage, string prefabName)
+    // {
+
+    //     GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+    //     newARObject.name = prefabName;
+    //     newARObject.SetActive(false);
+    //     _imageObjectMap[trackedImage] = newARObject;
+
+    //     _imageObjectMap.Add(trackedImage, newARObject);
+
+    //     UpdatedTrackedImage(trackedImage);
+    // }
+
+
+    private GameObject GetGameObject(string prefabName)
+    {
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        newARObject.name = prefabName;
+        newARObject.SetActive(false);
+
+        _allElements.Add(newARObject);
+
+        return newARObject;
+    }
+
+
+    private void ResetTrackedImageAssociation(ARTrackedImage trackedImage)
+    {
+        Debug.LogWarning($"Reset: {trackedImage.referenceImage.name}");
+        GameObject gameObject = GetGameObject(arMarkerAssociations.associations[trackedImage.referenceImage.name]);
+        gameObject.transform.position = GetRandomDistantPosition();
+        _imageObjectMap[trackedImage] = gameObject;
+    }
+
+
+    private void AssociateMarkerImageAndUpdate(string markerName, string prefabName)
+    {
+
+        Debug.Log($"[MITM] Before update - Association count: {arMarkerAssociations.associationList.Count}");
+        Debug.Log($"[MITM] Adding association: {markerName} -> {prefabName}");
+
+        arMarkerAssociations.AddAssociation(markerName, prefabName);
+
+        Debug.Log($"[MITM] After update - Association count: {arMarkerAssociations.associationList.Count}");
+        Debug.Log($"[MITM] Dumping all associations:");
+        foreach (var assoc in arMarkerAssociations.associationList)
+        {
+            Debug.Log($"[MITM] Marker: {assoc.markerId} -> Element: {assoc.elementType}");
+        }
+
+        _elementFilesManager.UpdateMarkerAssociations(arMarkerAssociations);
+    }
+
+
+    private Vector3 GetRandomDistantPosition()
+    {
+        // Generate random direction
+        Vector3 randomDirection = new Vector3(
+            UnityEngine.Random.Range(-1f, 1f),
+            UnityEngine.Random.Range(-1f, 1f),
+            UnityEngine.Random.Range(-1f, 1f)
+        ).normalized;
+
+        // Make it very far away (1000 units)
+        return randomDirection * 1000f;
+    }
+
+    // public void Reset()
+    // {
+    //     if(_imageObjectMap == null)
+    //     {
+    //         Debug.LogError("ImageObjectMap is null, cannot reset.");
+    //         return;
+    //     }
+    //     Debug.Log("Starting AR tracking system reset");
+    //     foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+    //     {
+    //         Destroy(entry.Value);
+    //     }
+
+    //     _imageObjectMap.Clear();
+    //     _isSelecting = false;
+    //     SelectedImageObject = null;
+
+    //     // Reload associations
+    //     ReloadMarkerImageAssociations();
+    //     Debug.Log("AR tracking system has been reset");
+    // }
+
+    // public void Reset()
+    // {
+    //     foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+    //     {
+    //         Destroy(entry.Value);
+    //     }
+
+    //     _imageObjectMap.Clear();
+    //     _isSelecting = false;
+    //     SelectedImageObject = null;
+
+    //     _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+
+    //     // Store current settings using newer API properties
+    //     IReferenceImageLibrary currentLibrary = _arTrackedImageManager.referenceLibrary;
+    //     int requestedMaxMovingImages = _arTrackedImageManager.requestedMaxNumberOfMovingImages;
+    //     GameObject trackedImagePrefab = _arTrackedImageManager.trackedImagePrefab;
+
+    //     // Destroy the existing component
+    //     Destroy(_arTrackedImageManager);
+
+    //     // Create a new ARTrackedImageManager component
+    //     _arTrackedImageManager = gameObject.AddComponent<ARTrackedImageManager>();
+
+    //     // Restore settings
+    //     _arTrackedImageManager.referenceLibrary = currentLibrary;
+    //     _arTrackedImageManager.requestedMaxNumberOfMovingImages = requestedMaxMovingImages;
+    //     _arTrackedImageManager.trackedImagePrefab = trackedImagePrefab;
+
+    //     // Re-enable the manager
+    //     _arTrackedImageManager.enabled = true;
+
+    //     // Reattach event handler
+    //     _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+
+    //     // Reload associations
+    //     ReloadMarkerImageAssociations();
+    // }
+
+    // public void Reset()
+    // {
+    //     Debug.Log("Starting AR tracking system reset");
+
+    //     // Safety check for the dictionary
+    //     if (_imageObjectMap != null)
+    //     {
+    //         Debug.Log("Destroying existing GameObjects in _imageObjectMap");
+    //         foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+    //         {
+    //             if (entry.Value != null)
+    //                 Destroy(entry.Value);
+    //         }
+    //         _imageObjectMap.Clear();
+    //     }
+    //     else
+    //     {
+    //         _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
+    //     }
+
+    //     _isSelecting = false;
+    //     SelectedImageObject = null;
+
+    //     // Critical check for ARTrackedImageManager - if null, create it
+    //     if (_arTrackedImageManager == null)
+    //     {
+    //         Debug.LogWarning("ARTrackedImageManager was null during Reset(), creating new instance");
+    //         // _arTrackedImageManager = gameObject.AddComponent<ARTrackedImageManager>();
+    //         _arTrackedImageManager = new ARTrackedImageManager();
+    //         _arTrackedImageManager.enabled = true;
+    //         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+    //         ReloadMarkerImageAssociations();
+    //         return;
+    //     }
+
+    //     // Remove event handler safely
+    //     try
+    //     {
+    //         _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Debug.LogError($"Error removing tracked images event handler: {e.Message}");
+    //     }
+
+    //     try
+    //     {
+    //         // Store current settings using newer API properties (with null checks)
+    //         IReferenceImageLibrary currentLibrary = _arTrackedImageManager.referenceLibrary;
+    //         int requestedMaxMovingImages = _arTrackedImageManager.requestedMaxNumberOfMovingImages;
+    //         GameObject trackedImagePrefab = _arTrackedImageManager.trackedImagePrefab;
+
+    //         // Destroy the existing component
+    //         // Destroy(_arTrackedImageManager);
+    //         _arTrackedImageManager = null;
+
+    //         // Create a new ARTrackedImageManager component
+    //         // _arTrackedImageManager = gameObject.AddComponent<ARTrackedImageManager>();
+
+    //         _arTrackedImageManager = new ARTrackedImageManager();
+    //         // Restore settings
+    //         if (currentLibrary != null)
+    //             _arTrackedImageManager.referenceLibrary = currentLibrary;
+
+    //         _arTrackedImageManager.requestedMaxNumberOfMovingImages = requestedMaxMovingImages;
+    //         _arTrackedImageManager.trackedImagePrefab = trackedImagePrefab;
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Debug.LogError($"Error recreating ARTrackedImageManager: {e.Message}");
+    //         // Fallback: create a fresh manager if recreation fails
+    //         // _arTrackedImageManager = gameObject.AddComponent<ARTrackedImageManager>();
+    //         _arTrackedImageManager = new ARTrackedImageManager();
+    //     }
+
+    //     // Re-enable the manager
+    //     _arTrackedImageManager.enabled = true;
+
+    //     // Reattach event handler
+    //     _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+
+    //     // Reload associations
+    //     ReloadMarkerImageAssociations();
+
+    //     Debug.Log("AR tracking system has been reset");
+    // }
+
+
+
+    public void Reset()
+    {
+        Debug.LogError("Starting AR tracking system reset");
+
+        // Clear and destroy tracked game objects
+        if (_imageObjectMap != null)
+        {
+            Debug.Log("Destroying existing GameObjects in _imageObjectMap");
+            Debug.Log($"Map contains {_imageObjectMap.Count} entries:");
+            foreach (var entry in _imageObjectMap)
+            {
+                string objectName = entry.Value != null ? entry.Value.name : "null";
+                string imageName = entry.Key != null ? entry.Key.referenceImage.name : "null";
+                Debug.Log($"  - {imageName} -> {objectName}");
+            }
+
+            foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+            {
+                if (entry.Value != null)
+                    Destroy(entry.Value);
+            }
+            _imageObjectMap.Clear();
+        }
+        else
+        {
+            _imageObjectMap = new Dictionary<ARTrackedImage, GameObject>();
+        }
+
+        if (_allElements != null)
+        {
+            Debug.Log("Destroying existing GameObjects in _allElements");
+            Debug.Log($"List contains {_allElements.Count} entries:");
+            foreach (GameObject element in _allElements)
+            {
+                string objectName = element != null ? element.name : "null";
+                Debug.Log($"  - {objectName}");
+            }
+
+            foreach (GameObject element in _allElements)
+            {
+                if (element != null)
+                    Destroy(element);
+            }
+            _allElements.Clear();
+        }
+
+
+        _isSelecting = false;
+        SelectedImageObject = null;
+
+
+        ResetTracking();
+
+
+        // Handle ARTrackedImageManager - reset by disabling and re-enabling
+        // if (_arTrackedImageManager != null)
+        // {
+        //     try
+        //     {
+        //         // Temporarily unsubscribe from events
+        //         _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+
+        //         // Disable and re-enable the manager to reset its state
+        //         _arTrackedImageManager.enabled = false;
+        //         _arTrackedImageManager.enabled = true;
+
+        //         // Resubscribe to events
+        //         _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Debug.LogError($"Error resetting ARTrackedImageManager: {e.Message}");
+        //     }
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("ARTrackedImageManager was null during Reset(), attempting to get component");
+        //     _arTrackedImageManager = GetComponent<ARTrackedImageManager>();
+
+        //     if (_arTrackedImageManager == null)
+        //     {
+        //         _arTrackedImageManager = gameObject.AddComponent<ARTrackedImageManager>();
+        //     }
+
+        //     _arTrackedImageManager.enabled = true;
+        //     _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+        // }
+
+        // // Reload associations
+        // ReloadMarkerImageAssociations();
+
+        Debug.Log("AR tracking system has been reset");
+    }
+
+    public void ResetTracking()
+    {
+        // First, unsubscribe from events to prevent callbacks during reset
+        if (_arTrackedImageManager != null)
+        {
+            _arTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+        }
+
+        // Clear all tracked images from our dictionary
+        if (_imageObjectMap != null)
+        {
+            foreach (var entry in _imageObjectMap)
+            {
+                if (entry.Value != null)
+                    Destroy(entry.Value);
+            }
+            _imageObjectMap.Clear();
+        }
+
+        // Clear any other elements
+        foreach (GameObject element in _allElements)
+        {
+            if (element != null)
+                Destroy(element);
+        }
+        _allElements.Clear();
+
+        // Reset selection state
+        _isSelecting = false;
+        SelectedImageObject = null;
+
+        // Important: Unity's AR Foundation doesn't provide a direct method to clear
+        // the tracked images collection, so disabling and re-enabling is the 
+        // recommended approach
+        if (_arTrackedImageManager != null)
+        {
+            // Store current reference library before disabling
+            var currentLibrary = _arTrackedImageManager.referenceLibrary;
+
+            // Disable the manager
+            _arTrackedImageManager.enabled = false;
+
+            // Force a frame to process the disable
+            StartCoroutine(DelayedReEnable(currentLibrary));
+        }
+        else
+        {
+            Debug.LogError("ARTrackedImageManager is null, can't reset tracking");
+        }
+    }
+
+    private IEnumerator DelayedReEnable(IReferenceImageLibrary library)
+    {
+        // Wait for a frame to ensure the disable is processed
+        yield return null;
+
+        // Re-enable and restore settings
+        _arTrackedImageManager.referenceLibrary = library;
+        _arTrackedImageManager.enabled = true;
+
+        // Resubscribe to events
+        _arTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+
+        // Reload associations
+        ReloadMarkerImageAssociations();
+
+        Debug.Log("AR tracking system has been fully reset");
+    }
+
+
+    private Color GetInvertedColor(GameObject gameObject)
+    {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Texture2D texture = renderer.material.mainTexture as Texture2D;
+        Color averageColor = Color.black;
+
+        if (texture != null)
+        {
+            Color[] pixels = texture.GetPixels();
+            foreach (Color pixel in pixels)
+            {
+                averageColor += pixel;
+            }
+            averageColor /= pixels.Length;
+        }
+        else
+        {
+            averageColor = renderer.material.color;
+        }
+
+        Color invertedColor = new Color(1 - averageColor.r, 1 - averageColor.g, 1 - averageColor.b);
+
+        return invertedColor;
+    }
+
+    public void SelectGameObject(GameObject selectedObject)
+    {
+
+        // Se l'oggetto è già selezionato, deselezionalo e rimuovi il bordo
+        if (_isSelecting && _imageObjectMap.ContainsValue(selectedObject) && SelectedImageObject != null && _imageObjectMap[SelectedImageObject] == selectedObject)
+        {
+            DeselectSelectedGameObject();
+            _isSelecting = false;
+            return;
+        }
+
+        //get the ar tracked image associated to this object
+        foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+        {
+            if (entry.Value == null || entry.Key == null)
+            {
+                continue;
+            }
+            Debug.Log("Entry: " + entry.Key.referenceImage.name + " -> " + entry.Value.name);
+            if (entry.Value == selectedObject)
+            {
+                if (SelectedImageObject != null && SelectedImageObject != entry.Key) DeselectSelectedGameObject();
+
+                SelectedImageObject = entry.Key;
+                Debug.Log("Selected: " + SelectedImageObject.referenceImage.name);
+
+                var outline = selectedObject.AddComponent<Outline>();
+                outline.OutlineMode = Outline.Mode.OutlineAll;
+                Color originalColor = selectedObject.GetComponent<Renderer>().material.color;
+                outline.OutlineColor = GetInvertedColor(selectedObject);
+                outline.OutlineWidth = 10f;
+
+                _isSelecting = true;
+
+                break;
+            }
+        }
+    }
+
+    public void DeselectSelectedGameObject()
+    {
+        if (SelectedImageObject == null || !_imageObjectMap.ContainsKey(SelectedImageObject)) return;
+
+        Outline outline = _imageObjectMap[SelectedImageObject].GetComponent<Outline>();
+
+        if (outline != null)
+        {
+            Destroy(outline);
+        }
+
+        Color color = _imageObjectMap[SelectedImageObject].GetComponent<Renderer>().material.color;
+
+        SelectedImageObject = null;
+    }
+
+    public bool SetPrefabOnSelected(string prefabName)
+    {
+        Debug.Log("Loading -> " + prefabName);
+        if (SelectedImageObject == null) return false;
+        GameObject oldGO = _imageObjectMap[SelectedImageObject];
+        ARTrackedImage aRTrackedImage = SelectedImageObject;
+
+        if (_imageObjectMap[aRTrackedImage] != null)
+        {
+            DeselectSelectedGameObject();
+            _imageObjectMap[aRTrackedImage].gameObject.SetActive(false);
+            _isSelecting = false;
+        }
+
+
+        GameObject newARObject;
+        if (_othersElements.Contains(prefabName))
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+            // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
+            // ComponentAdder ca = new();
+            // ca.AddComponentsToGameObject(newARObject);
+            TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                text.text = prefabName;
+            }
+        }
+        else
+        {
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        }
+        newARObject.name = prefabName;
+        newARObject.SetActive(false);
+        _imageObjectMap[aRTrackedImage] = newARObject;
+        UpdatedTrackedImage(aRTrackedImage);
+
+        if (slider != null)
+        {
+            if (menu.GetState())
+            {
+                Button button = slider.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+        }
+
+        return true;
+    }
+
+    public bool OnPrefabSelected(string prefabName)
+    {
+        if (SelectedImageObject == null) return false; //aggiungere errore nella gui che indica che è necessario fare una selezione
+        return SetPrefabOnSelected(prefabName);
+    }
+
+
+    bool soundOn = true;
+
+    bool sameElementSoundCount = false;
+
+    public void ClearAndAddElement(string prefabName, bool isSameElement = false)
+    {
+
+        // soundOn = (!sameElementSoundCount && isSameElement) || !isSameElement;
+
+        // sameElementSoundCount = !sameElementSoundCount && isSameElement;
+
+        // bool elementAlreadyAdded = _elementFilesManager.AddFoundElement(prefabName.ToLower());
+
+        // DeselectSelectedGameObject();
+
+        // ARTrackedImage targetImage = null;
+        // bool first = true;
+        // List<ARTrackedImage> imagesToReset = new();
+
+        // foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _imageObjectMap)
+        // {
+        //     if(entry.Value == null || entry.Key == null)
+        //     {
+        //         continue;
+        //     }
+        //     if (first) {
+        //         targetImage = entry.Key;
+        //         first = false;
+        //     }
+        //     imagesToReset.Add(entry.Key);
+
+        // }
+
+        // foreach(ARTrackedImage image in imagesToReset){
+        //     AssociateGameObjectToMarker(image, defaultObject.name);
+        // }
+
+        // if(targetImage != null){
+        //     AssociateGameObjectToMarker(targetImage, prefabName);
+        // }
+
+        // bool finded = false;
+        // AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
+
+        // //string buttonLabel = char.ToUpper(prefabName[0]) + prefabName.Substring(1);
+        // //string buttonLabel = prefabName;
+        // // if (_createButtonsComponent.buttonLabels.Contains(buttonLabel)){
+        // //     clip = Resources.Load<AudioClip>("Sounds/wrong");
+        // // }
+        // // if (_elementFilesManager.GetFoundElements().Contains(prefabName.ToLower()))
+        // if (!elementAlreadyAdded)
+        // {
+        //     clip = Resources.Load<AudioClip>("Sounds/wrong");
+        //     Debug.Log("Elemento già trovato (MITM): " + prefabName);
+        //     finded = true;
+        // } else {   
+        //     // _createButtonsComponent.CreateButton(buttonLabel);
+        //     // _createButtonsComponent.buttonLabels.Add(buttonLabel);
+
+        //     _createButtonsComponent.ResetButtons();
+        //     //_createButtonsComponent.ClearButtons();
+        //     Debug.Log("ButtonLabels aggiornato con successo");
+        //     finded = false;
+        //     AchievementsCheck.Instance.FoundedElement(prefabName);
+        //     Debug.Log("SONO QUIII :)" + prefabName);
+        //     ElementFilesManager.Instance.SetBalance(ElementFilesManager.Instance.GetBalance() + 1);
+        // }
+
+        // GameObject tempAudioObject = new GameObject("TempAudioObject");
+        // AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+        // audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+        // audioSource.clip = clip;
+
+        // if (soundOn) {
+        //     audioSource.Play();
+        //     SpawnPopUp(prefabName, finded);
+        // }
+
+        // Destroy(tempAudioObject, clip.length);
+    }
+
+    void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
+    {
+        GameObject spawnedObject;
+        if (alreadyFound)
+        {
+            spawnedObject = Instantiate(popUpElementAlreadyFound, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
+        }
+        Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
+        if (backgroundTransform != null)
+        {
+            Image backgroundImage = backgroundTransform.GetComponent<Image>();
+            if (backgroundImage != null)
+            {
+                Sprite loadedSprite;
+                if (_othersElements.Contains(prefabName))
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/other");
+                }
+                else
+                {
+                    loadedSprite = Resources.Load<Sprite>("Icon/" + prefabName);
+                }
+
+                if (loadedSprite != null)
+                {
+                    backgroundImage.sprite = loadedSprite;
+                    // Debug.Log("Loaded sprite: " + loadedSprite.name);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Background not found");
+        }
+
+        Transform nameElementTransform = FindInChildren(spawnedObject.transform, "NameElement");
+        if (nameElementTransform != null)
+        {
+            TextMeshProUGUI nameText = nameElementTransform.GetComponent<TextMeshProUGUI>();
+            if (nameText != null)
+            {
+                nameText.text = char.ToUpper(prefabName[0]) + prefabName[1..];
+                // Debug.Log("Loaded name: " + nameText.text);
+            }
+        }
+        else
+        {
+            Debug.Log("NameElement not found");
+        }
+
+        Destroy(spawnedObject, 3f);
+    }
+
+    Transform FindInChildren(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            Transform result = FindInChildren(child, name);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    public void SpawnPopUpNotExits()
+    {
+        GameObject spawnedObject = Instantiate(Resources.Load<GameObject>("ElementNotExist"), transform.position, Quaternion.identity);
+
+        AudioClip sound = Resources.Load<AudioClip>("Sounds/notexist");
+        GameObject audioObject = new GameObject("TempAudioObject");
+        AudioSource audioSourceTemp = audioObject.AddComponent<AudioSource>();
+        audioSourceTemp.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
+        audioSourceTemp.clip = sound;
+
+        audioSourceTemp.Play();
+
+        Destroy(audioObject, sound.length);
+
+        Destroy(spawnedObject, 3f);
+    }
+
+}

@@ -75,12 +75,13 @@ public class Elements : MonoBehaviour
     {
         ElementPair elementPair = new ElementPair(this.name, element.name);
         if (gameModeManager.GameMode == "CreateMarker") {
+            MultipleImagesTrackingManager mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
             if (ReadCSV.Instance.elementAssociations.TryGetValue(elementPair, out string resultPrefabName)) {
-                MultipleImagesTrackingManager.Instance.ClearAndAddElement(resultPrefabName, element.gameObject);
+                mitm.ClearAndAddElement(resultPrefabName, element.gameObject);
             } else {
                 ElementPair elementPairBis = new ElementPair(element.name, this.name);
                 if (!ReadCSV.Instance.elementAssociations.TryGetValue(elementPairBis, out string resultPrefabNameBis))
-                    MultipleImagesTrackingManager.Instance.SpawnPopUpNotExits();
+                    mitm.SpawnPopUpNotExits();
             } 
         } else {
             VirtualPlaneManager.Instance.ClearAndAddElement(elementPair, gameObject, element.gameObject);

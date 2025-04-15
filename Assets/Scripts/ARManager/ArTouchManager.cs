@@ -17,9 +17,8 @@ public class ArTouchManager : MonoBehaviour
 
     void Start()
     {
-        //objectRenderer = GetComponent<Renderer>();
-        mitm = MultipleImagesTrackingManager.Instance;
-        //defaultColor = objectRenderer.material.color;
+        // mitm = MultipleImagesTrackingManager.Instance;
+        mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
 
         gameModeManager = GameModeManager.Instance;
         vpm = VirtualPlaneManager.Instance;

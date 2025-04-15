@@ -1,5 +1,6 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class ChangeScenes : MonoBehaviour
 {
@@ -16,6 +17,23 @@ public class ChangeScenes : MonoBehaviour
         DestroyPersistentObjects();
         gameModeManager.GameMode = "CreateMarker";
         gameModeManager.IsMenuOpen = false;
+
+        // MultipleImagesTrackingManager instance = MultipleImagesTrackingManager.Instance;
+
+        // if(instance == null){
+        //     instance = new MultipleImagesTrackingManager();
+        //     // instance.isSceneBeingStarted = true;    
+        // }
+        // if (instance != null)
+        // {
+        //     instance.isSceneBeingStarted = true;
+        //     // instance.Reset();
+        // }
+        // else
+        // {
+        //     Debug.LogError("Ouch, the mitm instance is null..");
+        // }
+
         SceneManager.LoadScene("CreateMarkerMode");
     }
 
@@ -24,6 +42,36 @@ public class ChangeScenes : MonoBehaviour
         DestroyPersistentObjects();
         gameModeManager.GameMode = "Menu";
         gameModeManager.IsMenuOpen = false;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void MenuSceneResetMarkers()
+    {
+        DestroyPersistentObjects();
+        gameModeManager.GameMode = "Menu";
+        gameModeManager.IsMenuOpen = false;
+        // MultipleImagesTrackingManager instance = MultipleImagesTrackingManager.Instance;
+
+        // if (instance != null)
+        // {
+        //     instance.isSceneBeingStarted = true;
+        //     instance.Reset();
+        // }
+        // else
+        // {
+        //     Debug.LogError("Ouch, the mitm instance is null..");
+        // }
+        ARSession arSession = FindObjectOfType<ARSession>(); // Or get a reference however you manage it
+        if (arSession != null)
+        {
+            Debug.Log("Resetting AR Session.");
+            arSession.Reset();
+        }
+        else
+        {
+            Debug.LogWarning("AR Session component not found. Cannot reset tracking.");
+        }
+        
         SceneManager.LoadScene("Menu");
     }
 
@@ -55,8 +103,9 @@ public class ChangeScenes : MonoBehaviour
     {
         foreach (GameObject obj in FindObjectsOfType<GameObject>())
         {
-            if (obj.scene.buildIndex == -1) // Gli oggetti con -1 sono quelli che persistono tra le scene
+            if (obj.scene.buildIndex == -1 && obj.name != "ARDataManager") // Gli oggetti con -1 sono quelli che persistono tra le scene
             {
+                Debug.Log("Destroying persistent object: " + obj.name);
                 Destroy(obj);
             }
         }
