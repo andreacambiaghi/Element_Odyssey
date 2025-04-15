@@ -214,7 +214,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private GameObject GetGameObject(string prefabName)
     {
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.name = prefabName;
         newARObject.SetActive(false);
 
@@ -352,7 +352,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
         else
         {
-            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         }
         newARObject.name = prefabName;
         newARObject.SetActive(false);
@@ -468,16 +468,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
         }
 
-        GameObject effect = Instantiate(effectUnlocked, spawnedObject.transform.position, Quaternion.identity);
-
-        ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
-
-        if (particleSystem != null)
-        {
-            float totalDuration = particleSystem.main.duration + particleSystem.main.startLifetime.constantMax;
-            Destroy(effect, totalDuration);
-        }
-
         Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
         if (backgroundTransform != null)
         {
@@ -522,6 +512,16 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
 
         Destroy(spawnedObject, 3f);
+
+        GameObject effect = Instantiate(effectUnlocked, spawnedObject.transform.position, Quaternion.identity);
+
+        ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+
+        if (particleSystem != null)
+        {
+            float totalDuration = particleSystem.main.duration + particleSystem.main.startLifetime.constantMax;
+            Destroy(effect, totalDuration);
+        }
     }
 
     Transform FindInChildren(Transform parent, string name)

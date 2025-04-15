@@ -4618,7 +4618,7 @@ MonoBehaviour:
   popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
   xrOrigin: {fileID: 1586463271}
   elementFileManagerPrefab: {fileID: 99667892}
-  effectUnlocked: {fileID: 0}
+  effectUnlocked: {fileID: 3576924614362489592, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
 --- !u!4 &606227507
 Transform:
   m_ObjectHideFlags: 0
