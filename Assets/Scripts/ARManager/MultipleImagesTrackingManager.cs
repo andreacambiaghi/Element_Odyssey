@@ -214,7 +214,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     private GameObject GetGameObject(string prefabName)
     {
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
         newARObject.name = prefabName;
         newARObject.SetActive(false);
 
@@ -352,7 +352,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
         else
         {
-            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
+            newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(0, 0, 0));
         }
         newARObject.name = prefabName;
         newARObject.SetActive(false);
