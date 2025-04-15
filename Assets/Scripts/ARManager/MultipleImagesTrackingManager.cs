@@ -34,6 +34,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject xrOrigin;
 
     [SerializeField] private GameObject elementFileManagerPrefab;
+    [SerializeField] private GameObject effectUnlocked; // effect unlocked animation between two elements
 
     private bool _isSelecting = false;
 
@@ -449,6 +450,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         {
             audioSource.Play();
             SpawnPopUp(prefabName, finded);
+
         }
 
         Destroy(tempAudioObject, clip.length);
@@ -465,6 +467,17 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         {
             spawnedObject = Instantiate(popUpElementCreated, transform.position, Quaternion.identity);
         }
+
+        GameObject effect = Instantiate(effectUnlocked, spawnedObject.transform.position, Quaternion.identity);
+
+        ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+
+        if (particleSystem != null)
+        {
+            float totalDuration = particleSystem.main.duration + particleSystem.main.startLifetime.constantMax;
+            Destroy(effect, totalDuration);
+        }
+
         Transform backgroundTransform = FindInChildren(spawnedObject.transform, "IconElement");
         if (backgroundTransform != null)
         {
