@@ -3637,7 +3637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &379661943
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4618,6 +4618,7 @@ MonoBehaviour:
   popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
   xrOrigin: {fileID: 1586463271}
   elementFileManagerPrefab: {fileID: 99667892}
+  effectUnlocked: {fileID: 0}
 --- !u!4 &606227507
 Transform:
   m_ObjectHideFlags: 0
@@ -5405,7 +5406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &702822139
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6889,7 +6890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &895839406
 MonoBehaviour:
   m_ObjectHideFlags: 0
