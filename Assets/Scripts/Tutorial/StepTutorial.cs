@@ -16,6 +16,8 @@ public class StepTutorial : MonoBehaviour
     [SerializeField] private GameObject openInventory;
     [SerializeField] private GameObject clickAchievementButton;
     [SerializeField] private GameObject clickCardBoardButton;
+    [SerializeField] private GameObject achievementExplanation;
+    [SerializeField] private GameObject cardBoardExplanation;
 
     void Awake()
     {

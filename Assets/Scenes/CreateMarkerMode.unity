@@ -10005,6 +10005,8 @@ MonoBehaviour:
   openInventory: {fileID: 1835581725524491282, guid: 58b94556d8689e449afd133f1bc26bc7, type: 3}
   clickAchievementButton: {fileID: 623821588}
   clickCardBoardButton: {fileID: 193491168}
+  achievementExplanation: {fileID: 1835581725524491282, guid: 9fc8e88d1a655cf4ab5c583cc95e7fcb, type: 3}
+  cardBoardExplanation: {fileID: 1835581725524491282, guid: 968b18405f5cba44390d4764702d8054, type: 3}
 --- !u!1 &1234780463
 GameObject:
   m_ObjectHideFlags: 0
@@ -13586,6 +13588,8 @@ MonoBehaviour:
   openInventory: {fileID: 1835581725524491282, guid: 58b94556d8689e449afd133f1bc26bc7, type: 3}
   clickAchievementButton: {fileID: 193491168}
   clickCardBoardButton: {fileID: 108091065}
+  achievementExplanation: {fileID: 1835581725524491282, guid: 9fc8e88d1a655cf4ab5c583cc95e7fcb, type: 3}
+  cardBoardExplanation: {fileID: 1835581725524491282, guid: 968b18405f5cba44390d4764702d8054, type: 3}
 --- !u!1 &1606258969
 GameObject:
   m_ObjectHideFlags: 0
