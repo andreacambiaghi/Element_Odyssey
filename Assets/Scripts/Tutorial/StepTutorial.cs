@@ -14,6 +14,8 @@ public class StepTutorial : MonoBehaviour
     [SerializeField] private GameObject unionElement;
     [SerializeField] private GameObject firstElement;
     [SerializeField] private GameObject openInventory;
+    [SerializeField] private GameObject clickAchievementButton;
+    [SerializeField] private GameObject clickCardBoardButton;
 
     void Awake()
     {
@@ -39,7 +41,6 @@ public class StepTutorial : MonoBehaviour
     {
         Destroy(GameObject.Find(fireFrame.name + "(Clone)"));
         GameObject first = Instantiate(firstElement, firstElement.transform.position, Quaternion.identity);
-        // achievementButton.SetActive(true);
         StartCoroutine(ExecuteAfterTime(3f, () => 
         {
             Destroy(first);
@@ -49,6 +50,7 @@ public class StepTutorial : MonoBehaviour
                 Destroy(inventory);
                 clickOpenMenu.SetActive(true);
                 slider.SetActive(true);
+                achievementButton.SetActive(true);
             }));
         }));
     }
