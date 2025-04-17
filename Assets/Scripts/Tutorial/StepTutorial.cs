@@ -38,16 +38,17 @@ public class StepTutorial : MonoBehaviour
     private void Step3()
     {
         Destroy(GameObject.Find(fireFrame.name + "(Clone)"));
-        GameObject first = Instantiate(firstElement);
-        achievementButton.SetActive(true);
+        GameObject first = Instantiate(firstElement, firstElement.transform.position, Quaternion.identity);
+        // achievementButton.SetActive(true);
         StartCoroutine(ExecuteAfterTime(3f, () => 
         {
             Destroy(first);
-            GameObject inventory = Instantiate(openInventory);
+            GameObject inventory = Instantiate(openInventory, openInventory.transform.position, Quaternion.identity);
             StartCoroutine(ExecuteAfterTime(3f, () => 
             {
                 Destroy(inventory);
                 clickOpenMenu.SetActive(true);
+                slider.SetActive(true);
             }));
         }));
     }
@@ -58,9 +59,25 @@ public class StepTutorial : MonoBehaviour
         action?.Invoke();
     }
 
-    
+    private int currentStep = 0;
 
-
-
+    public void NextStep()
+    {
+        currentStep++;
+        
+        switch(currentStep)
+        {
+            case 1:
+                Step1();
+                break;
+            case 2:
+                Step2();
+                break;
+            case 3:
+                Step3();
+                break;
+            // Aggiungi altri case per step aggiuntivi
+        }
+    }
 
 }
