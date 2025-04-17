@@ -4840,17 +4840,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623821588}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5458937, y: 1.5458937, z: 1.5458937}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1606049586}
+  m_Father: {fileID: 1416334298}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -575, y: -50}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &623821590
 MonoBehaviour:
@@ -11097,6 +11097,7 @@ RectTransform:
   m_Children:
   - {fileID: 1577749884}
   - {fileID: 1283869174}
+  - {fileID: 623821589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12995,8 +12996,9 @@ GameObject:
   - component: {fileID: 1606049585}
   - component: {fileID: 1606049584}
   - component: {fileID: 1606049583}
+  - component: {fileID: 1606049587}
   m_Layer: 5
-  m_Name: Click
+  m_Name: TutorialReal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13076,8 +13078,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 623821589}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13085,6 +13086,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1606049587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606049582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cb405591d6b314ebd470e5e8f8a051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickOpenMenu: {fileID: 623821588}
+  waterFrame: {fileID: 1835581725524491282, guid: d09cc697c48a0124693f9d5fd70b96fe, type: 3}
+  fireFrame: {fileID: 1835581725524491282, guid: 3ca9a75d6ab263c49a5e20346140736a, type: 3}
+  achievementButton: {fileID: 2139607542}
+  cardBoardButton: {fileID: 892604840}
+  homeButton: {fileID: 1668687889}
+  slider: {fileID: 782628375}
+  unionElement: {fileID: 1835581725524491282, guid: ee61985b6a8337045899b47222ee421b, type: 3}
+  firstElement: {fileID: 1835581725524491282, guid: a9b76dacf66973a42827533cf2d886a3, type: 3}
+  openInventory: {fileID: 0}
 --- !u!1 &1606258969
 GameObject:
   m_ObjectHideFlags: 0
