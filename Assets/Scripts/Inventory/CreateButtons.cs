@@ -36,7 +36,7 @@ public class CreateButtons : MonoBehaviour
         // Button newButton = Instantiate(buttonPrefab, transform);
         Button newButton = null;
         Debug.Log($"Creating button for label: {label}");
-        switch (ElementDataManager.Instance.GetElementsType(label.ToLower()).ToLower())
+        switch (elementFilesManager.GetElementType(label.ToLower()).ToLower())
         {
             case "water":
                 newButton = Instantiate(buttonPrefabWater, transform);

@@ -27,7 +27,7 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
         {
              Debug.LogError("Panel non assegnato nell'Inspector di " + gameObject.name);
         }
-        if (ElementDataManager.Instance == null)
+        if (ElementFilesManager.Instance == null)
         {
             Debug.LogWarning("ElementDataManager.Instance non è ancora disponibile in Awake.");
         }
@@ -45,7 +45,7 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
             Debug.LogError("Panel non assegnato su " + gameObject.name);
             return;
         }
-        if (ElementDataManager.Instance == null)
+        if (ElementFilesManager.Instance == null)
         {
              Debug.LogError("ElementDataManager.Instance non è disponibile!");
              return; 
@@ -107,7 +107,7 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
             string elementType = null;
 
             try{
-                 elementType = ElementDataManager.Instance.GetElementsType(itemText);
+                 elementType = ElementFilesManager.Instance.GetElementType(itemText);
             }
             catch(System.Exception ex)
             {
