@@ -8,8 +8,11 @@ using UnityEngine.Video;
 public class ElementFilesManager : Singleton<ElementFilesManager>
 {
 
-    [SerializeField]
-    public TextAsset defaultAchievementsJsonFile;
+    // [SerializeField]
+    // public TextAsset defaultAchievementsJsonFile;
+
+    // [SerializeField]
+    // public TextAsset defaultElementTypeListJsonFile;
 
     private string foundElementsFilePath;
 
@@ -25,6 +28,8 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
 
     private string arMarkerAssociationsFilePath;
 
+    private string elementTypeFilePath;
+
     // public static ElementFilesManager Instance;
 
     private List<string> initialElements = null;
@@ -33,19 +38,12 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
 
     private Dictionary<ElementPair, string> elementAssociations = null;
 
+    private ElementTypeList elementTypeList = null;
+
+
+
     private void Awake()
     {
-        // Debug.Log("ElementFilesManager init");
-        // if (Instance != null && Instance != this)
-        // {
-        //     Destroy(this.gameObject);
-        //     return;
-        // }
-        // else
-        // {
-        //     Instance = this;
-        //     Initialize();
-        // }
         if (FindObjectsOfType(typeof(ElementFilesManager)).Length > 1)
         {
             Destroy(gameObject);
@@ -57,16 +55,6 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
     }
 
-    // private static ElementFilesManager GetInstance()
-    // {
-    //     if (Instance == null)
-    //     {
-    //         Instance = new ElementFilesManager();
-    //     }
-
-    //     return Instance;
-    // }
-
     private void Initialize()
     {
         foundElementsFilePath = Path.Combine(Application.persistentDataPath, "FoundElements.txt");
@@ -76,7 +64,22 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         buyFloorSaveDataFilePath = Path.Combine(Application.persistentDataPath, "buyFloor.txt");
         balanceFilePath = Path.Combine(Application.persistentDataPath, "balance.txt");
         arMarkerAssociationsFilePath = Path.Combine(Application.persistentDataPath, "arMarkersAssociations.json");
+        // elementTypeFilePath = Path.Combine(Application.persistentDataPath, "elementsType.json");
 
+        elementTypeList = LoadElementTypeData();
+        if (elementTypeList != null && elementTypeList.elements != null)
+        {
+            Debug.Log("--- Element Types ---");
+            foreach (var elementType in elementTypeList.elements)
+            {
+                Debug.Log($"Element: {elementType.element}, Type: {elementType.type}");
+            }
+            Debug.Log("---------------------");
+        }
+        else
+        {
+            Debug.LogWarning("Could not load or print element types.");
+        }
 
         UpdateAll();
 
@@ -208,6 +211,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
     public void ResetAchievements()
     {
         string filePath = achievementsFilePath;
+        TextAsset defaultAchievementsJsonFile = Resources.Load<TextAsset>("achievements");
         File.WriteAllText(filePath, defaultAchievementsJsonFile.text);
         AchievementsCheck.Instance.ResetAchievements();
     }
@@ -228,6 +232,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         initialElements = GetInitialElements();
         foundElements = GetFoundElements();
         elementAssociations = GetElementAssociations();
+        // LoadElementTypeData();
     }
 
     public string getAchievementsJson()
@@ -238,6 +243,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         if (!File.Exists(filePath))
         {
             Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            TextAsset defaultAchievementsJsonFile = Resources.Load<TextAsset>("achievements");
             File.WriteAllText(filePath, defaultAchievementsJsonFile.text);
             //Debug.LogWarning("Il file JSON è stato creato nel percorso: " + filePath);
         }
@@ -509,7 +515,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
 
         boughtFloors.Add(boughtFloor.ToLower());
-        UpdateFoundElementsFile(foundElements);
+        // UpdateFoundElementsFile(foundElements);
 
         File.WriteAllLines(buyFloorSaveDataFilePath, boughtFloors);
         Debug.LogWarning("UPDATED BOUGHT FLOORS: " + File.ReadAllText(buyFloorSaveDataFilePath));
@@ -572,15 +578,15 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
             defaultAssociations.AddAssociation(i + "", defaultValue);
         }
 
-        Debug.Log("Creating default AR marker associations:");
-        Debug.Log($"Created {defaultAssociations.associationList.Count} marker associations");
+        // Debug.Log("Creating default AR marker associations:");
+        // Debug.Log($"Created {defaultAssociations.associationList.Count} marker associations");
 
-        int displayCount = Math.Min(5, defaultAssociations.associationList.Count);
-        for (int i = 0; i < displayCount; i++)
-        {
-            var assoc = defaultAssociations.associationList[i];
-            Debug.Log($"Marker {assoc.markerId} -> {assoc.elementType}");
-        }
+        // int displayCount = Math.Min(5, defaultAssociations.associationList.Count);
+        // for (int i = 0; i < displayCount; i++)
+        // {
+        //     var assoc = defaultAssociations.associationList[i];
+        //     Debug.Log($"Marker {assoc.markerId} -> {assoc.elementType}");
+        // }
 
         return defaultAssociations;
     }
@@ -642,6 +648,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         Debug.Log($"[EFM] Serialized {arMarkerAssociations.associationList.Count} marker associations");
     }
 
+
     public ArMarkerAssociations GetArMarkerAssociations()
     {
         string filePath = arMarkerAssociationsFilePath;
@@ -684,6 +691,78 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
 
         return arMarkerAssociations;
     }
+
+    public string GetMarkerType(string markerId){
+        ArMarkerAssociations arMarkerAssociations = createDefaultMarkerAssociations();
+        if (arMarkerAssociations == null)
+        {
+            Debug.LogError("ArMarkerAssociations is null after deserialization");
+            return null;
+        }
+
+        string elementType = arMarkerAssociations.GetValue(markerId);
+
+        if (elementType == null)
+        {
+            Debug.LogWarning($"Marker ID '{markerId}' not found in default associations.");
+            return null; // Or handle as needed, maybe return a default type?
+        }
+
+        return elementType;
+    }
+
+    private ElementTypeList LoadElementTypeData()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("elementsType");
+
+        // Debug.Log("Loading element type data from: " + textAsset.text);
+        if (textAsset == null)
+        {
+            Debug.LogError("Element type JSON file not found in Resources folder.");
+            return null;
+        }
+
+        string json = textAsset.text;
+        // string json = File.ReadAllText(filePath);
+
+        ElementTypeList elementTypeList = JsonUtility.FromJson<ElementTypeList>(json);
+
+        if (elementTypeList == null || elementTypeList.elements == null)
+        {
+            Debug.LogError("Failed to parse element type JSON.");
+            return null;
+        }
+
+        Debug.Log("Loaded " + elementTypeList.elements.Count + " element types.");
+        return elementTypeList;
+    }
+
+    public string GetElementType(string elementName)
+    {
+        if (elementTypeList == null)
+        {
+            elementTypeList = LoadElementTypeData();
+        }
+
+        if (elementTypeList == null || elementTypeList.elements == null)
+        {
+            Debug.LogError("Element type list is null or empty.");
+            return null;
+        }
+
+        foreach (var element in elementTypeList.elements)
+        {
+            if (element.element.Equals(elementName, StringComparison.OrdinalIgnoreCase))
+            {
+                return element.type;
+            }
+        }
+
+        Debug.LogWarning("Element type not found for: " + elementName);
+        return null;
+    }
+
+
 
     [Serializable]
     public class VillageData
@@ -822,6 +901,20 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
             }
             return null;
         }
+    }
+
+
+    [System.Serializable]
+    private class ElementType
+    {
+        public string element;
+        public string type;
+    }
+
+    [System.Serializable]
+    private class ElementTypeList
+    {
+        public List<ElementType> elements;
     }
 
 }

@@ -71,7 +71,7 @@ public class ChangeScenes : MonoBehaviour
         {
             Debug.LogWarning("AR Session component not found. Cannot reset tracking.");
         }
-        
+
         SceneManager.LoadScene("Menu");
     }
 
@@ -103,7 +103,11 @@ public class ChangeScenes : MonoBehaviour
     {
         foreach (GameObject obj in FindObjectsOfType<GameObject>())
         {
-            if (obj.scene.buildIndex == -1 && obj.name != "ARDataManager") // Gli oggetti con -1 sono quelli che persistono tra le scene
+            if (obj.scene.buildIndex == -1
+            && obj.name != "ARDataManager"
+            // && obj.name != "ElementFileManager"
+            // && obj.name != "ElementFilesManager"
+            ) // Gli oggetti con -1 sono quelli che persistono tra le scene
             {
                 Debug.Log("Destroying persistent object: " + obj.name);
                 Destroy(obj);

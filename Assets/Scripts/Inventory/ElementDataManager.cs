@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.IO; // Anche se usiamo Resources, è buona norma averlo per System.Serializable
+using System.IO; 
 
 // Metti questo script su un GameObject vuoto nella tua scena iniziale,
 // oppure lascia che il Singleton lo crei automaticamente la prima volta che viene richiesto.

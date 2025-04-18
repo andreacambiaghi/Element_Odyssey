@@ -33,8 +33,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     [SerializeField] private GameObject xrOrigin;
 
-    [SerializeField] private GameObject elementFileManagerPrefab;
-
     private bool _isSelecting = false;
 
     private void Awake()
@@ -50,13 +48,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
 
         _elementFilesManager = ElementFilesManager.Instance;
-        // _elementFilesManager = elementFileManagerPrefab.GetComponent<ElementFilesManager>();
-        // _arTrackedImageManager = xrOrigin.GetComponent<ARTrackedImageManager>();
         _arTrackedImageManager = xrOrigin.GetComponent<ARTrackedImageManager>();
         _createButtonsComponent = createButton.GetComponent<CreateButtons>();
-        // _aRDataManager = GameObject.Find("ARDataManager").GetComponent<ARDataManager>();
         _aRDataManager = ARDataManager.Instance;
-
 
         if (_aRDataManager == null)
         {
@@ -325,7 +319,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     {
         Debug.Log("Loading -> " + prefabName);
         if (SelectedImageObject == null) return false;
-        GameObject oldGO = _aRDataManager.imageObjectMap[SelectedImageObject];
+        // GameObject oldGO = _aRDataManager.imageObjectMap[SelectedImageObject];
         ARTrackedImage aRTrackedImage = SelectedImageObject;
 
         if (_aRDataManager.imageObjectMap[aRTrackedImage] != null)
@@ -336,13 +330,18 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         }
 
 
+        if (_elementFilesManager.GetMarkerType(aRTrackedImage.referenceImage.name) != _elementFilesManager.GetElementType(prefabName))
+        {
+            Debug.LogError($"Element {prefabName} non compatibile con {aRTrackedImage.referenceImage.name} ({_elementFilesManager.GetMarkerType(aRTrackedImage.referenceImage.name)})");
+            return false;
+            //TODO: mostrare errore nella GUI
+        }
+
+
         GameObject newARObject;
         if (_aRDataManager.othersElements.Contains(prefabName))
         {
             newARObject = Instantiate(Resources.Load<GameObject>("other"), Vector3.zero, Quaternion.Euler(0, 0, 0));
-            // newARObject = Create3DText.Instance.CreateTextObject(prefabName.ToUpper());
-            // ComponentAdder ca = new();
-            // ca.AddComponentsToGameObject(newARObject);
             TextMeshProUGUI[] texts = newARObject.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
@@ -353,6 +352,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         {
             newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         }
+
         newARObject.name = prefabName;
         newARObject.SetActive(false);
         _aRDataManager.imageObjectMap[aRTrackedImage] = newARObject;
@@ -392,35 +392,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
         bool elementAlreadyAdded = _elementFilesManager.AddFoundElement(prefabName.ToLower());
 
         DeselectSelectedGameObject();
-
-        // ARTrackedImage targetImage = null;
-        // bool first = true;
-        // List<ARTrackedImage> imagesToReset = new();
-
-        // foreach (KeyValuePair<ARTrackedImage, GameObject> entry in _aRDataManager.imageObjectMap)
-        // {
-        //     if (entry.Value == null || entry.Key == null)
-        //     {
-        //         continue;
-        //     }
-        //     if (first)
-        //     {
-        //         targetImage = entry.Key;
-        //         first = false;
-        //     }
-        //     imagesToReset.Add(entry.Key);
-
-        // }
-
-        // foreach (ARTrackedImage image in imagesToReset)
-        // {
-        //     AssociateGameObjectToMarker(image, defaultObject.name);
-        // }
-
-        // if (targetImage != null)
-        // {
-        //     AssociateGameObjectToMarker(targetImage, prefabName);
-        // }
 
         bool finded = false;
         AudioClip clip = Resources.Load<AudioClip>("Sounds/correct");
@@ -484,7 +455,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 if (loadedSprite != null)
                 {
                     backgroundImage.sprite = loadedSprite;
-                    // Debug.Log("Loaded sprite: " + loadedSprite.name);
                 }
             }
         }

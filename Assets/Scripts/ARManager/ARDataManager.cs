@@ -65,6 +65,8 @@ public class ARDataManager : Singleton<ARDataManager>
                 Debug.LogWarning("ElementFilesManager is NOT null anymore!");
             }
 
+
+            Debug.LogError($"ELEMENT TEST: {_elementFilesManager.GetElementType("sky")}");
             ReloadMarkerImageAssociations();
 
         }

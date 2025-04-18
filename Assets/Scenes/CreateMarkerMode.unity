@@ -499,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAchievementsJsonFile: {fileID: 4900000, guid: 5b0d55b919b273c469cf32f0662e86c5, type: 3}
+  defaultElementTypeListJsonFile: {fileID: 4900000, guid: 902ef4f72f2069145a46e9e928fdf2e4, type: 3}
 --- !u!4 &99667894
 Transform:
   m_ObjectHideFlags: 0
@@ -4395,7 +4396,6 @@ MonoBehaviour:
   popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
   popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
   xrOrigin: {fileID: 1586463271}
-  elementFileManagerPrefab: {fileID: 99667892}
 --- !u!4 &606227507
 Transform:
   m_ObjectHideFlags: 0
