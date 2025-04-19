@@ -95,6 +95,7 @@ public class StepTutorial : MonoBehaviour
         clickCloseAchievementButton.SetActive(false);
         Instantiate(cardBoardExplanation);
         cardBoardButton.SetActive(true);
+        clickCardBoardButton.SetActive(true);
     }
 
     private void Step10()
