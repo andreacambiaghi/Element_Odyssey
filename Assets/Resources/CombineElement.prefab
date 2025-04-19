@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2308033848831500023}
   m_Layer: 0
-  m_Name: OpenInventory
+  m_Name: CombineElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.68349594, g: 0.64705884, b: 0.9254902, a: 1}
+  m_Color: {r: 0.64705884, g: 0.9254902, b: 0.9163603, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aec40652800894440a9794d69f7aab2e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2a0e84327599fd45b829756d8f97e87, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.33333334, g: 0.34012884, b: 0.79607844, a: 1}
+  m_Color: {r: 0.33333334, g: 0.77549714, b: 0.79607844, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -427,7 +427,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Let\u2019s go check out the elements you\u2019ve unlocked"
+  m_text: Now bring the two cards close together until they merge to create a new
+    element
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

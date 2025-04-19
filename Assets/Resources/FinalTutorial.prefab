@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2308033848831500023}
   m_Layer: 0
-  m_Name: FirstElement
+  m_Name: FinalTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.85141015, g: 0.64705884, b: 0.9254902, a: 1}
+  m_Color: {r: 0.64705884, g: 0.9254902, b: 0.6792402, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1ca77b6449dd9f044844dbb9222e7651, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 86224a2be3b87374283a26195909d7ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.79607844, g: 0.33333334, b: 0.7476705, a: 1}
+  m_Color: {r: 0.33333334, g: 0.79607844, b: 0.53817624, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "As you unlock elements, you\u2019ll complete achievements"
+  m_text: Happy creating and enjoy the Element Odyssey
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
