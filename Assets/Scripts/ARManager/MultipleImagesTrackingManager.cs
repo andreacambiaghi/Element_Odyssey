@@ -36,6 +36,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject elementFileManagerPrefab;
     [SerializeField] private GameObject effectUnlocked; // effect unlocked animation between two elements
 
+    [SerializeField] private GameObject errorTypeElementPrefab;
+
     private bool _isSelecting = false;
 
     private void Awake()
@@ -335,9 +337,10 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
         if (_elementFilesManager.GetMarkerType(aRTrackedImage.referenceImage.name) != _elementFilesManager.GetElementType(prefabName))
         {
+            Instantiate(errorTypeElementPrefab, Vector3.zero, Quaternion.identity);
             Debug.LogError($"Element {prefabName} non compatibile con {aRTrackedImage.referenceImage.name} ({_elementFilesManager.GetMarkerType(aRTrackedImage.referenceImage.name)})");
             return false;
-            //TODO: mostrare errore nella GUI
+            //DONE: mostrare errore nella GUI
         }
 
 

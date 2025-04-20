@@ -5113,6 +5113,7 @@ MonoBehaviour:
   xrOrigin: {fileID: 1586463271}
   elementFileManagerPrefab: {fileID: 99667892}
   effectUnlocked: {fileID: 3576924614362489592, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
+  errorTypeElementPrefab: {fileID: 1835581725524491282, guid: bf98bfc5ad5eb1e4bac5afde0c00d80b, type: 3}
 --- !u!4 &606227507
 Transform:
   m_ObjectHideFlags: 0
