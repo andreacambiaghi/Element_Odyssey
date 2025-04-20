@@ -15,6 +15,9 @@ public class AchievementsMenu : MonoBehaviour
 
     public void OpenPanel()
     {
+
+        StepTutorial.Instance.ShowAchievement();
+
         // Debug.Log("OpenPaneeeeeeeeeeeeeeeeeeeeeeel");
         if (panel != null)
         {
@@ -64,6 +67,8 @@ public class AchievementsMenu : MonoBehaviour
     }
     public void ClosePanel()
     {
+        StepTutorial.Instance.CloseAchievement();
+
         // Debug.Log("ClosePaneeeeeeeeeeeeeeeeeeeeeeel");
         if (panel != null)
         {

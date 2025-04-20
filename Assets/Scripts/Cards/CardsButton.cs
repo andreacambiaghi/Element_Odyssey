@@ -15,6 +15,8 @@ public class CardsButton : MonoBehaviour
 
     public void OpenPanel()
     {
+        StepTutorial.Instance.ShowCardBoard();
+        
         // Debug.Log("OpenPaneeeeeeeeeeeeeeeeeeeeeeel");
         if (panel != null)
         {
@@ -64,6 +66,8 @@ public class CardsButton : MonoBehaviour
     }
     public void ClosePanel()
     {
+        StepTutorial.Instance.CloseCardBoard();
+
         // Debug.Log("ClosePaneeeeeeeeeeeeeeeeeeeeeeel");
         if (panel != null)
         {
