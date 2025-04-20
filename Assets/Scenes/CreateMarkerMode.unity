@@ -9478,6 +9478,8 @@ GameObject:
   - component: {fileID: 1126050170}
   - component: {fileID: 1126050172}
   - component: {fileID: 1126050171}
+  - component: {fileID: 1126050174}
+  - component: {fileID: 1126050173}
   m_Layer: 5
   m_Name: NextStep
   m_TagString: Untagged
@@ -9544,6 +9546,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126050169}
   m_CullTransparentMesh: 1
+--- !u!114 &1126050173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126050169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1126050171}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1126050174}
+        m_TargetAssemblyTypeName: NextStepTutorial, Assembly-CSharp
+        m_MethodName: NextStep
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1126050174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126050169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bacf4ab46db6064f856e63edcb9f4b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1134303993
 GameObject:
   m_ObjectHideFlags: 0
@@ -13961,7 +14031,6 @@ GameObject:
   - component: {fileID: 1606049585}
   - component: {fileID: 1606049584}
   - component: {fileID: 1606049583}
-  - component: {fileID: 1606049587}
   m_Layer: 5
   m_Name: TutorialReal
   m_TagString: Untagged
@@ -14052,38 +14121,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1606049587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606049582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19cb405591d6b314ebd470e5e8f8a051, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickOpenMenu: {fileID: 623821588}
-  clickOpenMenu2: {fileID: 2060360076}
-  waterFrame: {fileID: 1835581725524491282, guid: d09cc697c48a0124693f9d5fd70b96fe, type: 3}
-  fireFrame: {fileID: 1835581725524491282, guid: 3ca9a75d6ab263c49a5e20346140736a, type: 3}
-  achievementButton: {fileID: 2139607542}
-  cardBoardButton: {fileID: 892604840}
-  homeButton: {fileID: 1668687889}
-  slider: {fileID: 782628375}
-  unionElement: {fileID: 1835581725524491282, guid: ee61985b6a8337045899b47222ee421b, type: 3}
-  showAchievement: {fileID: 1835581725524491282, guid: a9b76dacf66973a42827533cf2d886a3, type: 3}
-  openInventory: {fileID: 1835581725524491282, guid: 58b94556d8689e449afd133f1bc26bc7, type: 3}
-  clickAchievementButton: {fileID: 193491168}
-  clickCardBoardButton: {fileID: 108091065}
-  combineElement: {fileID: 1835581725524491282, guid: 9fc8e88d1a655cf4ab5c583cc95e7fcb, type: 3}
-  cardBoardExplanation: {fileID: 1835581725524491282, guid: 968b18405f5cba44390d4764702d8054, type: 3}
-  nextStepButton: {fileID: 1126050169}
-  clickCloseAchievementButton: {fileID: 1659139973}
-  clickCloseCardBoardButton: {fileID: 1097171465}
-  forChange: {fileID: 1835581725524491282, guid: 1c7f480e35d8ea94fa976ca92c6856d7, type: 3}
-  finalTutorial: {fileID: 1835581725524491282, guid: 45cc07d8756432845aa31b978081f223, type: 3}
 --- !u!1 &1606258969
 GameObject:
   m_ObjectHideFlags: 0

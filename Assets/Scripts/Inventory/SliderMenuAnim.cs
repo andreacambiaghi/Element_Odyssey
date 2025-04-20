@@ -10,6 +10,16 @@ public class SliderMenuAnim : MonoBehaviour
 
     public void ShowHideMenu()
     {
+    
+        if(isMenuOpen)
+        {
+            StepTutorial.Instance.CloseInventory();
+        }
+        else
+        {
+            StepTutorial.Instance.OpenInventory();
+        }
+
         isMenuOpen = !isMenuOpen;
         // Debug.Log("Sono denro ShowHideMenu");
         if(PanelMenu != null)

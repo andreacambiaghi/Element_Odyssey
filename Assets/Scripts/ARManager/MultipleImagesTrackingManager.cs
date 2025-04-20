@@ -119,6 +119,9 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             if (_aRDataManager.arMarkerAssociations.associations.TryGetValue(trackedImage.referenceImage.name, out string prefabName))
             {
                 AssociateGameObjectToMarker(trackedImage, prefabName);
+                // stampo il nome dell'immagine tracciata
+                Debug.Log($"Detected image '{trackedImage.referenceImage.name}' associated with prefab '{prefabName}'.");
+                StepTutorial.Instance.FrameMarker(trackedImage.referenceImage.name);
             }
             else
             {
@@ -337,7 +340,8 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
         if (_elementFilesManager.GetMarkerType(aRTrackedImage.referenceImage.name) != _elementFilesManager.GetElementType(prefabName))
         {
-            Instantiate(errorTypeElementPrefab, Vector3.zero, Quaternion.identity);
+            GameObject erroTypeObj = Instantiate(errorTypeElementPrefab, Vector3.zero, Quaternion.identity);
+            Destroy(erroTypeObj, 3f);
             Debug.LogError($"Element {prefabName} non compatibile con {aRTrackedImage.referenceImage.name} ({_elementFilesManager.GetMarkerType(aRTrackedImage.referenceImage.name)})");
             return false;
             //DONE: mostrare errore nella GUI
@@ -434,6 +438,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
     void SpawnPopUp(string prefabName = "default", bool alreadyFound = false)
     {
+        StepTutorial.Instance.UnionElement();
         GameObject spawnedObject;
         if (alreadyFound)
         {
