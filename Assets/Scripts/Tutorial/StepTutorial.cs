@@ -54,7 +54,7 @@ public class StepTutorial : MonoBehaviour
         nextStepButton.SetActive(false);
         clickOpenMenu2.SetActive(false);
 
-        if (nextStep == 1) Step1();
+        if (nextStep == 0) Step0();
     }
 
     public void FrameMarker(string type)
