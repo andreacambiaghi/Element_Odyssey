@@ -32,7 +32,7 @@ public class StepTutorial : MonoBehaviour
     // array di bool per gli step.. possono essere fatti solo una volta.. metti che il marker viene inquadrato due volte? o apro troppo spesso l'inventario?
     // non voglio che il tutorial si ripeta.. quindi mettiamo un array di bool per ogni step.. se è true non lo faccio più
     private readonly bool[] stepCompleted = new bool[14];
-    private int nextStep = 1;
+    private int nextStep = 0;
 
     void Awake()
     {
