@@ -121,7 +121,6 @@ public class MultipleImagesTrackingManager : MonoBehaviour
                 AssociateGameObjectToMarker(trackedImage, prefabName);
                 // stampo il nome dell'immagine tracciata
                 Debug.Log($"Detected image '{trackedImage.referenceImage.name}' associated with prefab '{prefabName}'.");
-                StepTutorial.Instance.FrameMarker(trackedImage.referenceImage.name);
             }
             else
             {
@@ -211,10 +210,13 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
         _aRDataManager.imageObjectMap[trackedImage].gameObject.SetActive(true);
         _aRDataManager.imageObjectMap[trackedImage].transform.position = trackedImage.transform.position;
+
+        StepTutorial.Instance.FrameMarker(trackedImage.referenceImage.name);
     }
 
     private GameObject GetGameObject(string prefabName)
     {
+
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("Prefab/" + prefabName), Vector3.zero, Quaternion.Euler(-90, 0, 0));
         newARObject.name = prefabName;
         newARObject.SetActive(false);
