@@ -533,7 +533,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         File.WriteAllText(filePath, balance.ToString());
     }
 
-    public void resetBalance()
+    public void ResetBalance()
     {
         string filePath = balanceFilePath;
         File.WriteAllText(filePath, "0");
@@ -577,17 +577,6 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
             }
             defaultAssociations.AddAssociation(i + "", defaultValue);
         }
-
-        // Debug.Log("Creating default AR marker associations:");
-        // Debug.Log($"Created {defaultAssociations.associationList.Count} marker associations");
-
-        // int displayCount = Math.Min(5, defaultAssociations.associationList.Count);
-        // for (int i = 0; i < displayCount; i++)
-        // {
-        //     var assoc = defaultAssociations.associationList[i];
-        //     Debug.Log($"Marker {assoc.markerId} -> {assoc.elementType}");
-        // }
-
         return defaultAssociations;
     }
 
@@ -692,6 +681,20 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         return arMarkerAssociations;
     }
 
+    public void DeleteMakerAssociations()
+    {
+        string filePath = arMarkerAssociationsFilePath;
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            Debug.Log("Il file JSON è stato eliminato dal percorso: " + filePath);
+        }
+        else
+        {
+            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
+        }
+    }
+
     public string GetMarkerType(string markerId){
         ArMarkerAssociations arMarkerAssociations = createDefaultMarkerAssociations();
         if (arMarkerAssociations == null)
@@ -762,6 +765,51 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         return null;
     }
 
+    public bool CreateTutorialFile()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "tutorial.txt");
+        if (!File.Exists(filePath))
+        {
+            File.WriteAllText(filePath, "true");
+            Debug.Log("Il file JSON è stato creato nel percorso: " + filePath);
+            return true;
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+            return false;
+        }
+    }
+
+    public bool GetTutorialFile()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "tutorial.txt");
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
+            return false;
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+            string[] lines = File.ReadAllText(filePath).Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            return bool.Parse(lines[0]);
+        }
+    }
+
+    public void DeleteTutorialFile()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "tutorial.txt");
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            Debug.Log("Il file JSON è stato eliminato dal percorso: " + filePath);
+        }
+        else
+        {
+            Debug.Log("Il file JSON non esiste nel percorso: " + filePath);
+        }
+    }
 
 
     [Serializable]

@@ -46,6 +46,12 @@ public class StepTutorial : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if(ElementFilesManager.Instance.GetTutorialFile()){
+            Destroy(gameObject);
+            nextStep = 99;
+            return;
+        }
+
         clickOpenMenu.SetActive(false);
         achievementButton.SetActive(false);
         cardBoardButton.SetActive(false);
@@ -243,6 +249,7 @@ public class StepTutorial : MonoBehaviour
         nextStepButton.SetActive(false);
         stepCompleted[13] = true; // Segna lo step come completato
         nextStep = 14;
+        ElementFilesManager.Instance.CreateTutorialFile();
     }
 
     public void NextStep()

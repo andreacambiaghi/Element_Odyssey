@@ -13,7 +13,9 @@ public class DeleteSavesButton : MonoBehaviour
         ElementFilesManager.Instance.ResetVillageObjects();
         ElementFilesManager.Instance.ResetBuyFloor();
         ElementFilesManager.Instance.ResetAchievements();
-        ElementFilesManager.Instance.resetBalance();
+        ElementFilesManager.Instance.ResetBalance();
+        ElementFilesManager.Instance.DeleteTutorialFile();
+        // ElementFilesManager.Instance.DeleteMakerAssociations();
 
         Debug.Log("Saves deleted!");
     }
