@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class BackHome : MonoBehaviour
 {
-    void OnMouseDown()
+    public void Back()
     {
         SceneManager.LoadScene("Menu");
     }
