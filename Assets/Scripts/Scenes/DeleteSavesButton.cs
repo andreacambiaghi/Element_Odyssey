@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DeleteSavesButton : MonoBehaviour
 {
-    [SerializeField] private GameObject deleteSavesButton;
     private string originalText;
     public void DeleteSaves()
     {

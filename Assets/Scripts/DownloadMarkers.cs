@@ -1,8 +1,12 @@
+using System.Collections;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class DownloadMarkers : MonoBehaviour
 {
+    private string originalText;
+
     public void SavePdfFromResources()
     {
         TextAsset pdfAsset = Resources.Load<TextAsset>("Markers");
@@ -46,5 +50,24 @@ public class DownloadMarkers : MonoBehaviour
                 count++;
             }
         }
+    }
+
+    public void ChangeNameButton()
+    {
+        TextMeshProUGUI childText = GetComponentInChildren<TextMeshProUGUI>();
+
+        if (originalText == null)
+        {
+            originalText = childText.text;
+        }
+
+        childText.text = "Done!";
+        StartCoroutine(RestoreTextAfterDelay(childText, 1f));
+    }
+
+    private IEnumerator RestoreTextAfterDelay(TextMeshProUGUI textMesh, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        textMesh.text = originalText;
     }
 }
