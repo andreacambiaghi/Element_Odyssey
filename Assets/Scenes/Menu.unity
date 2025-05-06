@@ -490,7 +490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d93453607daa2b498f3ec972a537ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deleteSavesButton: {fileID: 333377601}
 --- !u!1 &377158399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,7 +1576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &968887669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1593,9 +1592,9 @@ RectTransform:
   - {fileID: 760765458}
   m_Father: {fileID: 1546525011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -740}
   m_SizeDelta: {x: 500, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &968887671
@@ -1851,7 +1850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204b01e63633a824b9a59983faac3014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downloadSavesButton: {fileID: 1143989689}
 --- !u!1 &1203301607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2285,7 +2283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -161.85925}
+  m_AnchoredPosition: {x: 0, y: -51.859253}
   m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1546525012
