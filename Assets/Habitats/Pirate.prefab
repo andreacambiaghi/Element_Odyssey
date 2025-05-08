@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1112377314231056609}
   - component: {fileID: 8467770558332629007}
   m_Layer: 0
-  m_Name: Pirate
+  m_Name: pirate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

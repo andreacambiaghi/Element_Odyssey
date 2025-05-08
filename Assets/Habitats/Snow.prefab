@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 7252498357541024596}
   - component: {fileID: 7429751344777901969}
   m_Layer: 0
-  m_Name: Snow
+  m_Name: snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
