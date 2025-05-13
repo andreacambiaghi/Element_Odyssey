@@ -1,5 +1,5 @@
-using UnityEngine; 
-using UnityEngine.XR.ARFoundation; 
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using TMPro;
@@ -8,17 +8,17 @@ using Unity.VisualScripting;
 using System;
 using UnityEngine.UIElements;
 
-public class VillagePlaneManager : MonoBehaviour 
-{ 
+public class VillagePlaneManager : MonoBehaviour
+{
 
     public static VillagePlaneManager Instance;
 
     private ElementFilesManager elementFilesManager;
-    
+
     private CreateButtons createButtonsComponent;
 
     [SerializeField] private GameObject slider;
-    
+
     [SerializeField] private SliderMenuAnim menu;
 
     [SerializeField] private GameObject createButton;
@@ -29,9 +29,9 @@ public class VillagePlaneManager : MonoBehaviour
 
     private VillagePlaneManager() { }
 
-    [SerializeField] private GameObject XROrigin; 
+    [SerializeField] private GameObject XROrigin;
 
-    private ARPlaneManager planeManager; 
+    private ARPlaneManager planeManager;
 
     private GameObject selectedObject;          // the object selected by touch interactions in the arplane
 
@@ -48,10 +48,10 @@ public class VillagePlaneManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
-           Destroy(this.gameObject);
-           return;
+            Destroy(this.gameObject);
+            return;
         }
         else
         {
@@ -59,17 +59,17 @@ public class VillagePlaneManager : MonoBehaviour
         }
 
     }
-    
-    private void Start() 
+
+    private void Start()
     {
-        if (XROrigin == null) 
-        { 
-            Debug.LogError("XR Origin is not assigned"); 
-            return; 
-        } 
-        planeManager = XROrigin.GetComponent<ARPlaneManager>(); 
+        if (XROrigin == null)
+        {
+            Debug.LogError("XR Origin is not assigned");
+            return;
+        }
+        planeManager = XROrigin.GetComponent<ARPlaneManager>();
         elementFilesManager = ElementFilesManager.Instance;
-        
+
         Debug.Log("Current gamemode: " + GameModeManager.Instance.GameMode);
         elementFilesManager.RefreshVillageData();
 
@@ -85,42 +85,51 @@ public class VillagePlaneManager : MonoBehaviour
 
         createButtonsComponent = createButton.GetComponent<CreateButtons>();
         createButtonsComponent.ResetButtons();
-    } 
- 
+    }
 
-    private void Update() 
-    { 
+
+    private void Update()
+    {
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
-        if (planeTouchCoords != null && isPlacementEnabled && !GameModeManager.Instance.IsMenuOpen) {
+        if (planeTouchCoords != null && isPlacementEnabled && !GameModeManager.Instance.IsMenuOpen)
+        {
             Debug.Log("Plane Touched at " + planeTouchCoords);
 
-            if(!isPlanePlaced){
+            if (!isPlanePlaced)
+            {
                 createVillagePlane(planeTouchCoords.coords);
                 isPlanePlaced = true;
                 ARPlaneManager planeManager = FindObjectOfType<ARPlaneManager>();
-                if (planeManager != null) {
+                if (planeManager != null)
+                {
                     planeManager.enabled = false;
-                    foreach (ARPlane plane in planeManager.trackables){
+                    foreach (ARPlane plane in planeManager.trackables)
+                    {
                         plane.gameObject.SetActive(false);
                     }
                 }
-            }else{
-                    if(selectedObject != null){ 
-                        moveSelectedObject(planeTouchCoords.coords);
+            }
+            else
+            {
+                if (selectedObject != null)
+                {
+                    moveSelectedObject(planeTouchCoords.coords);
+                    return;
+                }
+                else
+                {
+                    if (isDeletionInProgress)
+                    {
+                        isDeletionInProgress = false;
                         return;
-                    }else{ 
-                        if(isDeletionInProgress){
-                            isDeletionInProgress = false;
-                            return;
-                        } 
-                        SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
-                        return;
+                    }
+                    SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+                    return;
                 }
             }
         }
 
-    } 
-
+    }
 
     private PlaneCoords DetectPlaneTouch()
     {
@@ -130,18 +139,25 @@ public class VillagePlaneManager : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                if (Physics.Raycast(ray, out RaycastHit hit)){
+                if (Physics.Raycast(ray, out RaycastHit hit))
+                {
                     //bool uiHit = IsPointerOverUI(touch.position);
                     //bool uiHit = IsPointerOverUI();
                     bool uiHit = IsTouchOverNonPlaneObject(hit);
-                    
-                    ARPlane hitPlane = hit.transform.GetComponent<ARPlane>(); 
-                    if (hitPlane != null && !uiHit){
-                        return new PlaneCoords(hit.point, hitPlane); 
-                    } else if (hit.transform.gameObject == VillagePlane) {
+
+                    ARPlane hitPlane = hit.transform.GetComponent<ARPlane>();
+                    if (hitPlane != null && !uiHit)
+                    {
+                        return new PlaneCoords(hit.point, hitPlane);
+                    }
+                    else if (hit.transform.gameObject == VillagePlane)
+                    {
                         return new PlaneCoords(hit.point, null);
-                    } else return null;
-                } else {
+                    }
+                    else return null;
+                }
+                else
+                {
                     return null;
                 }
             }
@@ -179,22 +195,23 @@ public class VillagePlaneManager : MonoBehaviour
     }
 
     private void SpawnObject(Vector3 position, ARPlane plane, string prefabName)
-    {       
+    {
         Debug.Log("Spawning a " + prefabName);
-        
-        if (prefabName == null) return; 
-        GameObject resource = Resources.Load<GameObject>("VillagePrefabs/" + prefabName);
 
-        if (resource == null){
+        if (prefabName == null) return;
+        GameObject resource = Resources.Load<GameObject>("Habitats/" + prefabName);
+
+        if (resource == null)
+        {
             Debug.LogError("Resource cannot be spawned (null): " + prefabName);
             return;
-        } 
+        }
 
         // GameObject newARObject = Instantiate(resource, new Vector3(0, 1f, 0), Quaternion.Euler(0, 180, 0));
         // GameObject newARObject = Instantiate(resource, resource.transform.position, resource.transform.rotation);
         GameObject newARObject = Instantiate(resource, resource.transform.position, Quaternion.Euler(0, 180, 0));
 
-        
+
         newARObject.name = prefabName;
         newARObject.transform.position = position;
 
@@ -210,8 +227,8 @@ public class VillagePlaneManager : MonoBehaviour
 
         // // Apply the scale factor
         // newARObject.transform.localScale = scaleFactor;
-        
-        
+
+
         placedObjects.Add(newARObject);
 
         newARObject.SetActive(true);
@@ -219,9 +236,11 @@ public class VillagePlaneManager : MonoBehaviour
         saveCurrentConfiguration();
     }
 
-    private Vector3 GetPrefabSize(GameObject prefab) {
+    private Vector3 GetPrefabSize(GameObject prefab)
+    {
         Renderer renderer = prefab.GetComponent<Renderer>();
-        if (renderer == null){
+        if (renderer == null)
+        {
             Debug.LogError("Prefab does not have a Renderer component: " + prefab.name);
             return Vector3.one;
         }
@@ -229,7 +248,8 @@ public class VillagePlaneManager : MonoBehaviour
         return renderer.bounds.size;
     }
 
-    private Color GetInvertedColor(GameObject gameObject){
+    private Color GetInvertedColor(GameObject gameObject)
+    {
         // Renderer renderer = gameObject.GetComponent<Renderer>();
         // Texture2D texture = renderer.material.mainTexture as Texture2D;
         // Color averageColor = Color.black;
@@ -260,15 +280,18 @@ public class VillagePlaneManager : MonoBehaviour
         selectedPrefab = prefabName;
     }
 
-    public bool OnPrefabSelected(string prefabName){
+    public bool OnPrefabSelected(string prefabName)
+    {
         elementSelected.GetComponent<TextMeshProUGUI>().text = "You have selected " + prefabName;
         DeselectSelectedGameObject();
         SetSelectedPrefab(prefabName.ToLower());
         return false;
     }
 
-    public void DeselectSelectedGameObject(){
-        if(selectedObject != null) {
+    public void DeselectSelectedGameObject()
+    {
+        if (selectedObject != null)
+        {
             Outline outline = selectedObject.GetComponent<Outline>();
             if (outline != null) Destroy(outline);
 
@@ -278,7 +301,7 @@ public class VillagePlaneManager : MonoBehaviour
 
     public void DeleteGameObject(GameObject gameObject)
     {
-        if(gameObject == null) return;
+        if (gameObject == null) return;
         Debug.Log("DeleteGameObject: " + gameObject.name);
         placedObjects.Remove(gameObject);
         gameObject.SetActive(false);
@@ -291,16 +314,18 @@ public class VillagePlaneManager : MonoBehaviour
 
     public void SelectGameObject(GameObject gameObject)
     {
-        if(gameObject == null) return;
-        if(selectedObject == gameObject){
+        if (gameObject == null) return;
+        if (selectedObject == gameObject)
+        {
             isDeletionInProgress = true;
 
             DeselectSelectedGameObject();
             DeleteGameObject(gameObject);
-            
+
             return;
-        } 
-        if(selectedObject != null){
+        }
+        if (selectedObject != null)
+        {
             DeselectSelectedGameObject();
             return;
         }
@@ -310,20 +335,21 @@ public class VillagePlaneManager : MonoBehaviour
         selectedObject = gameObject;
 
         Outline outline = selectedObject.AddComponent<Outline>();
-        if(outline != null){
+        if (outline != null)
+        {
             outline.OutlineMode = Outline.Mode.OutlineAll;
             outline.OutlineColor = GetInvertedColor(selectedObject);
             outline.OutlineWidth = 10f;
-        } 
+        }
 
     }
 
-    public void createVillagePlane(Vector3 position){
+    public void createVillagePlane(Vector3 position)
+    {
         ElementFilesManager.VillageSaveData villageSaveData = elementFilesManager.getVillageSaveData();
-        // GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), new Vector3(0, 1f, 0), Quaternion.Euler(0, 180, 0));
-        // GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), Resources.Load<GameObject>("VillagePlane").transform.position, Resources.Load<GameObject>("VillagePlane").transform.rotation);
+
         GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), Resources.Load<GameObject>("VillagePlane").transform.position, Quaternion.Euler(0, 180, 0));
-        
+
         newARObject.name = "VillagePlane";
         newARObject.transform.position = position;
 
@@ -331,28 +357,32 @@ public class VillagePlaneManager : MonoBehaviour
 
         VillagePlane = newARObject;
 
-        if(villageSaveData != null){
+        if (villageSaveData != null)
+        {
             string floor = villageSaveData.floor;
             changeVillagePlane(floor);
 
-            if(villageSaveData.villageObjects == null) return;
+            if (villageSaveData.villageObjects == null) return;
 
-            foreach(ElementFilesManager.VillageObjectSaveData villageObject in villageSaveData.villageObjects){
-            SpawnObject(VillagePlane.transform.TransformPoint(villageObject.position), null, villageObject.objectName);
+            foreach (ElementFilesManager.VillageObjectSaveData villageObject in villageSaveData.villageObjects)
+            {
+                SpawnObject(VillagePlane.transform.TransformPoint(villageObject.position), null, villageObject.objectName);
             }
         }
     }
 
-    public void changeVillagePlane(string prefabName){
-        if(VillagePlane == null) return;
+    public void changeVillagePlane(string prefabName)
+    {
+        if (VillagePlane == null) return;
 
-        GameObject newPlane = Resources.Load<GameObject>("Floor/Planes/"+prefabName);
-         if(prefabName == null) {
-            Debug.LogWarning("Piano non trovato: "+prefabName);
+        GameObject newPlane = Resources.Load<GameObject>("Floor/Planes/" + prefabName);
+        if (prefabName == null)
+        {
+            Debug.LogWarning("Piano non trovato: " + prefabName);
             return;
         }
 
-        Material newMaterial = Resources.Load<Material>("Floor/Materials/"+prefabName);
+        Material newMaterial = Resources.Load<Material>("Floor/Materials/" + prefabName);
 
         VillagePlane.GetComponent<MeshRenderer>().material = newMaterial;
 
@@ -360,7 +390,7 @@ public class VillagePlaneManager : MonoBehaviour
 
         saveCurrentConfiguration();
     }
-    
+
     Transform FindInChildren(Transform parent, string name)
     {
         foreach (Transform child in parent)
@@ -375,8 +405,10 @@ public class VillagePlaneManager : MonoBehaviour
         return null;
     }
 
-    void moveSelectedObject(Vector3 position){
-        if(selectedObject != null){
+    void moveSelectedObject(Vector3 position)
+    {
+        if (selectedObject != null)
+        {
             selectedObject.transform.position = position;
             DeselectSelectedGameObject();
 
@@ -384,14 +416,16 @@ public class VillagePlaneManager : MonoBehaviour
         }
     }
 
-    private void saveCurrentConfiguration(){
+    private void saveCurrentConfiguration()
+    {
         ElementFilesManager.VillageSaveData villageSaveData = new ElementFilesManager.VillageSaveData();
         villageSaveData.floor = currentFloor;
         List<ElementFilesManager.VillageObjectSaveData> villageObjectSaveData = new List<ElementFilesManager.VillageObjectSaveData>();
 
-        for (int i = 0; i < placedObjects.Count; i++){
+        for (int i = 0; i < placedObjects.Count; i++)
+        {
             ElementFilesManager.VillageObjectSaveData villageObject = new ElementFilesManager.VillageObjectSaveData();
-            villageObject.objectName = placedObjects[i].name;  
+            villageObject.objectName = placedObjects[i].name;
             villageObject.position = VillagePlane.transform.InverseTransformPoint(placedObjects[i].transform.position);
 
             villageObjectSaveData.Add(villageObject);
@@ -403,12 +437,14 @@ public class VillagePlaneManager : MonoBehaviour
 
     }
 
-    public void resetConfiguration(){
-        foreach(GameObject placedObject in placedObjects){
+    public void resetConfiguration()
+    {
+        foreach (GameObject placedObject in placedObjects)
+        {
             Destroy(placedObject);
         }
         placedObjects.Clear();
-        
+
         saveCurrentConfiguration();
     }
 
@@ -425,7 +461,7 @@ public class VillagePlaneManager : MonoBehaviour
 
         public override string ToString()
         {
-            if(plane == null) return $"Coords: {coords.ToString()}";
+            if (plane == null) return $"Coords: {coords.ToString()}";
             return $"Coords: {coords.ToString()}, Plane: {plane.ToString()}";
         }
     }

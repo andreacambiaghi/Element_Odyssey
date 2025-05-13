@@ -18,9 +18,15 @@ public class ArTouchManager : MonoBehaviour
     void Start()
     {
         // mitm = MultipleImagesTrackingManager.Instance;
-        mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
+        // if (GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>())
+        // {
+        //     mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
+        // }else{
+        //     mitm = null;
+        // }
 
         gameModeManager = GameModeManager.Instance;
+
         vpm = VirtualPlaneManager.Instance;
 
         vlpm = VillagePlaneManager.Instance;
@@ -51,15 +57,15 @@ public class ArTouchManager : MonoBehaviour
 
     void Select()
     {
-        if(gameModeManager.IsMenuOpen)
+        if (gameModeManager.IsMenuOpen)
         {
             return;
         }
-        if(gameModeManager.GameMode == "CreateMarker")
+        if (gameModeManager.GameMode == "CreateMarker")
             mitm.SelectGameObject(gameObject);
-        else if(gameModeManager.GameMode == "VirtualPlane")
+        else if (gameModeManager.GameMode == "VirtualPlane")
             vpm.SelectGameObject(gameObject);
-        else if(gameModeManager.GameMode == "Village")
+        else if (gameModeManager.GameMode == "Village")
             vlpm.SelectGameObject(gameObject);
         else
             Debug.LogError("Game mode not recognized");
