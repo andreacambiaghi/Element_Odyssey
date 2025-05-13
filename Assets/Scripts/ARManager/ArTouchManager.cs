@@ -17,19 +17,20 @@ public class ArTouchManager : MonoBehaviour
 
     void Start()
     {
-        // mitm = MultipleImagesTrackingManager.Instance;
-        // if (GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>())
-        // {
-        //     mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
-        // }else{
-        //     mitm = null;
-        // }
-
         gameModeManager = GameModeManager.Instance;
 
-        vpm = VirtualPlaneManager.Instance;
-
-        vlpm = VillagePlaneManager.Instance;
+        if(gameModeManager.GameMode == "CreateMarker")
+        {
+            mitm = GameObject.Find("MultipleImagesTrackingManager").GetComponent<MultipleImagesTrackingManager>();
+        }
+        else if (gameModeManager.GameMode == "VirtualPlane")
+        {
+            vpm = VirtualPlaneManager.Instance;
+        }
+        else if (gameModeManager.GameMode == "Village")
+        {
+            vlpm = VillagePlaneManager.Instance;
+        }
     }
 
     void Update()
