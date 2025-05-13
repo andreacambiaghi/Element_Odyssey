@@ -21,6 +21,8 @@ public class VillagePlaneManager : MonoBehaviour
 
     [SerializeField] private SliderMenuAnim menu;
 
+    [SerializeField] private GameObject habitatsMenu;
+
     [SerializeField] private GameObject createButton;
 
     [SerializeField] private GameObject popUpElementCreated;
@@ -83,8 +85,8 @@ public class VillagePlaneManager : MonoBehaviour
             Debug.LogError("Failed to load village data");
         }
 
-        createButtonsComponent = createButton.GetComponent<CreateButtons>();
-        createButtonsComponent.ResetButtons();
+        // createButtonsComponent = createButton.GetComponent<CreateButtons>();
+        // createButtonsComponent.ResetButtons();
     }
 
 
@@ -118,11 +120,11 @@ public class VillagePlaneManager : MonoBehaviour
                 }
                 else
                 {
-                    if (isDeletionInProgress)
-                    {
-                        isDeletionInProgress = false;
-                        return;
-                    }
+                    // if (isDeletionInProgress)
+                    // {
+                    //     isDeletionInProgress = false;
+                    //     return;
+                    // }
                     SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
                     return;
                 }
@@ -296,6 +298,7 @@ public class VillagePlaneManager : MonoBehaviour
             if (outline != null) Destroy(outline);
 
             selectedObject = null;
+            HideHabitatsMenu();
         }
     }
 
@@ -310,17 +313,17 @@ public class VillagePlaneManager : MonoBehaviour
         saveCurrentConfiguration();
     }
 
-    private bool isDeletionInProgress = false;
+    // private bool isDeletionInProgress = false;
 
     public void SelectGameObject(GameObject gameObject)
     {
         if (gameObject == null) return;
         if (selectedObject == gameObject)
         {
-            isDeletionInProgress = true;
+            // isDeletionInProgress = true;
 
             DeselectSelectedGameObject();
-            DeleteGameObject(gameObject);
+            // DeleteGameObject(gameObject);
 
             return;
         }
@@ -342,13 +345,24 @@ public class VillagePlaneManager : MonoBehaviour
             outline.OutlineWidth = 10f;
         }
 
+        ShowHabitatsMenu();
+    }
+
+    public void ShowHabitatsMenu()
+    {
+        habitatsMenu.SetActive(true);
+    }
+
+    public void HideHabitatsMenu()
+    {
+        habitatsMenu.SetActive(false);
     }
 
     public void createVillagePlane(Vector3 position)
     {
         ElementFilesManager.VillageSaveData villageSaveData = elementFilesManager.getVillageSaveData();
 
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlane"), Resources.Load<GameObject>("VillagePlane").transform.position, Quaternion.Euler(0, 180, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlaneFull"), Resources.Load<GameObject>("VillagePlaneFull").transform.position, Quaternion.Euler(0, 180, 0));
 
         newARObject.name = "VillagePlane";
         newARObject.transform.position = position;
