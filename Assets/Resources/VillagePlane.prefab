@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5650867203253126031}
   - component: {fileID: 1728166569594974294}
   - component: {fileID: 3196829623847163685}
+  - component: {fileID: 4195247155470300366}
   m_Layer: 0
   m_Name: VillagePlane
   m_TagString: Untagged
@@ -131,6 +132,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4195247155470300366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3441271776596388448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1991604c6e0b1f48bf7b38012ff7c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grayMaterial: {fileID: 2100000, guid: 07f3dc1a30d8e65499f27d6fd7b5b792, type: 2}
 --- !u!1001 &343019628663423679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,7 +155,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5966541447784986218, guid: 1377863362a225d4ba3019027b2a50dc, type: 3}
       propertyPath: m_Name
-      value: Space
+      value: space
       objectReference: {fileID: 0}
     - target: {fileID: 8245070377899680963, guid: 1377863362a225d4ba3019027b2a50dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -203,7 +217,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 231189217510137160, guid: 6244e3a66c3f3d545ae1a816969ade89, type: 3}
       propertyPath: m_Name
-      value: Park
+      value: park
       objectReference: {fileID: 0}
     - target: {fileID: 4606119474929594942, guid: 6244e3a66c3f3d545ae1a816969ade89, type: 3}
       propertyPath: m_LocalPosition.x
@@ -429,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5921388760092126002, guid: 8c927be3cfdea3644a76ca0eaf00c026, type: 3}
       propertyPath: m_Name
-      value: Island
+      value: island
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -575,7 +589,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7745403962360236026, guid: eeb6e8a9badef7148b06070c8391ca81, type: 3}
       propertyPath: m_Name
-      value: Snow
+      value: snow
       objectReference: {fileID: 0}
     - target: {fileID: 7814557690318412523, guid: eeb6e8a9badef7148b06070c8391ca81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -761,7 +775,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 289731292625463374, guid: 263d2b4eeb3c4c347a5875db9d28bdde, type: 3}
       propertyPath: m_Name
-      value: Pirate
+      value: pirate
       objectReference: {fileID: 0}
     - target: {fileID: 9119219944676336897, guid: 263d2b4eeb3c4c347a5875db9d28bdde, type: 3}
       propertyPath: m_LocalPosition.x
@@ -863,7 +877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7167375000427557565, guid: a1acfda4f6eb8c14ebbe1cbba4d40d66, type: 3}
       propertyPath: m_Name
-      value: Town
+      value: town
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -925,7 +939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347931258797603979, guid: 55dc36148e3692d4ca085ecd7c3a673b, type: 3}
       propertyPath: m_Name
-      value: Ufo
+      value: ufo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -947,7 +961,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5134692688348293644, guid: 7b7453c069883d643ad94d0ca856e928, type: 3}
       propertyPath: m_Name
-      value: Volcano
+      value: volcano
       objectReference: {fileID: 0}
     - target: {fileID: 5840325925355400687, guid: 7b7453c069883d643ad94d0ca856e928, type: 3}
       propertyPath: m_LocalPosition.x

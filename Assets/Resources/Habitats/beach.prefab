@@ -5020,6 +5020,7 @@ GameObject:
   - component: {fileID: 6468795376391208618}
   - component: {fileID: 6569268966399642137}
   - component: {fileID: 4590664724001005964}
+  - component: {fileID: 3258614239298780720}
   m_Layer: 0
   m_Name: beach
   m_TagString: Untagged
@@ -5126,7 +5127,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 4d7e740c96c3ef647a47fe69ef0f4e41, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3bc2a3a166e62c945952f112f68a8e6f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5211,6 +5212,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3258614239298780720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6859972988460044914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cda1085226859f43873e02f9fc159bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6908307086639167980
 GameObject:
   m_ObjectHideFlags: 0

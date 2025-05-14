@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class MaterialStripper : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> targetObjects = new List<GameObject>();
     [SerializeField] public Material grayMaterial;
+    private HashSet<string> excludedRoots = new HashSet<string>();
 
     void Start()
     {
@@ -14,32 +14,55 @@ public class MaterialStripper : MonoBehaviour
             return;
         }
 
-        foreach (GameObject obj in targetObjects)
+        LoadExcludedRoots();
+
+        foreach (Transform child in transform) // Solo figli diretti
         {
-            if (obj == null) continue;
+            if (excludedRoots.Contains(child.name)) continue; // Se è escluso, salta tutto il sotto-albero
 
-            // 🔹 Cambia materiali
-            foreach (Renderer rend in obj.GetComponentsInChildren<Renderer>())
-            {
-                Material[] grayArray = new Material[rend.sharedMaterials.Length];
-                for (int i = 0; i < grayArray.Length; i++)
-                    grayArray[i] = grayMaterial;
+            ApplyStrip(child.gameObject);
+        }
+    }
 
-                rend.sharedMaterials = grayArray;
-            }
+    private void ApplyStrip(GameObject obj)
+    {
+        // 🔹 Cambia materiali
+        foreach (Renderer rend in obj.GetComponentsInChildren<Renderer>())
+        {
+            Material[] grayArray = new Material[rend.sharedMaterials.Length];
+            for (int i = 0; i < grayArray.Length; i++)
+                grayArray[i] = grayMaterial;
 
-            // 🔸 Disattiva Animator
-            foreach (Animator animator in obj.GetComponentsInChildren<Animator>())
-            {
-                animator.enabled = false;
-            }
+            rend.sharedMaterials = grayArray;
+        }
 
-            // 🔸 Ferma audio
-            foreach (AudioSource audio in obj.GetComponentsInChildren<AudioSource>())
-            {
-                audio.Stop();
-                audio.enabled = false;
-            }
+        // 🔸 Disattiva Animator
+        foreach (Animator animator in obj.GetComponentsInChildren<Animator>())
+        {
+            animator.enabled = false;
+        }
+
+        // 🔸 Ferma audio
+        foreach (AudioSource audio in obj.GetComponentsInChildren<AudioSource>())
+        {
+            audio.Stop();
+            audio.enabled = false;
+        }
+    }
+
+    private void LoadExcludedRoots()
+    {
+        TextAsset txt = Resources.Load<TextAsset>("HabitatsDone");
+        if (txt == null)
+        {
+            Debug.LogWarning("File 'HabitatsDone.txt' non trovato in Resources.");
+            return;
+        }
+
+        string[] lines = txt.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        foreach (string line in lines)
+        {
+            excludedRoots.Add(line.Trim());
         }
     }
 }
