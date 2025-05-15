@@ -5,18 +5,28 @@ public class PlaySoundOnClick : MonoBehaviour
 {
     private AudioSource audioSource;
 
+    [SerializeField] private Material grayMaterial;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("Master")[0];
 
+        // Imposta Mixer se disponibile
+        AudioMixer mixer = Resources.Load<AudioMixer>("Mixer");
+        if (mixer != null)
+            audioSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Master")[0];
     }
 
     void OnMouseDown()
     {
-        if (audioSource.clip != null)
-        {
-            audioSource.PlayOneShot(audioSource.clip);
-        }
+        if (audioSource.clip == null) return;
+
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer == null || renderer.sharedMaterial == null) return;
+
+        // Se il materiale è il grigio, non riprodurre
+        if (grayMaterial != null && renderer.sharedMaterial == grayMaterial) return;
+
+        audioSource.PlayOneShot(audioSource.clip);
     }
 }
