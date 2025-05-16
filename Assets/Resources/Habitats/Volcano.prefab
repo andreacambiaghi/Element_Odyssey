@@ -107,8 +107,9 @@ GameObject:
   - component: {fileID: 9049203142170922840}
   - component: {fileID: 8642697038571707401}
   - component: {fileID: 3562608231070002358}
+  - component: {fileID: 5223866367495805889}
   m_Layer: 0
-  m_Name: Volcano
+  m_Name: volcano
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +215,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 4d7e740c96c3ef647a47fe69ef0f4e41, type: 2}
   m_audioClip: {fileID: 8300000, guid: d528af4e7ad214749a87735a1b452ff3, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -299,6 +300,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5223866367495805889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134692688348293644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cda1085226859f43873e02f9fc159bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grayMaterial: {fileID: 2100000, guid: 07f3dc1a30d8e65499f27d6fd7b5b792, type: 2}
 --- !u!1 &7198818798862449959
 GameObject:
   m_ObjectHideFlags: 0
