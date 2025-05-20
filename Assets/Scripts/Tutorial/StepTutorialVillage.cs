@@ -17,7 +17,7 @@ public class StepTutorialVillage : MonoBehaviour
 
     // array di bool per gli step.. possono essere fatti solo una volta.. metti che il marker viene inquadrato due volte? o apro troppo spesso l'inventario?
     // non voglio che il tutorial si ripeta.. quindi mettiamo un array di bool per ogni step.. se è true non lo faccio più
-    private readonly bool[] stepCompleted = new bool[7];
+    private readonly bool[] stepCompleted = new bool[6];
     private int nextStep = 0;
 
     void Awake()
@@ -93,14 +93,7 @@ public class StepTutorialVillage : MonoBehaviour
         Instantiate(EndFrame);
         stepCompleted[5] = true; // Segna lo step come completato
         nextStep = 6;
-    }
-    private void Step6()
-    {
-        if (stepCompleted[6]) return; // Se lo step è già completato, non fare nulla
-        Destroy(EndFrame);
-        nextStepButton.SetActive(false);
-        stepCompleted[6] = true; // Segna lo step come completato
-        nextStep = 7;
+        Destroy(EndFrame, 3f);
         nextStepButton.SetActive(false);
     }
     public void NextStep()
@@ -124,9 +117,6 @@ public class StepTutorialVillage : MonoBehaviour
                 break;
             case 5:
                 Step5();
-                break;
-            case 6:
-                Step6();
                 break;
         }
     }
