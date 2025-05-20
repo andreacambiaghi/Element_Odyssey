@@ -7856,7 +7856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0004272461, y: -2288.259}
+  m_AnchoredPosition: {x: 0.0004272461, y: -2333.2168}
   m_SizeDelta: {x: 364.9478, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1521557837
@@ -9982,13 +9982,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e0b0f8d47fd9745b79b39953f19a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  welcome: {fileID: 1835581725524491282, guid: 9f717bd42a9496f4696e8117c86c786e, type: 3}
+  welcomePrefab: {fileID: 1835581725524491282, guid: 9f717bd42a9496f4696e8117c86c786e, type: 3}
   nextStepButton: {fileID: 2123639859}
-  unlockFrame: {fileID: 1835581725524491282, guid: 8d9c141c2b65d9a4583ca4b2a9feb649, type: 3}
-  habitatFrame: {fileID: 1835581725524491282, guid: a51da2d385609ed4b8ad98e706bf7741, type: 3}
-  ChangeHabitatFrame: {fileID: 1835581725524491282, guid: 8cf9d61496a9e9f4eb0d8cd47b93c923, type: 3}
-  ChangeFloorFrame: {fileID: 1835581725524491282, guid: f62c989f8f05b8446bdb5a5c790efe5d, type: 3}
-  EndFrame: {fileID: 1835581725524491282, guid: ec3a8a0e066d8324fba63188df0fe7a1, type: 3}
+  unlockFramePrefab: {fileID: 1835581725524491282, guid: 8d9c141c2b65d9a4583ca4b2a9feb649, type: 3}
+  habitatFramePrefab: {fileID: 1835581725524491282, guid: a51da2d385609ed4b8ad98e706bf7741, type: 3}
+  ChangeHabitatFramePrefab: {fileID: 1835581725524491282, guid: 8cf9d61496a9e9f4eb0d8cd47b93c923, type: 3}
+  ChangeFloorFramePrefab: {fileID: 1835581725524491282, guid: f62c989f8f05b8446bdb5a5c790efe5d, type: 3}
+  EndFramePrefab: {fileID: 1835581725524491282, guid: ec3a8a0e066d8324fba63188df0fe7a1, type: 3}
 --- !u!1 &2056879895
 GameObject:
   m_ObjectHideFlags: 0
