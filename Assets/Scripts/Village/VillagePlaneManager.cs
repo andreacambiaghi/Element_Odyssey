@@ -211,12 +211,20 @@ public class VillagePlaneManager : MonoBehaviour
 
         // GameObject newARObject = Instantiate(resource, new Vector3(0, 1f, 0), Quaternion.Euler(0, 180, 0));
         // GameObject newARObject = Instantiate(resource, resource.transform.position, resource.transform.rotation);
-        GameObject newARObject = Instantiate(resource, resource.transform.position, Quaternion.Euler(0, 180, 0));
 
+        // --- MODIFICA: Istanzia come figlio del VillagePlane ---
+        // Usiamo Instantiate con il quarto parametro (parent)
+        // La posizione passata (position) è nel mondo, Instantiate con parent calcola la localPosition corretta
+        GameObject newARObject = Instantiate(resource, position, Quaternion.Euler(0, 180, 0), VillagePlane.transform);
+        // --- FINE MODIFICA ---
 
-        newARObject.name = prefabName;
-        newARObject.transform.position = position;
+        newARObject.name = prefabName; // Imposta il nome
 
+        // La riga seguente è ora gestita direttamente dall'Instantiate che accetta il parent
+        // e non va messa DOPO se la posizione è già world space.
+        // newARObject.transform.position = position;
+
+        // Le linee di scaling commentate rimangono come nel tuo originale
         // Vector3 referenceSize = new Vector3(0.2f, 0.2f, 0.2f);
 
         // // Calculate the scale factor
@@ -362,7 +370,7 @@ public class VillagePlaneManager : MonoBehaviour
     {
         ElementFilesManager.VillageSaveData villageSaveData = elementFilesManager.getVillageSaveData();
 
-        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlaneFull"), Resources.Load<GameObject>("VillagePlaneFull").transform.position, Quaternion.Euler(0, 180, 0));
+        GameObject newARObject = Instantiate(Resources.Load<GameObject>("VillagePlaneTest"), Resources.Load<GameObject>("VillagePlaneTest").transform.position, Quaternion.Euler(0, 180, 0));
 
         newARObject.name = "VillagePlane";
         newARObject.transform.position = position;

@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 518561020404634321}
   - component: {fileID: -932584875633510498}
   m_Layer: 0
-  m_Name: park
+  m_Name: Park
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

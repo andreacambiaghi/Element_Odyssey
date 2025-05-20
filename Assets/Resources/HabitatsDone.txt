@@ -1,2 +1,14 @@
-ufo
+beach
+castle
+Default
+forest
 island
+park
+pirate
+snow
+space
+town
+ufo
+volcano
+windmill
+zen

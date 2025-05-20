@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 3562608231070002358}
   - component: {fileID: 5223866367495805889}
   m_Layer: 0
-  m_Name: volcano
+  m_Name: Volcano
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
