@@ -140,6 +140,12 @@ public class VillagePlaneManager : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Ended)
             {
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    Debug.Log("Touched UI element, ignoring plane touch.");
+                    return null; // Return null if a UI element was touched
+                }
+
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
@@ -157,10 +163,6 @@ public class VillagePlaneManager : MonoBehaviour
                         return new PlaneCoords(hit.point, null);
                     }
                     else return null;
-                }
-                else
-                {
-                    return null;
                 }
             }
         }
