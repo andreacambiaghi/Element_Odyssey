@@ -52,17 +52,26 @@ public class MaterialStripper : MonoBehaviour
 
     private void LoadExcludedRoots()
     {
-        TextAsset txt = Resources.Load<TextAsset>("HabitatsDone");
-        if (txt == null)
+        // TextAsset txt = Resources.Load<TextAsset>("HabitatsDone");
+        // if (txt == null)
+        // {
+        //     Debug.LogWarning("File 'HabitatsDone.txt' non trovato in Resources.");
+        //     return;
+        // }
+
+        // string[] lines = txt.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        // foreach (string line in lines)
+        // {
+        //     excludedRoots.Add(line.Trim());
+        // }
+        ElementFilesManager.Instance.RefreshVillageHabitats();
+        ElementFilesManager.VillageHabitats villageHabitats = ElementFilesManager.Instance.GetVillageHabitats();
+        foreach(ElementFilesManager.Habitat habitat in villageHabitats.habitats)
         {
-            Debug.LogWarning("File 'HabitatsDone.txt' non trovato in Resources.");
-            return;
+            if (habitat.Value == 0) continue; // Se il valore è 0, non lo aggiungere
+            excludedRoots.Add(habitat.Key);
         }
 
-        string[] lines = txt.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-        foreach (string line in lines)
-        {
-            excludedRoots.Add(line.Trim());
-        }
+
     }
 }

@@ -429,6 +429,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         {
             Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
             File.WriteAllText(filePath, getDefaultHabitats());
+            Debug.LogWarning("Default habitats creato nel percorso: " + filePath);
         }
         else
         {
@@ -436,9 +437,9 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
 
         string habitatsString = File.ReadAllText(filePath);
-        //Debug.LogWarning("saved Village data: " + villageDataString);
+        Debug.LogWarning("saved Village habitats: " + habitatsString);
 
-        //Debug.LogWarning("now creating the village data object");
+        // Debug.LogWarning("now creating the village data object");
 
         VillageHabitats villageHabitats = JsonUtility.FromJson<VillageHabitats>(habitatsString);
 
@@ -454,22 +455,22 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
             return null;
         }
 
-        // Debug.Log("This is the village data:");
+        Debug.Log("This is the village habitats:");
 
-        // Debug.LogError("writing village data");
-        // foreach (var villageObject in villageData.villageObjects)
-        // {
-        //     Debug.Log($"Key: {villageObject.Key}, \nValue: {villageObject.Value}, \nRequirements: [{string.Join(", ", villageObject.Requirements)}]");
-        //     // Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
-        // }
-        // Debug.LogError("Finshed writing village data");
+        Debug.LogError("writing village habitats");
+        foreach (var villageObject in villageHabitats.habitats)
+        {
+            Debug.Log($"Key: {villageObject.Key}, \nValue: {villageObject.Value}, \nRequirements: [{string.Join(", ", villageObject.Requirements)}]");
+            // Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
+        }
+        Debug.LogError("Finshed writing village habitats");
         return villageHabitats;
     }
 
     public void RefreshVillageHabitats()
     {
         UpdateAll();
-        VillageHabitats villageHabitats= GetVillageHabitats();
+        VillageHabitats villageHabitats = GetVillageHabitats();
         foreach (var villageHabitat in villageHabitats.habitats)
         {
             if (villageHabitat.Requirements != null)
@@ -493,7 +494,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
                 }
             }
         }
-        UpdateVillageData(villageHabitats);
+        UpdateVillageHabitats(villageHabitats);
     }
 
     public void ResetVillageHabitats()
@@ -502,7 +503,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         File.WriteAllText(filePath, getDefaultHabitats());
     }
 
-    public void UpdateVillageData(VillageHabitats villageHabitats)
+    public void UpdateVillageHabitats(VillageHabitats villageHabitats)
     {
         string filePath = habitatsFilePath;
 
@@ -516,10 +517,9 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
 
         string villageHabitatsString = JsonUtility.ToJson(villageHabitats);
+
         File.WriteAllText(filePath, villageHabitatsString);
     }
-
-
 
 
 
