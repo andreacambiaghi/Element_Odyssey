@@ -115,7 +115,7 @@ public class StepTutorialVillage : MonoBehaviour
 
         if (currentTutorialFrameInstance != null)
         {
-            Destroy(currentTutorialFrameInstance, 3f);
+            Destroy(currentTutorialFrameInstance, 1f);
             currentTutorialFrameInstance = null;
         }
 
