@@ -1,79 +1,69 @@
 {
     "villageObjects": [
-        {
-            "Key": "angel",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "beach",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "bee",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "car",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "helicopter",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "horse",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "house",
-            "Value": 0,
-            "Requirements":["mountain"]
-        },
-        {
-            "Key": "lake-house",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "mountain",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "statue",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "sushi",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "tree",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "volcano",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "windmill",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        },
-        {
-            "Key": "people",
-            "Value": 0,
-            "Requirements": ["mountain"]
-        }
+      {
+        "Key": "beach",
+        "Value": 0,
+        "Requirements": ["sand"]
+      },
+      {
+        "Key": "castle",
+        "Value": 0,
+        "Requirements": ["stone"]
+      },
+      {
+        "Key": "forest",
+        "Value": 0,
+        "Requirements": ["tree"]
+      },
+      {
+        "Key": "island",
+        "Value": 0,
+        "Requirements": ["lake"]
+      },
+      {
+        "Key": "park",
+        "Value": 0,
+        "Requirements": ["plant"]
+      },
+      {
+        "Key": "pirate",
+        "Value": 0,
+        "Requirements": ["tsunami"]
+      },
+      {
+        "Key": "snow",
+        "Value": 0,
+        "Requirements": ["snow"]
+      },
+      {
+        "Key": "space",
+        "Value": 0,
+        "Requirements": ["planet"]
+      },
+      {
+        "Key": "town",
+        "Value": 0,
+        "Requirements": ["engine"]
+      },
+      {
+        "Key": "ufo",
+        "Value": 0,
+        "Requirements": ["steam"]
+      },
+      {
+        "Key": "volcano",
+        "Value": 0,
+        "Requirements": ["lava"]
+      },
+      {
+        "Key": "windmill",
+        "Value": 0,
+        "Requirements": ["wind"]
+      },
+      {
+        "Key": "zen",
+        "Value": 0,
+        "Requirements": ["tea"]
+      }
     ]
-}
+  }
