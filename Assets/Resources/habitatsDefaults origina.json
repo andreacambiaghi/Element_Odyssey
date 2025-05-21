@@ -1,0 +1,74 @@
+{
+    "villageHabitats": [
+        {
+            "Key": "beach",
+            "Value": 0,
+            "Requirements": ["sand", "water", "palm"]
+        },
+        {
+            "Key": "castle",
+            "Value": 0,
+            "Requirements": ["stone", "brick", "mist"]
+        },
+        {
+            "Key": "Default",
+            "Value": 0,
+            "Requirements": ["earth", "wind", "water"]
+        },
+        {
+            "Key": "forest",
+            "Value": 0,
+            "Requirements": ["tree", "fog", "mist", "pollen"]
+        },
+        {
+            "Key": "island",
+            "Value": 0,
+            "Requirements": ["ocean", "palm", "lagoon"]
+        },
+        {
+            "Key": "park",
+            "Value": 0,
+            "Requirements": ["plant", "tree", "stone"]
+        },
+        {
+            "Key": "pirate",
+            "Value": 0,
+            "Requirements": ["boat", "sea", "sand", "mist"]
+        },
+        {
+            "Key": "snow",
+            "Value": 0,
+            "Requirements": ["snowmobile", "avalanche", "mist"]
+        },
+        {
+            "Key": "space",
+            "Value": 0,
+            "Requirements": ["rocket", "vacuum", "planet", "saturn"]
+        },
+        {
+            "Key": "town",
+            "Value": 0,
+            "Requirements": ["train", "engine", "car", "smoke"]
+        },
+        {
+            "Key": "ufo",
+            "Value": 0,
+            "Requirements": ["rocket", "vacuum", "jet"]
+        },
+        {
+            "Key": "volcano",
+            "Value": 0,
+            "Requirements": ["lava", "ash", "eruption", "disaster"]
+        },
+        {
+            "Key": "windmill",
+            "Value": 0,
+            "Requirements": ["wind", "windmill", "engine", "wood"]
+        },
+        {
+            "Key": "zen",
+            "Value": 0,
+            "Requirements": ["incense", "lotus", "tea", "mist"]
+        }
+    ]
+}

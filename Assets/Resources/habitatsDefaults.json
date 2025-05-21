@@ -1,0 +1,74 @@
+{
+    "villageHabitats": [
+        {
+            "Key": "beach",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "castle",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "Default",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "forest",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "island",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "park",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "pirate",
+            "Value": 0,
+            "Requirements": ["mountain"]
+        },
+        {
+            "Key": "snow",
+            "Value": 0,
+            "Requirements": ["steam"]
+        },
+        {
+            "Key": "space",
+            "Value": 0,
+            "Requirements": ["steam"]
+        },
+        {
+            "Key": "town",
+            "Value": 0,
+            "Requirements": ["steam"]
+        },
+        {
+            "Key": "ufo",
+            "Value": 0,
+            "Requirements": ["steam"]
+        },
+        {
+            "Key": "volcano",
+            "Value": 0,
+            "Requirements": ["steam"]
+        },
+        {
+            "Key": "windmill",
+            "Value": 0,
+            "Requirements": ["steam"]
+        },
+        {
+            "Key": "zen",
+            "Value": 0,
+            "Requirements": ["steam"]
+        }
+    ]
+}

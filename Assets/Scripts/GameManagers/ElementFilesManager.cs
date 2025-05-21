@@ -22,6 +22,8 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
 
     private string villageSaveDataFilePath;
 
+    private string habitatsFilePath;
+
     private string buyFloorSaveDataFilePath;
 
     private string balanceFilePath;
@@ -64,6 +66,7 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         buyFloorSaveDataFilePath = Path.Combine(Application.persistentDataPath, "buyFloor.txt");
         balanceFilePath = Path.Combine(Application.persistentDataPath, "balance.txt");
         arMarkerAssociationsFilePath = Path.Combine(Application.persistentDataPath, "arMarkersAssociations.json");
+        habitatsFilePath = Path.Combine(Application.persistentDataPath, "habitats.json");
         // elementTypeFilePath = Path.Combine(Application.persistentDataPath, "elementsType.json");
 
         elementTypeList = LoadElementTypeData();
@@ -410,6 +413,119 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         File.WriteAllText(filePath, villageDataString);
     }
 
+
+
+    public string getDefaultHabitats()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("habitatsDefaults");
+        return textAsset.text;
+    }
+
+    public VillageHabitats GetVillageHabitats()
+    {
+        string filePath = habitatsFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Il file JSON non esiste nel percorso: " + filePath);
+            File.WriteAllText(filePath, getDefaultHabitats());
+        }
+        else
+        {
+            Debug.LogWarning("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string habitatsString = File.ReadAllText(filePath);
+        //Debug.LogWarning("saved Village data: " + villageDataString);
+
+        //Debug.LogWarning("now creating the village data object");
+
+        VillageHabitats villageHabitats = JsonUtility.FromJson<VillageHabitats>(habitatsString);
+
+        if (villageHabitats == null)
+        {
+            Debug.LogError("Habitats is null after deserialization");
+            return null;
+        }
+
+        if (villageHabitats.habitats == null)
+        {
+            Debug.LogError("villageHabitats is null after deserialization");
+            return null;
+        }
+
+        // Debug.Log("This is the village data:");
+
+        // Debug.LogError("writing village data");
+        // foreach (var villageObject in villageData.villageObjects)
+        // {
+        //     Debug.Log($"Key: {villageObject.Key}, \nValue: {villageObject.Value}, \nRequirements: [{string.Join(", ", villageObject.Requirements)}]");
+        //     // Debug.Log("Requirements: " + string.Join(", ", villageObject.Requirements));
+        // }
+        // Debug.LogError("Finshed writing village data");
+        return villageHabitats;
+    }
+
+    public void RefreshVillageHabitats()
+    {
+        UpdateAll();
+        VillageHabitats villageHabitats= GetVillageHabitats();
+        foreach (var villageHabitat in villageHabitats.habitats)
+        {
+            if (villageHabitat.Requirements != null)
+            {
+                bool allRequirementsSatisfied = true;
+                foreach (var requirement in villageHabitat.Requirements)
+                {
+                    if (!foundElements.Contains(requirement.ToLower()) && !initialElements.Contains(requirement.ToLower()))
+                    {
+                        allRequirementsSatisfied = false;
+                        break;
+                    }
+                }
+                if (allRequirementsSatisfied)
+                {
+                    villageHabitat.Value = 1;
+                }
+                else
+                {
+                    villageHabitat.Value = 0;
+                }
+            }
+        }
+        UpdateVillageData(villageHabitats);
+    }
+
+    public void ResetVillageHabitats()
+    {
+        string filePath = habitatsFilePath;
+        File.WriteAllText(filePath, getDefaultHabitats());
+    }
+
+    public void UpdateVillageData(VillageHabitats villageHabitats)
+    {
+        string filePath = habitatsFilePath;
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("Il file JSON non esiste nel percorso, an empty one will be created: " + filePath);
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+        }
+
+        string villageHabitatsString = JsonUtility.ToJson(villageHabitats);
+        File.WriteAllText(filePath, villageHabitatsString);
+    }
+
+
+
+
+
+
+
+
     public string getDefaultVillageSaveData()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("villageSaveDataDefaults");
@@ -695,7 +811,8 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
     }
 
-    public string GetMarkerType(string markerId){
+    public string GetMarkerType(string markerId)
+    {
         ArMarkerAssociations arMarkerAssociations = createDefaultMarkerAssociations();
         if (arMarkerAssociations == null)
         {
@@ -839,6 +956,35 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
             return $"Key: {Key} \nValue: {Value} \nRequirements: {(Requirements != null ? string.Join(", ", Requirements) : "No requirements")}";
         }
     }
+
+    [Serializable]
+    public class VillageHabitats
+    {
+        public List<Habitat> habitats;
+
+        public string toString()
+        {
+            if (habitats == null)
+            {
+                return "No village habitats available.";
+            }
+            return string.Join("\n", habitats.ConvertAll(v => v.toString()));
+        }
+    }
+
+    [Serializable]
+    public class Habitat
+    {
+        public string Key;
+        public int Value;
+        public List<string> Requirements;
+
+        public string toString()
+        {
+            return $"Key: {Key} \nValue: {Value} \nRequirements: {(Requirements != null ? string.Join(", ", Requirements) : "No requirements")}";
+        }
+    }
+
 
     [Serializable]
     public class VillageSaveData
