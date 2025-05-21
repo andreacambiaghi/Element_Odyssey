@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5744358273040457552}
   - component: {fileID: -5252697901361979307}
   - component: {fileID: -8723598951726376991}
+  - component: {fileID: -9113078094288162384}
   m_Layer: 0
   m_Name: castle
   m_TagString: Untagged
@@ -220,6 +221,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-9113078094288162384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343348613595977492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8810725941864128501
 GameObject:
   m_ObjectHideFlags: 0

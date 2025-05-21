@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 2090750700238965286}
   - component: {fileID: 1534401529854795660}
   - component: {fileID: 5979264852637177975}
+  - component: {fileID: -4431318128132942514}
   m_Layer: 0
   m_Name: zen
   m_TagString: Untagged
@@ -501,6 +502,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4431318128132942514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321239418647079125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3499686982045230789
 GameObject:
   m_ObjectHideFlags: 0

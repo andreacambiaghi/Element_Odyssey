@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 1869879281010996645}
   - component: {fileID: 518561020404634321}
   - component: {fileID: -932584875633510498}
+  - component: {fileID: 2783107788946067470}
   m_Layer: 0
   m_Name: park
   m_TagString: Untagged
@@ -470,6 +471,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grayMaterial: {fileID: 2100000, guid: 07f3dc1a30d8e65499f27d6fd7b5b792, type: 2}
+--- !u!114 &2783107788946067470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231189217510137160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &502579314184632511
 GameObject:
   m_ObjectHideFlags: 0

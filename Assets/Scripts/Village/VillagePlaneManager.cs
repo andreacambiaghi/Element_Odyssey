@@ -111,24 +111,24 @@ public class VillagePlaneManager : MonoBehaviour
                     }
                 }
             }
-            else
-            {
-                if (selectedObject != null)
-                {
-                    moveSelectedObject(planeTouchCoords.coords);
-                    return;
-                }
-                else
-                {
-                    // if (isDeletionInProgress)
-                    // {
-                    //     isDeletionInProgress = false;
-                    //     return;
-                    // }
-                    SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
-                    return;
-                }
-            }
+            // else
+            // {
+            //     if (selectedObject != null)
+            //     {
+            //         moveSelectedObject(planeTouchCoords.coords);
+            //         return;
+            //     }
+            //     else
+            //     {
+            //         // if (isDeletionInProgress)
+            //         // {
+            //         //     isDeletionInProgress = false;
+            //         //     return;
+            //         // }
+            //         SpawnObject(planeTouchCoords.coords, planeTouchCoords.plane, selectedPrefab);
+            //         return;
+            //     }
+            // }
         }
 
     }
@@ -355,6 +355,21 @@ public class VillagePlaneManager : MonoBehaviour
         }
 
         ShowHabitatsMenu();
+    }
+
+    public void SetHabitatOnSelected(string habitat)
+    {
+        if (selectedObject == null) return;
+
+        Debug.Log("SetHabitatOnSelected: " + selectedObject.name + " to habitat: " + habitat);
+
+        SpawnObject(selectedObject.transform.position, null, habitat);
+
+        placedObjects.Remove(selectedObject);
+        selectedObject.SetActive(false);
+        Destroy(selectedObject);
+
+        DeselectSelectedGameObject();
     }
 
     public void ShowHabitatsMenu()

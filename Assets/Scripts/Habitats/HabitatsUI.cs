@@ -17,17 +17,25 @@ public class HabitatsUI : MonoBehaviour
     {
         completedHabitats = new HashSet<string>();
 
-        TextAsset textAsset = Resources.Load<TextAsset>("HabitatsDone");
-        if (textAsset == null)
-        {
-            Debug.LogWarning("HabitatsDone.txt not found in Resources folder.");
-            return;
-        }
+        // TextAsset textAsset = Resources.Load<TextAsset>("HabitatsDone");
+        // if (textAsset == null)
+        // {
+        //     Debug.LogWarning("HabitatsDone.txt not found in Resources folder.");
+        //     return;
+        // }
 
-        string[] lines = textAsset.text.Split(new char[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
-        foreach (string line in lines)
+        // string[] lines = textAsset.text.Split(new char[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
+        // foreach (string line in lines)
+        // {
+        //     completedHabitats.Add(line.Trim());
+        // }
+
+        ElementFilesManager.Instance.RefreshVillageHabitats();
+        ElementFilesManager.VillageHabitats villageHabitats = ElementFilesManager.Instance.GetVillageHabitats();
+        foreach(ElementFilesManager.Habitat habitat in villageHabitats.habitats)
         {
-            completedHabitats.Add(line.Trim());
+            if (habitat.Value == 0) continue; // Se il valore è 0, non lo aggiungere
+            completedHabitats.Add(habitat.Key);
         }
     }
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2647885449436227585}
   - component: {fileID: 806547724150276419}
   - component: {fileID: 2156148776953089087}
+  - component: {fileID: -6660794422213536426}
   m_Layer: 0
   m_Name: forest
   m_TagString: Untagged
@@ -219,6 +220,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6660794422213536426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8541218950611433435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3385161157931803886
 PrefabInstance:
   m_ObjectHideFlags: 0

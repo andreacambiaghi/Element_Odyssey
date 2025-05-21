@@ -5021,7 +5021,7 @@ GameObject:
   - component: {fileID: 6569268966399642137}
   - component: {fileID: 4590664724001005964}
   - component: {fileID: 3258614239298780720}
-  - component: {fileID: -3930214767410446510}
+  - component: {fileID: 6784469867228259034}
   m_Layer: 0
   m_Name: beach
   m_TagString: Untagged
@@ -5226,7 +5226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grayMaterial: {fileID: 2100000, guid: 07f3dc1a30d8e65499f27d6fd7b5b792, type: 2}
---- !u!114 &-3930214767410446510
+--- !u!114 &6784469867228259034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5235,10 +5235,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6859972988460044914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1991604c6e0b1f48bf7b38012ff7c42, type: 3}
+  m_Script: {fileID: 11500000, guid: af7fe0865eda7784c8bf63c1336aba3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grayMaterial: {fileID: 2100000, guid: 579080bda9f89ee42a5447d6d997e266, type: 2}
 --- !u!1 &6908307086639167980
 GameObject:
   m_ObjectHideFlags: 0
