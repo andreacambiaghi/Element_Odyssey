@@ -3,103 +3,103 @@
     "villageObjects": [
       {
         "objectName": "beach",
-        "position": { "x": -4.0, "y": 0.0, "z": 4.0 }
+        "position": { "x": -4.0, "y": 0.3, "z": 4.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": -2.0, "y": 0.0, "z": 4.0 }
+        "position": { "x": -2.0, "y": 0.3, "z": 4.0 }
       },
       {
         "objectName": "castle",
-        "position": { "x": 0.0, "y": 0.0, "z": 4.0 }
+        "position": { "x": 0.0, "y": 0.3, "z": 4.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 2.0, "y": 0.0, "z": 4.0 }
+        "position": { "x": 2.0, "y": 0.3, "z": 4.0 }
       },
       {
         "objectName": "forest",
-        "position": { "x": 4.0, "y": 0.0, "z": 4.0 }
+        "position": { "x": 4.0, "y": 0.3, "z": 4.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": -4.0, "y": 0.0, "z": 2.0 }
+        "position": { "x": -4.0, "y": 0.3, "z": 2.0 }
       },
       {
         "objectName": "island",
-        "position": { "x": -2.0, "y": 0.0, "z": 2.0 }
+        "position": { "x": -2.0, "y": 0.3, "z": 2.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 0.0, "y": 0.0, "z": 2.0 }
+        "position": { "x": 0.0, "y": 0.3, "z": 2.0 }
       },
       {
         "objectName": "park",
-        "position": { "x": 2.0, "y": 0.0, "z": 2.0 }
+        "position": { "x": 2.0, "y": 0.3, "z": 2.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 4.0, "y": 0.0, "z": 2.0 }
+        "position": { "x": 4.0, "y": 0.3, "z": 2.0 }
       },
       {
         "objectName": "pirate",
-        "position": { "x": -4.0, "y": 0.0, "z": 0.0 }
+        "position": { "x": -4.0, "y": 0.3, "z": 0.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": -2.0, "y": 0.0, "z": 0.0 }
+        "position": { "x": -2.0, "y": 0.3, "z": 0.0 }
       },
       {
         "objectName": "snow",
-        "position": { "x": 0.0, "y": 0.0, "z": 0.0 }
+        "position": { "x": 0.0, "y": 0.3, "z": 0.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 2.0, "y": 0.0, "z": 0.0 }
+        "position": { "x": 2.0, "y": 0.3, "z": 0.0 }
       },
       {
         "objectName": "space",
-        "position": { "x": 4.0, "y": 0.0, "z": 0.0 }
+        "position": { "x": 4.0, "y": 0.3, "z": 0.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": -4.0, "y": 0.0, "z": -2.0 }
+        "position": { "x": -4.0, "y": 0.3, "z": -2.0 }
       },
       {
         "objectName": "town",
-        "position": { "x": -2.0, "y": 0.0, "z": -2.0 }
+        "position": { "x": -2.0, "y": 0.3, "z": -2.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 0.0, "y": 0.0, "z": -2.0 }
+        "position": { "x": 0.0, "y": 0.3, "z": -2.0 }
       },
       {
         "objectName": "ufo",
-        "position": { "x": 2.0, "y": 0.0, "z": -2.0 }
+        "position": { "x": 2.0, "y": 0.3, "z": -2.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 4.0, "y": 0.0, "z": -2.0 }
+        "position": { "x": 4.0, "y": 0.3, "z": -2.0 }
       },
       {
         "objectName": "volcano",
-        "position": { "x": -4.0, "y": 0.0, "z": -4.0 }
+        "position": { "x": -4.0, "y": 0.3, "z": -4.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": -2.0, "y": 0.0, "z": -4.0 }
+        "position": { "x": -2.0, "y": 0.3, "z": -4.0 }
       },
       {
         "objectName": "windmill",
-        "position": { "x": 0.0, "y": 0.0, "z": -4.0 }
+        "position": { "x": 0.0, "y": 0.3, "z": -4.0 }
       },
       {
         "objectName": "Default",
-        "position": { "x": 2.0, "y": 0.0, "z": -4.0 }
+        "position": { "x": 2.0, "y": 0.3, "z": -4.0 }
       },
       {
         "objectName": "zen",
-        "position": { "x": 4.0, "y": 0.0, "z": -4.0 }
+        "position": { "x": 4.0, "y": 0.3, "z": -4.0 }
       }
     ]
   }

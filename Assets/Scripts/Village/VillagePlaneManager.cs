@@ -215,6 +215,7 @@ public class VillagePlaneManager : MonoBehaviour
         // --- MODIFICA: Istanzia come figlio del VillagePlane ---
         // Usiamo Instantiate con il quarto parametro (parent)
         // La posizione passata (position) è nel mondo, Instantiate con parent calcola la localPosition corretta
+        // Vector3 spawnPos = position + Vector3.up * 0.1f;
         GameObject newARObject = Instantiate(resource, position, Quaternion.Euler(0, 180, 0), VillagePlane.transform);
         // --- FINE MODIFICA ---
 
