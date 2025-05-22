@@ -48,6 +48,8 @@ public class VillagePlaneManager : MonoBehaviour
 
     private List<GameObject> placedObjects = new List<GameObject>();
 
+    public bool menuOpen = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -92,6 +94,12 @@ public class VillagePlaneManager : MonoBehaviour
 
     private void Update()
     {
+
+        if (menuOpen)
+        {
+            return;
+        }
+
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
         if (planeTouchCoords != null && isPlacementEnabled && !GameModeManager.Instance.IsMenuOpen)
         {
@@ -310,6 +318,7 @@ public class VillagePlaneManager : MonoBehaviour
 
             selectedObject = null;
             HideHabitatsMenu();
+            
         }
     }
 
@@ -377,11 +386,13 @@ public class VillagePlaneManager : MonoBehaviour
     public void ShowHabitatsMenu()
     {
         habitatsMenu.SetActive(true);
+        menuOpen = true;
     }
 
     public void HideHabitatsMenu()
     {
         habitatsMenu.SetActive(false);
+        menuOpen = false;
     }
 
     public void createVillagePlane(Vector3 position)

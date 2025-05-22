@@ -11,6 +11,7 @@ public class HabitatsCloseUI : MonoBehaviour
         if (UI != null)
         {
             UI.SetActive(false);
+            VillagePlaneManager.Instance.menuOpen = false;
         }
     }
 }
