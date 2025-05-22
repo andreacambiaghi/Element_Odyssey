@@ -31,13 +31,12 @@ public class StepTutorialVillage : MonoBehaviour
             return;
         }
 
-        // if (ElementFilesManager.Instance != null && ElementFilesManager.Instance.GetTutorialFile())
-        // {
-        //     Destroy(gameObject);
-        //     CleanupTutorialFrames();
-        //     nextStep = 99;
-        //     return;
-        // }
+        if (ElementFilesManager.Instance != null && ElementFilesManager.Instance.GetTutorialVillageFile())
+        {
+            Destroy(gameObject);
+            nextStep = 99;
+            return;
+        }
 
         if (nextStep == 0 && !stepCompleted[0])
         {

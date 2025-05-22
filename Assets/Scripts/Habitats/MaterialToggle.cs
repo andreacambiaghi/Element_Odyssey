@@ -20,6 +20,8 @@ public class MaterialStripper : MonoBehaviour
         {
             if (excludedRoots.Contains(child.name)) continue; // Se è escluso, salta tutto il sotto-albero
 
+            if (child.name.ToLower() == "default") continue; // Se il nome è "default", salta tutto il sotto-albero)
+
             ApplyStrip(child.gameObject);
         }
     }
@@ -66,7 +68,7 @@ public class MaterialStripper : MonoBehaviour
         // }
         ElementFilesManager.Instance.RefreshVillageHabitats();
         ElementFilesManager.VillageHabitats villageHabitats = ElementFilesManager.Instance.GetVillageHabitats();
-        foreach(ElementFilesManager.Habitat habitat in villageHabitats.habitats)
+        foreach (ElementFilesManager.Habitat habitat in villageHabitats.habitats)
         {
             if (habitat.Value == 0) continue; // Se il valore è 0, non lo aggiungere
             excludedRoots.Add(habitat.Key);
