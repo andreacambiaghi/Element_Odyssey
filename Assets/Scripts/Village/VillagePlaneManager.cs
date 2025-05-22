@@ -95,10 +95,7 @@ public class VillagePlaneManager : MonoBehaviour
     private void Update()
     {
 
-        if (menuOpen)
-        {
-            return;
-        }
+        if (menuOpen) return;
 
         PlaneCoords planeTouchCoords = DetectPlaneTouch();
         if (planeTouchCoords != null && isPlacementEnabled && !GameModeManager.Instance.IsMenuOpen)
@@ -143,6 +140,7 @@ public class VillagePlaneManager : MonoBehaviour
 
     private PlaneCoords DetectPlaneTouch()
     {
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -318,7 +316,7 @@ public class VillagePlaneManager : MonoBehaviour
 
             selectedObject = null;
             HideHabitatsMenu();
-            
+
         }
     }
 
@@ -337,6 +335,9 @@ public class VillagePlaneManager : MonoBehaviour
 
     public void SelectGameObject(GameObject gameObject)
     {
+
+        if (menuOpen) return;
+
         if (gameObject == null) return;
         if (selectedObject == gameObject)
         {

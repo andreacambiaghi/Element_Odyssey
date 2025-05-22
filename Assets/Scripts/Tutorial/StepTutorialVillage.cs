@@ -123,6 +123,8 @@ public class StepTutorialVillage : MonoBehaviour
 
         nextStepButton.SetActive(false);
 
+        ElementFilesManager.Instance.CreateTutorialVillageFile();
+
         // if (ElementFilesManager.Instance != null)
         // {
         //     ElementFilesManager.Instance.SetTutorialFile(true);

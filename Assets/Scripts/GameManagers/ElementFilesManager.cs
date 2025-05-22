@@ -898,6 +898,22 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
     }
 
+    public bool CreateTutorialVillageFile()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "tutorialvillage.txt");
+        if (!File.Exists(filePath))
+        {
+            File.WriteAllText(filePath, "true");
+            Debug.Log("Il file JSON è stato creato nel percorso: " + filePath);
+            return true;
+        }
+        else
+        {
+            Debug.Log("Il file JSON esiste nel percorso: " + filePath);
+            return false;
+        }
+    }
+
     public bool GetTutorialFile()
     {
         string filePath = Path.Combine(Application.persistentDataPath, "tutorial.txt");
