@@ -356,6 +356,52 @@ public class VillagePlaneManager : MonoBehaviour
 
         Debug.Log("SelectGameObject: " + gameObject.name);
 
+        // -- TEST --
+
+        string objectName = gameObject.name;
+
+        if (elementFilesManager == null)
+        {
+            Debug.LogError("ElementFilesManager instance is null. Cannot check unlocked status.");
+            return;
+        }
+
+        ElementFilesManager.VillageHabitats villageHabitats = elementFilesManager.GetVillageHabitats();
+
+        bool isUnlocked = false;
+        if (villageHabitats != null && villageHabitats.habitats != null)
+        {
+            foreach (var habitatEntry in villageHabitats.habitats)
+            {
+                if (habitatEntry.Key == objectName)
+                {
+                    if (habitatEntry.Value > 0)
+                    {
+                        isUnlocked = true;
+                        break;
+                    }
+                    else
+                    {
+                        isUnlocked = false;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("VillageHabitats data is null or empty in ElementFilesManager. Cannot check unlocked status.");
+            isUnlocked = false;
+        }
+
+        if (!isUnlocked)
+        {
+            Debug.Log($"Tentativo di selezionare habitat bloccato: '{objectName}'. Interazione bloccata.");
+            return;
+        }
+
+        // -- FINE TEST --
+
         selectedObject = gameObject;
 
         Outline outline = selectedObject.AddComponent<Outline>();
