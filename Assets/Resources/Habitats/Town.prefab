@@ -130,7 +130,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 2
+  m_Range: 0.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -394,7 +394,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 2
+  m_Range: 0.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -488,7 +488,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 2
+  m_Range: 0.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -667,7 +667,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 2
+  m_Range: 0.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1087,7 +1087,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 2
+  m_Range: 0.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1266,7 +1266,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 2
+  m_Range: 0.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1819,6 +1819,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 21.406757
       objectReference: {fileID: 0}
+    - target: {fileID: -5238413704784433996, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
+      propertyPath: m_Range
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5238413704784433996, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -1538112130698044685, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.3
@@ -1894,6 +1902,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
       propertyPath: m_Name
       value: town
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924503943417345425, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
+      propertyPath: m_Range
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924503943417345425, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4122570223682381995, guid: c8ebc5b6d8dea784bb38b34040a62042, type: 3}
       propertyPath: m_LocalScale.x

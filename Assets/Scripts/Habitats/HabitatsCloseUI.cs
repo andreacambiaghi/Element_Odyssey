@@ -13,5 +13,7 @@ public class HabitatsCloseUI : MonoBehaviour
             UI.SetActive(false);
             VillagePlaneManager.Instance.menuOpen = false;
         }
+
+        VillagePlaneManager.Instance.DeselectSelectedGameObject();
     }
 }

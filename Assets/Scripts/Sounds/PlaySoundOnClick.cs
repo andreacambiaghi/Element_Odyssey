@@ -19,6 +19,8 @@ public class PlaySoundOnClick : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (VillagePlaneManager.Instance.menuOpen) return;
+
         if (audioSource.clip == null) return;
 
         Renderer renderer = GetComponent<Renderer>();
