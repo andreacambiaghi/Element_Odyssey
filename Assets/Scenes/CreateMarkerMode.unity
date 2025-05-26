@@ -4974,8 +4974,8 @@ MonoBehaviour:
   slider: {fileID: 782628375}
   menu: {fileID: 1577749885}
   createButton: {fileID: 1328013456}
-  popUpElementCreated: {fileID: 1835581725524491282, guid: f2e454a4357086f478c70df8c16f6f88, type: 3}
-  popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: e3313f658c089974d9507fe4fa436683, type: 3}
+  popUpElementCreated: {fileID: 1835581725524491282, guid: 195dff0113b50c844a8b3e77b15529dd, type: 3}
+  popUpElementAlreadyFound: {fileID: 1835581725524491282, guid: 761d07463acd3b544b6cf8e4625c3543, type: 3}
   xrOrigin: {fileID: 1586463271}
   elementFileManagerPrefab: {fileID: 99667892}
   effectUnlocked: {fileID: 3576924614362489592, guid: 4a919ff208278c347a4582e77e55ed83, type: 3}
