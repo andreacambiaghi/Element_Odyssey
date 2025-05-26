@@ -2731,7 +2731,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 349.5597, y: 816.72876}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &267963454
 MonoBehaviour:
@@ -2847,7 +2847,7 @@ MonoBehaviour:
   soundButton: {fileID: 1218078475}
   elementSelected: {fileID: 0}
   coin: {fileID: 1606258969}
-  yourCardsButton: {fileID: 0}
+  yourCardsButton: {fileID: 892604840}
 --- !u!1 &286395355
 GameObject:
   m_ObjectHideFlags: 0
@@ -16804,8 +16804,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 65
-  m_fontSizeBase: 65
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
