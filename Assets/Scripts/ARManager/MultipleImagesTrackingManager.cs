@@ -37,6 +37,7 @@ public class MultipleImagesTrackingManager : MonoBehaviour
     [SerializeField] private GameObject effectUnlocked; // effect unlocked animation between two elements
 
     [SerializeField] private GameObject errorTypeElementPrefab;
+    [SerializeField] private GameObject habitatsUnlockedPrefab;
 
     private bool _isSelecting = false;
 
@@ -426,10 +427,44 @@ public class MultipleImagesTrackingManager : MonoBehaviour
 
             if (unlockedHabitats.Count > 0)
             {
+                string firstUnlockedHabitat = unlockedHabitats[0];
                 Debug.Log("Unlocked Habitats after adding element " + prefabName + ": " + string.Join(", ", unlockedHabitats));
-                
-                // METTERE POPUP QUI
+
+                GameObject habitatsObject = Instantiate(habitatsUnlockedPrefab, transform.position, Quaternion.identity);
+
+                // Imposta il testo
+                TextMeshProUGUI[] texts = habitatsObject.GetComponentsInChildren<TextMeshProUGUI>();
+                foreach (var text in texts)
+                {
+                    if (text.name == "NameHabitat")
+                    {
+                        text.text = firstUnlockedHabitat;
+                        break;
+                    }
+                }
+
+                // Imposta l'immagine
+                Image[] allImages = habitatsObject.GetComponentsInChildren<Image>();
+                foreach (Image img in allImages)
+                {
+                    if (img.name == "IconHabitat")
+                    {
+                        Sprite habitatSprite = Resources.Load<Sprite>("HabitatsIcon/" + firstUnlockedHabitat);
+                        if (habitatSprite != null)
+                        {
+                            img.sprite = habitatSprite;
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Sprite non trovato per: " + firstUnlockedHabitat);
+                        }
+                        break;
+                    }
+                }
+
+                Destroy(habitatsObject, 3f);
             }
+
             else
             {
                 Debug.Log("No habitats unlocked after adding element: " + prefabName);
