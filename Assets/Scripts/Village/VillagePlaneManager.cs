@@ -358,6 +358,8 @@ public class VillagePlaneManager : MonoBehaviour
 
         // -- TEST --
 
+        Debug.Log("Checking if habitat is unlocked for: " + gameObject.name);
+
         string objectName = gameObject.name;
 
         if (elementFilesManager == null)
