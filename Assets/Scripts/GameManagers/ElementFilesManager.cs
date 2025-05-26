@@ -522,6 +522,43 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
     }
 
 
+    /**
+        * Returns a list of unlocked habitats after adding a new element.
+        * A habitat is considered unlocked if its value is 0 and all its requirements are satisfied.
+        * 
+        * @param newElement The new element that has been added.
+        * @return A list of unlocked habitat names.
+        */
+    public List<string> GetUnlockedHabitatsAfterNewElement(string newElement)
+    {
+        List<string> unlockedHabitats = new List<string>();
+
+        VillageHabitats villageHabitats = GetVillageHabitats();
+        if (villageHabitats != null && villageHabitats.habitats != null)
+        {
+            foreach (var habitat in villageHabitats.habitats)
+            {
+                if (habitat.Value == 0)
+                {
+                    bool allRequirementsSatisfied = true;
+                    if (habitat.Requirements != null)
+                    {
+                        foreach (var requirement in habitat.Requirements)
+                        {
+                            if (!foundElements.Contains(requirement.ToLower()) && !initialElements.Contains(requirement.ToLower()) && requirement.ToLower() != newElement.ToLower())
+                            {
+                                allRequirementsSatisfied = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (allRequirementsSatisfied)
+                        unlockedHabitats.Add(habitat.Key);
+                }
+            }
+        }
+        return unlockedHabitats;
+    }
 
 
 
@@ -752,7 +789,6 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         }
         Debug.Log($"[EFM] Serialized {arMarkerAssociations.associationList.Count} marker associations");
     }
-
 
     public ArMarkerAssociations GetArMarkerAssociations()
     {

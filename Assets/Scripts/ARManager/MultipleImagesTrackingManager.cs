@@ -421,6 +421,21 @@ public class MultipleImagesTrackingManager : MonoBehaviour
             finded = false;
             AchievementsCheck.Instance.FoundedElement(prefabName);
             ElementFilesManager.Instance.SetBalance(ElementFilesManager.Instance.GetBalance() + 1);
+
+            List<string> unlockedHabitats = ElementFilesManager.Instance.GetUnlockedHabitatsAfterNewElement(prefabName);
+
+            if (unlockedHabitats.Count > 0)
+            {
+                Debug.Log("Unlocked Habitats after adding element " + prefabName + ": " + string.Join(", ", unlockedHabitats));
+                
+                // METTERE POPUP QUI
+            }
+            else
+            {
+                Debug.Log("No habitats unlocked after adding element: " + prefabName);
+            }
+
+
         }
 
         GameObject tempAudioObject = new GameObject("TempAudioObject");
