@@ -31,7 +31,7 @@ public class StepTutorialVillage : MonoBehaviour
             return;
         }
 
-        if (ElementFilesManager.Instance != null && ElementFilesManager.Instance.GetTutorialVillageFile())
+        if (ElementFilesManager.Instance.GetTutorialVillageFile())
         {
             Destroy(gameObject);
             nextStep = 99;

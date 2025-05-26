@@ -394,6 +394,11 @@ public class VillagePlaneManager : MonoBehaviour
             isUnlocked = false;
         }
 
+        if(objectName.ToLower() == "default")
+        {
+            isUnlocked = true; // Il prefab "default" è sempre sbloccato
+        }
+
         if (!isUnlocked)
         {
             Debug.Log($"Tentativo di selezionare habitat bloccato: '{objectName}'. Interazione bloccata.");
