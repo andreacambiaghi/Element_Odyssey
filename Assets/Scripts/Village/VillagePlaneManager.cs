@@ -360,7 +360,7 @@ public class VillagePlaneManager : MonoBehaviour
 
         // Debug.Log("Checking if habitat is unlocked for: " + gameObject.name);
 
-        // string objectName = gameObject.name;
+        string objectName = gameObject.name;
 
         // if (elementFilesManager == null)
         // {
@@ -368,44 +368,44 @@ public class VillagePlaneManager : MonoBehaviour
         //     return;
         // }
 
-        // ElementFilesManager.VillageHabitats villageHabitats = elementFilesManager.GetVillageHabitats();
+        ElementFilesManager.VillageHabitats villageHabitats = elementFilesManager.GetVillageHabitats();
 
-        // bool isUnlocked = false;
-        // if (villageHabitats != null && villageHabitats.habitats != null)
-        // {
-        //     foreach (var habitatEntry in villageHabitats.habitats)
-        //     {
-        //         if (habitatEntry.Key == objectName)
-        //         {
-        //             if (habitatEntry.Value > 0)
-        //             {
-        //                 isUnlocked = true;
-        //                 break;
-        //             }
-        //             else
-        //             {
-        //                 isUnlocked = false;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("VillageHabitats data is null or empty in ElementFilesManager. Cannot check unlocked status.");
-        //     isUnlocked = false;
-        // }
+        bool isUnlocked = false;
+        if (villageHabitats != null && villageHabitats.habitats != null)
+        {
+            foreach (var habitatEntry in villageHabitats.habitats)
+            {
+                if (habitatEntry.Key == objectName)
+                {
+                    if (habitatEntry.Value > 0)
+                    {
+                        isUnlocked = true;
+                        break;
+                    }
+                    else
+                    {
+                        isUnlocked = false;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("VillageHabitats data is null or empty in ElementFilesManager. Cannot check unlocked status.");
+            isUnlocked = false;
+        }
 
-        // if(objectName.ToLower() == "default")
-        // {
-        //     isUnlocked = true; // Il prefab "default" è sempre sbloccato
-        // }
+        if(objectName.ToLower() == "default" || objectName.ToLower() == "cube")
+        {
+            isUnlocked = true; 
+        }
 
-        // if (!isUnlocked)
-        // {
-        //     Debug.Log($"Tentativo di selezionare habitat bloccato: '{objectName}'. Interazione bloccata.");
-        //     return;
-        // }
+        if (!isUnlocked)
+        {
+            Debug.Log($"Tentativo di selezionare habitat bloccato: '{objectName}'. Interazione bloccata.");
+            return;
+        }
 
         // -- FINE TEST --
 
@@ -419,7 +419,8 @@ public class VillagePlaneManager : MonoBehaviour
             outline.OutlineWidth = 10f;
         }
 
-        ShowHabitatsMenu();
+        if(isUnlocked)
+            ShowHabitatsMenu();
     }
 
     public void SetHabitatOnSelected(string habitat)

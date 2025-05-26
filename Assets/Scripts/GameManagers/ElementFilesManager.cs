@@ -560,6 +560,43 @@ public class ElementFilesManager : Singleton<ElementFilesManager>
         return unlockedHabitats;
     }
 
+    public VillageHabitats getUnlockedVillageHabitats()
+    {
+        VillageHabitats villageHabitats = GetVillageHabitats();
+        if (villageHabitats == null || villageHabitats.habitats == null)
+        {
+            Debug.LogError("Village habitats is null or empty.");
+            return null;
+        }
+
+        VillageHabitats unlockedHabitats = new VillageHabitats();
+        unlockedHabitats.habitats = new List<Habitat>();
+
+        foreach (var habitat in villageHabitats.habitats)
+        {
+            if (habitat.Value == 0)
+            {
+                bool allRequirementsSatisfied = true;
+                if (habitat.Requirements != null)
+                {
+                    foreach (var requirement in habitat.Requirements)
+                    {
+                        if (!foundElements.Contains(requirement.ToLower()) && !initialElements.Contains(requirement.ToLower()))
+                        {
+                            allRequirementsSatisfied = false;
+                            break;
+                        }
+                    }
+                }
+                if (allRequirementsSatisfied)
+                {
+                    unlockedHabitats.habitats.Add(habitat);
+                }
+            }
+        }
+
+        return unlockedHabitats;
+    }
 
 
 
