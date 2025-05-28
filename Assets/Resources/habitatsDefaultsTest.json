@@ -1,74 +1,74 @@
 {
-    "villageHabitats": [
+    "habitats": [
         {
             "Key": "beach",
             "Value": 0,
-            "Requirements": ["sand", "water", "palm"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "castle",
             "Value": 0,
-            "Requirements": ["stone", "brick", "mist"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "Default",
             "Value": 0,
-            "Requirements": ["earth", "wind", "water"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "forest",
             "Value": 0,
-            "Requirements": ["tree", "fog", "mist", "pollen"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "island",
             "Value": 0,
-            "Requirements": ["ocean", "palm", "lagoon"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "park",
             "Value": 0,
-            "Requirements": ["plant", "tree", "stone"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "pirate",
             "Value": 0,
-            "Requirements": ["boat", "sea", "sand", "mist"]
+            "Requirements": ["mountain"]
         },
         {
             "Key": "snow",
             "Value": 0,
-            "Requirements": ["snowmobile", "avalanche", "mist"]
+            "Requirements": ["steam"]
         },
         {
             "Key": "space",
             "Value": 0,
-            "Requirements": ["rocket", "vacuum", "planet", "saturn"]
+            "Requirements": ["steam"]
         },
         {
             "Key": "town",
             "Value": 0,
-            "Requirements": ["train", "engine", "car", "smoke"]
+            "Requirements": ["steam"]
         },
         {
             "Key": "ufo",
             "Value": 0,
-            "Requirements": ["rocket", "vacuum", "jet"]
+            "Requirements": ["steam"]
         },
         {
             "Key": "volcano",
             "Value": 0,
-            "Requirements": ["lava", "ash", "eruption", "disaster"]
+            "Requirements": ["steam"]
         },
         {
             "Key": "windmill",
             "Value": 0,
-            "Requirements": ["wind", "windmill", "engine", "wood"]
+            "Requirements": ["steam"]
         },
         {
             "Key": "zen",
             "Value": 0,
-            "Requirements": ["incense", "lotus", "tea", "mist"]
+            "Requirements": ["steam"]
         }
     ]
 }
