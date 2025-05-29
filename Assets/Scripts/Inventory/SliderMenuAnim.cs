@@ -7,11 +7,19 @@ public class SliderMenuAnim : MonoBehaviour
 {
     public GameObject PanelMenu;
     private bool isMenuOpen = false;
+    private HeaderFilter headerFilter;
+
+    void Awake()
+    {
+        headerFilter = new();
+    }
 
     public void ShowHideMenu()
     {
-    
-        if(isMenuOpen)
+
+        headerFilter.ClearAllFilters();
+
+        if (isMenuOpen)
         {
             StepTutorial.Instance.CloseInventory();
         }
@@ -22,11 +30,11 @@ public class SliderMenuAnim : MonoBehaviour
 
         isMenuOpen = !isMenuOpen;
         // Debug.Log("Sono denro ShowHideMenu");
-        if(PanelMenu != null)
+        if (PanelMenu != null)
         {
             // Debug.Log("PanelMenu non è null");
             Animator animator = PanelMenu.GetComponent<Animator>();
-            if(animator != null)
+            if (animator != null)
             {
                 //Debug.Log("animator non è null");
                 bool isOpen = animator.GetBool("show");
