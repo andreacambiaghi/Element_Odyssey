@@ -25,7 +25,7 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
 
         if (panel == null)
         {
-            Debug.LogError("Panel non assegnato nell'Inspector di " + gameObject.name);
+             Debug.LogError("Panel non assegnato nell'Inspector di " + gameObject.name);
         }
         if (ElementFilesManager.Instance == null)
         {
@@ -40,15 +40,15 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
             Debug.LogError("Container non assegnato su " + gameObject.name);
             return;
         }
-        if (panel == null)
+         if (panel == null)
         {
             Debug.LogError("Panel non assegnato su " + gameObject.name);
             return;
         }
         if (ElementFilesManager.Instance == null)
         {
-            Debug.LogError("ElementDataManager.Instance non è disponibile!");
-            return;
+             Debug.LogError("ElementDataManager.Instance non è disponibile!");
+             return; 
         }
 
 
@@ -70,7 +70,7 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
         {
             circle.gameObject.SetActive(true);
             typeToFilter = clickedType;
-            Debug.Log($"Filtro attivato: {typeToFilter}");
+             Debug.Log($"Filtro attivato: {typeToFilter}");
         }
         else
         {
@@ -81,18 +81,18 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
         ApplyFilter(typeToFilter);
     }
 
-    private void ApplyFilter(string filterType)
+     private void ApplyFilter(string filterType)
     {
         bool noFilter = string.IsNullOrEmpty(filterType);
 
         foreach (Transform item in panel.transform)
         {
-
+        
             TextMeshProUGUI textComponent = item.GetComponentInChildren<TextMeshProUGUI>();
 
             if (textComponent == null)
             {
-                Debug.LogWarning($"Nessun componente TextMeshProUGUI (o Text) trovato nei figli di {item.name} dentro il Panel. L'oggetto verrà {(noFilter ? "mostrato" : "nascosto")}.", item);
+                Debug.LogWarning($"Nessun componente TextMeshProUGUI (o Text) trovato nei figli di {item.name} dentro il Panel. L'oggetto verrà { (noFilter ? "mostrato" : "nascosto") }.", item);
                 item.gameObject.SetActive(noFilter);
                 continue;
             }
@@ -106,11 +106,10 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
             string itemText = textComponent.text;
             string elementType = null;
 
-            try
-            {
-                elementType = ElementFilesManager.Instance.GetElementType(itemText);
+            try{
+                 elementType = ElementFilesManager.Instance.GetElementType(itemText);
             }
-            catch (System.Exception ex)
+            catch(System.Exception ex)
             {
                 Debug.LogError($"Errore chiamando ElementDataManager.Instance.GetElementsType con testo '{itemText}' da {item.name}: {ex.Message}", item);
                 item.gameObject.SetActive(false);
@@ -120,49 +119,15 @@ public class HeaderFilter : MonoBehaviour, IPointerClickHandler
 
             if (elementType == null)
             {
-                Debug.LogWarning($"ElementDataManager.Instance.GetElementsType ha restituito null per il testo '{itemText}' su {item.name}. L'oggetto verrà nascosto.", item);
-                item.gameObject.SetActive(false);
-                continue;
+                 Debug.LogWarning($"ElementDataManager.Instance.GetElementsType ha restituito null per il testo '{itemText}' su {item.name}. L'oggetto verrà nascosto.", item);
+                 item.gameObject.SetActive(false);
+                 continue;
             }
 
             bool shouldBeActive = elementType.ToLower() == filterType;
             item.gameObject.SetActive(shouldBeActive);
         }
-
+         
         Debug.Log($"Filtraggio completato per type: {(noFilter ? "NESSUNO" : filterType)}. Elementi visibili nel panel: {panel.transform.Cast<Transform>().Count(t => t.gameObject.activeSelf)}");
     }
-
-    public void ClearAllFilters()
-    {
-        if (container == null)
-        {
-            Debug.LogError("Container non assegnato su " + gameObject.name);
-            return;
-        }
-
-        if (panel == null)
-        {
-            Debug.LogError("Panel non assegnato su " + gameObject.name);
-            return;
-        }
-
-        // Disattiva tutti i cerchi
-        foreach (Transform child in container)
-        {
-            Transform c = child.Find("Circle");
-            if (c != null)
-            {
-                c.gameObject.SetActive(false);
-            }
-        }
-
-        // Mostra tutti gli elementi nel pannello
-        foreach (Transform item in panel.transform)
-        {
-            item.gameObject.SetActive(true);
-        }
-
-        Debug.Log("Tutti i filtri disattivati. Tutti gli elementi sono ora visibili.");
-    }
-
 }
